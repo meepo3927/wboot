@@ -31,11 +31,18 @@ var alias = {
     root$: JS_DIR + '/root.js'
 };
 
+if (process.env.NODE_ENV === 'production') {
+    var publicPath = './dist/';
+} else {
+    publicPath = '/dist/';
+}
+
+
 module.exports = {
     entry: util.getEntry(JS_DIR + '/entry/*.js'),
     output: {
         path: path.resolve(__dirname, './dist'),
-        publicPath: '/dist/',
+        publicPath: publicPath,
         filename: '[name].js'
     },
     module: {
@@ -56,7 +63,8 @@ module.exports = {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map'
+  module.exports.devtool = '#source-map';
+
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
