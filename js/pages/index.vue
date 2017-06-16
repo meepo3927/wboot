@@ -1,7 +1,7 @@
 <template>
 <div class="page-index" >
     <div >
-        left-12345
+        left-123
         <i class="fa fa-cog"></i>
     </div>
     <!-- 页面 - 右 -->

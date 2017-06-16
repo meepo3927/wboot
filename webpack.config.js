@@ -69,7 +69,7 @@ module.exports = {
         historyApiFallback: true,
         noInfo: false
     },
-    devtool: '#eval-source-map'
+    devtool: '#cheap-module-source-map'
 }
 
 if (process.env.NODE_ENV === 'production') {

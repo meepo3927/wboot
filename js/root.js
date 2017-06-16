@@ -3,6 +3,7 @@ import 'polyfill';
 import Vue from 'vue';
 import mlayer from 'mlayer';
 
+require('../less/vendor.less');
 require('../less/entry.less');
 
 var LOG = function () {
