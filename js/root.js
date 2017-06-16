@@ -3,7 +3,7 @@ import 'polyfill';
 import Vue from 'vue';
 import mlayer from 'mlayer';
 
-require('../less/oe.less');
+require('../less/entry.less');
 
 export {
     Vue,

@@ -61,6 +61,14 @@ var getRules = function () {
                 loader: 'css-loader'
             },
             {
+                loader: 'postcss-loader',
+                options: {
+                    plugins: (plugins) => [
+                        require('autoprefixer')(prefixerConfig)
+                    ]
+                }
+            },
+            {
                 loader: 'less-loader'
             }
         ]
