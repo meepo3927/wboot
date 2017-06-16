@@ -1,11 +1,13 @@
 <template>
-<div is="left-right-layout" :width="140">
-	sdssd
+<div >
+	<input type="text" v-model="msg">
+	---- <br />
+	{{msg}}.
 </div>
 </template>
 
 <script>
-import 'common';
+
 let methods = {};
 let computed = {};
 let watch = {};
@@ -13,7 +15,9 @@ const created = function () {};
 const mounted = function () {};
 const beforeDestroy = function () {};
 const dataFunc = function () {
-	let o = {};
+	let o = {
+		msg: +new Date()
+	};
 	return o;
 };
 export default {

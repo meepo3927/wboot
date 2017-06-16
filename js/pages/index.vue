@@ -1,7 +1,7 @@
 <template>
 <div class="page-index" >
     <div >
-        left-123456
+        left-12345
     </div>
     <!-- 页面 - 右 -->
     <form class="p15" @submit.prevent>
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-
+import {mlayer} from 'root';
 let methods = {};
 methods.alert = function () {
     mlayer.msg(this.name);
@@ -33,7 +33,7 @@ const mounted = function () {};
 const beforeDestroy = function () {};
 const dataFunc = function () {
     let o = {
-        name: 'meepo'
+        name: 'meepo123'
     };
     return o;
 };
