@@ -3,12 +3,20 @@
 	<input type="text" v-model="msg">
 	---- <br />
 	{{msg}}            .haha
+
+	<button class="btn btn-default" @click="e1">ClickMe</button>
 </div>
 </template>
 
 <script>
-
+import {LOG} from 'root';
 let methods = {};
+methods.e1 = function () {
+	require.ensure([], (require) => {
+		var h = require('lib/html2canvas.js');
+		LOG(h);
+	});
+};
 let computed = {};
 let watch = {};
 const created = function () {};

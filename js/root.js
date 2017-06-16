@@ -5,7 +5,17 @@ import mlayer from 'mlayer';
 
 require('../less/entry.less');
 
+var LOG = function () {
+    if (window.console && window.console.log) {
+        var len = arguments.length;
+        for (var i = 0; i < len; i++) {
+            window.console.log(arguments[i]);
+        }
+    }
+};
+window.LOG = LOG;
 export {
     Vue,
-    mlayer
+    mlayer,
+    LOG
 };

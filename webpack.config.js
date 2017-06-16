@@ -32,7 +32,7 @@ var alias = {
 };
 
 if (process.env.NODE_ENV === 'production') {
-    var publicPath = './dist/';
+    var publicPath = '/wboo/dist/';
 } else {
     publicPath = '/dist/';
 }
@@ -43,7 +43,8 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './dist'),
         publicPath: publicPath,
-        filename: '[name].js'
+        filename: '[name].js',
+        chunkFilename: 'chunk.[name].js'
     },
     module: {
         rules: util.getRules()
@@ -52,6 +53,15 @@ module.exports = {
         alias
     },
     plugins: [
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'commons',
+            minChunks: 2
+        }),
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery'
+        }),
         new Webpack2Polyfill()
     ],
     devServer: {
