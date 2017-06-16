@@ -1,7 +1,8 @@
 <template>
 <div class="page-index" >
     <div >
-        left-12345
+        left-12355
+        <i class="fa fa-cog"></i>
     </div>
     <!-- 页面 - 右 -->
     <form class="p15" @submit.prevent>
@@ -33,7 +34,7 @@ const mounted = function () {};
 const beforeDestroy = function () {};
 const dataFunc = function () {
     let o = {
-        name: 'meepo123'
+        name: 'meep'
     };
     return o;
 };
