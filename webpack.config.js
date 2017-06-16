@@ -1,12 +1,14 @@
 var path = require('path')
 var webpack = require('webpack')
-
+var JS_DIR = path.resolve(__dirname, 'js');
 module.exports = {
-  entry: './src/main.js',
+  entry: {
+    index: JS_DIR + '/entry/index.js'
+  },
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
-    filename: 'build.js'
+    filename: '[name].js'
   },
   module: {
     rules: [
@@ -35,10 +37,12 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.esm.js'
+      'vue$': 'vue/dist/vue.esm.js',
+      'pages': JS_DIR + '/pages/'
     }
   },
   devServer: {
+    port: 8001,
     historyApiFallback: true,
     noInfo: true
   },
