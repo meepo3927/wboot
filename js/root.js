@@ -15,6 +15,7 @@ var LOG = function () {
     }
 };
 window.LOG = LOG;
+
 export {
     Vue,
     mlayer,

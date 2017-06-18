@@ -54,6 +54,6 @@ export default {
 
 <style scoped lang="less">
 div {
-    
+    background-color: transparent;
 }
 </style>
