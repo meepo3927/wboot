@@ -24,11 +24,22 @@ var getRules = function (env) {
         loader: 'babel-loader',
         exclude: /node_modules/
     };
+    var vueloaders = {};
+    if (env === 'production') {
+        vueloaders.css = ExtractTextPlugin.extract({
+            use: [
+                'vue-style-loader',
+                'css-loader',
+                'postcss-loader',
+                'less-loader'
+            ]
+        });
+    }
     var vueRule = {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-            loaders: {}
+            loaders: vueloaders
         }
     };
     var imgRule = {

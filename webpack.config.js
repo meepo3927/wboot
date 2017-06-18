@@ -71,7 +71,8 @@ if (nodeEnv === 'production') {
             minimize: true
         }),
         new ExtractTextPlugin({
-            filename:'style.css'
+            filename:'style.css',
+            allChunks: true
         }),
         new CleanWebpackPlugin(['dist'], {})
     ]);
