@@ -16,10 +16,6 @@ function getEntry(globPath) {
     }
     return entries;
 }
-var prefixerConfig = {
-    browsers: ["last 37 versions", "> 1%"],
-    cascade: false
-};
 var getRules = function () {
     var jsRule = {
         test: /\.js$/,
@@ -31,10 +27,7 @@ var getRules = function () {
         loader: 'vue-loader',
         options: {
             loaders: {
-            },
-            postcss: [
-                require('autoprefixer')(prefixerConfig)
-            ]
+            }
         }
     };
     var imgRule = {
@@ -61,12 +54,7 @@ var getRules = function () {
                 loader: 'css-loader'
             },
             {
-                loader: 'postcss-loader',
-                options: {
-                    plugins: (plugins) => [
-                        require('autoprefixer')(prefixerConfig)
-                    ]
-                }
+                loader: 'postcss-loader'
             },
             {
                 loader: 'less-loader'
