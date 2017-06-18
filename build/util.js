@@ -1,6 +1,8 @@
 var glob = require('glob');
 var path = require('path');
 
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 function getEntry(globPath) {
     var files = glob.sync(globPath);
     var entries = {},
@@ -16,7 +18,7 @@ function getEntry(globPath) {
     }
     return entries;
 }
-var getRules = function () {
+var getRules = function (env) {
     var jsRule = {
         test: /\.js$/,
         loader: 'babel-loader',
@@ -26,8 +28,7 @@ var getRules = function () {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-            loaders: {
-            }
+            loaders: {}
         }
     };
     var imgRule = {
@@ -44,22 +45,23 @@ var getRules = function () {
             name: ('fonts/[name].[hash:7].[ext]')
         }
     };
+    if (env === 'production') {
+        var lessloader = ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: ['css-loader','postcss-loader','less-loader'],
+        });
+    } else {
+        lessloader = [
+            'style-loader',
+            'css-loader',
+            'postcss-loader',
+            'less-loader'
+        ];
+    }
+
     var lessRule = {
         test: /\.less$/,
-        use: [
-            {
-                loader: 'style-loader'
-            },
-            {
-                loader: 'css-loader'
-            },
-            {
-                loader: 'postcss-loader'
-            },
-            {
-                loader: 'less-loader'
-            }
-        ]
+        use: lessloader
     };
     return [jsRule, vueRule, imgRule, fontRule, lessRule];
 };
