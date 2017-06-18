@@ -3,7 +3,7 @@ var webpack = require('webpack');
 var util = require('./build/util');
 var config = require('./build/config');
 var Webpack2Polyfill = require("webpack2-polyfill-plugin");
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+// var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 
 var JS_DIR = path.resolve(__dirname, 'js');
@@ -70,10 +70,12 @@ if (nodeEnv === 'production') {
         new webpack.LoaderOptionsPlugin({
             minimize: true
         }),
-        new ExtractTextPlugin({
-            filename:'style.css',
-            allChunks: true
-        }),
         new CleanWebpackPlugin(['dist'], {})
     ]);
+    if (config.cssExtract) {
+        module.exports.plugins.push(new ExtractTextPlugin({
+            filename: 'style.css',
+            allChunks: true
+        }));
+    }
 }

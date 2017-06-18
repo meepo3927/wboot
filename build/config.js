@@ -28,5 +28,6 @@ var alias = {
 };
 
 module.exports = {
-    alias
+    alias,
+    cssExtract: false
 };
