@@ -1,4 +1,4 @@
-var path = require('path')
+var path = require('path');
 var webpack = require('webpack');
 var util = require('./build/util');
 var config = require('./build/config');
@@ -16,12 +16,12 @@ if (env === 'production') {
 } else {
     publicPath = '/dist/';
 }
-
+var distPath = path.resolve(__dirname, './dist');
 
 module.exports = {
     entry: util.getEntry(JS_DIR + '/entry/*.js'),
     output: {
-        path: path.resolve(__dirname, './dist'),
+        path: distPath,
         publicPath: publicPath,
         filename: '[name].js',
         chunkFilename: 'chunk.[name].js'
@@ -47,6 +47,11 @@ module.exports = {
             'process.env': {
                 RUN_ENV: `"${env}"`
             }
+        }),
+        new webpack.DllReferencePlugin({
+            context: distPath,
+            manifest: require('./build/manifest.json'),
+            name: 'dll'
         })
     ],
     devServer: {
@@ -71,7 +76,11 @@ if (env === 'production') {
         new webpack.LoaderOptionsPlugin({
             // minimize: true
         }),
-        new CleanWebpackPlugin(['dist'], {})
+        new CleanWebpackPlugin(['dist'], {
+            exclude: [
+                'dll.js'
+            ]
+        })
     ]);
     if (config.cssExtract) {
         module.exports.plugins.push(new ExtractTextPlugin({
