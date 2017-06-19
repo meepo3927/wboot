@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "start": "cross-env RUN_ENV=development webpack-dev-server --hot --colors",
-    "build": "cross-env RUN_ENV=production webpack --progress --hide-modules --colors"
+    "build": "cross-env RUN_ENV=production webpack --progress --hide-modules --colors",
+    "dll": " webpack --progress --colors --config ./build/dll.config.js"
   },
   "dependencies": {
     "vue": "^2.3.3"

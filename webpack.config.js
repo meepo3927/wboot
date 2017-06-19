@@ -50,7 +50,7 @@ module.exports = {
         }),
         new webpack.DllReferencePlugin({
             context: distPath,
-            manifest: require('./build/manifest.json'),
+            manifest: require('./build/dll-manifest.json'),
             name: 'dll'
         })
     ],
