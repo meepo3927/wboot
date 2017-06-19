@@ -9,7 +9,7 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 var JS_DIR = path.resolve(__dirname, 'js');
 
 // var nodeEnv = process.env.NODE_ENV;
-var env = process.env.RUN_ENV;
+var env = process.env.RUN_ENV || 'development';
 
 if (env === 'production') {
     var publicPath = '/wboo/dist/';
@@ -42,7 +42,12 @@ module.exports = {
             jQuery: 'jquery',
             'window.jQuery': 'jquery'
         }),
-        new Webpack2Polyfill()
+        new Webpack2Polyfill(),
+        new webpack.DefinePlugin({
+            'process.env': {
+                RUN_ENV: '"' + env + '"'
+            }
+        })
     ],
     devServer: {
         port: 8001,
@@ -57,11 +62,6 @@ if (env === 'production') {
 
     // http://vue-loader.vuejs.org/en/workflow/production.html
     module.exports.plugins = (module.exports.plugins || []).concat([
-        new webpack.DefinePlugin({
-            'process.env': {
-                // NODE_ENV: 'production'
-            }
-        }),
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: true,
             compress: {
