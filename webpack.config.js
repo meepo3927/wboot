@@ -3,7 +3,7 @@ var webpack = require('webpack');
 var util = require('./build/util');
 var config = require('./build/config');
 var Webpack2Polyfill = require("webpack2-polyfill-plugin");
-// var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 
 var JS_DIR = path.resolve(__dirname, 'js');

@@ -1,7 +1,7 @@
 var glob = require('glob');
 var path = require('path');
 var config = require('./config');
-// var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 function getEntry(globPath) {
     var files = glob.sync(globPath);

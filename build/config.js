@@ -29,5 +29,5 @@ var alias = {
 
 module.exports = {
     alias,
-    cssExtract: false
+    cssExtract: true
 };
