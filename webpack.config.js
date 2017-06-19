@@ -8,9 +8,10 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 
 var JS_DIR = path.resolve(__dirname, 'js');
 
-var nodeEnv = process.env.NODE_ENV;
+// var nodeEnv = process.env.NODE_ENV;
+var env = process.env.RUN_ENV;
 
-if (nodeEnv === 'production') {
+if (env === 'production') {
     var publicPath = '/wboo/dist/';
 } else {
     publicPath = '/dist/';
@@ -26,7 +27,7 @@ module.exports = {
         chunkFilename: 'chunk.[name].js'
     },
     module: {
-        rules: util.getRules(nodeEnv)
+        rules: util.getRules(env)
     },
     resolve: {
         alias: config.alias
@@ -51,14 +52,14 @@ module.exports = {
     devtool: '#cheap-module-source-map'
 }
 
-if (nodeEnv === 'production') {
+if (env === 'production') {
     module.exports.devtool = '#source-map';
 
     // http://vue-loader.vuejs.org/en/workflow/production.html
     module.exports.plugins = (module.exports.plugins || []).concat([
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: 'production'
+                // NODE_ENV: 'production'
             }
         }),
         new webpack.optimize.UglifyJsPlugin({
@@ -68,7 +69,7 @@ if (nodeEnv === 'production') {
             }
         }),
         new webpack.LoaderOptionsPlugin({
-            minimize: true
+            // minimize: true
         }),
         new CleanWebpackPlugin(['dist'], {})
     ]);

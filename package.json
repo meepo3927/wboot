@@ -5,9 +5,8 @@
   "author": "guoye <guoye@nmcc.ncr>",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --colors",
-    "start": "cross-env NODE_ENV=development webpack-dev-server --hot --colors",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --colors"
+    "start": "cross-env RUN_ENV=development webpack-dev-server --hot --colors",
+    "build": "cross-env RUN_ENV=production webpack --progress --hide-modules --colors"
   },
   "dependencies": {
     "vue": "^2.3.3"
