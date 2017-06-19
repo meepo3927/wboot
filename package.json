@@ -5,8 +5,8 @@
   "author": "guoye <guoye@nmcc.ncr>",
   "private": true,
   "scripts": {
-    "start": "cross-env RUN_ENV=development webpack-dev-server --hot --colors",
-    "build": "cross-env RUN_ENV=production webpack --progress --hide-modules --colors",
+    "start": "webpack-dev-server --env=development --hot --colors",
+    "build": "webpack --env=production --progress --hide-modules --colors",
     "dll": " webpack --progress --colors --config ./build/dll.config.js"
   },
   "dependencies": {
@@ -24,6 +24,7 @@
     "glob": "^7.1.2",
     "less": "^2.7.2",
     "less-loader": "^4.0.4",
+    "loader-utils": "^1.1.0",
     "postcss-loader": "^2.0.6",
     "style-loader": "^0.18.2",
     "vue-loader": "^12.1.0",
