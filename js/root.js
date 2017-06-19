@@ -19,6 +19,7 @@ var processEnv = function () {
     try {
         let env = process.env || {};
         let o = env.RUN_ENV;
+
         if (o !== 'production') {
             let list = document.querySelectorAll('[only-prod]');
             for (let i = 0; i < list.length; i++) {

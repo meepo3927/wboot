@@ -45,7 +45,7 @@ module.exports = {
         new Webpack2Polyfill(),
         new webpack.DefinePlugin({
             'process.env': {
-                RUN_ENV: '"' + env + '"'
+                RUN_ENV: `"${env}"`
             }
         })
     ],
