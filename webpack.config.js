@@ -37,11 +37,7 @@ module.exports = {
             name: 'commons',
             minChunks: 2
         }),
-        new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery',
-            'window.jQuery': 'jquery'
-        }),
+        new webpack.ProvidePlugin(config.provide),
         new Webpack2Polyfill(),
         new webpack.DefinePlugin({
             'process.env': {

@@ -29,5 +29,10 @@ var alias = {
 
 module.exports = {
     alias,
+    provide: {
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery'
+    },
     cssExtract: true
 };

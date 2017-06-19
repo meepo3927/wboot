@@ -7,7 +7,6 @@ const vendors = [
     'vue'
 ];
 var dist = path.resolve(__dirname, '../dist');
-var build = path.resolve(__dirname, '.');
 module.exports = {
     output: {
         path: dist,
@@ -19,15 +18,11 @@ module.exports = {
     },
     plugins: [
         new webpack.DllPlugin({
-            path: build + '/dll-manifest.json',
+            path: path.join(__dirname, 'dll-manifest.json'),
             name: '[name]',
             context: dist
         }),
-        new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery',
-            'window.jQuery': 'jquery'
-        })
+        new webpack.ProvidePlugin(config.provide)
     ],
     resolve: {
         alias: config.alias
