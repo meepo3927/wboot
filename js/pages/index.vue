@@ -1,18 +1,7 @@
 <template>
-<div class="page-index" >
-    <div >
-        left-1234
-        <i class="fa fa-cog"></i>
-    </div>
-    <!-- 页面 - 右 -->
+<div class="page-index">
     <form class="p15" @submit.prevent>
-        <div>
-            <input type="text" class="form-control" v-model="name">
-        </div>
-
-        <div class="mt10">
-            <textarea class="form-control" id="message" v-model="name"></textarea>
-        </div>
+        <input type="text" class="form-control" v-model="name">
         <p v-text="name"></p>
         <button class="btn btn-default" @click="alert" type="button">
             确定
@@ -34,7 +23,7 @@ const mounted = function () {};
 const beforeDestroy = function () {};
 const dataFunc = function () {
     let o = {
-        name: 'meep'
+        name: 'meepo'
     };
     return o;
 };
@@ -53,7 +42,5 @@ export default {
 </script>
 
 <style scoped lang="less">
-div {
-    background-color: #fff;
-}
+.page-index {}
 </style>

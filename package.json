@@ -1,16 +1,14 @@
 {
   "name": "wboo",
-  "description": "A Vue.js project",
+  "description": "a web project",
   "version": "1.0.0",
   "author": "guoye <guoye@nmcc.ncr>",
-  "private": true,
   "scripts": {
     "start": "webpack-dev-server --env=development --hot --colors",
     "build": "webpack --env=production --progress --hide-modules --colors",
     "dll": " webpack --progress --colors --config ./build/dll.config.js"
   },
   "dependencies": {
-    "vue": "^2.3.3"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",

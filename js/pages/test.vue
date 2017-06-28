@@ -1,21 +1,20 @@
 <template>
-<div >
-	<input type="text" v-model="msg">
-	---- <br />
-	{{msg}}            .haha
-
-	<button class="btn btn-default" @click="e1">ClickMe</button>
+<div class="page-test">
+	<form class="p15" @submit.prevent>
+		<input type="text" class="form-control" v-model="name">
+		<p v-text="name"></p>
+		<button class="btn btn-default" @click="alert" type="button">
+			确定
+		</button>
+	</form>
 </div>
 </template>
 
 <script>
 import 'root';
 let methods = {};
-methods.e1 = function () {
-	require.ensure([], (require) => {
-		var h = require('lib/html2canvas.js');
-		LOG(h);
-	});
+methods.alert = function () {
+    mlayer.msg(this.name);
 };
 let computed = {};
 let watch = {};
@@ -24,7 +23,7 @@ const mounted = function () {};
 const beforeDestroy = function () {};
 const dataFunc = function () {
 	let o = {
-		msg: +new Date()
+		name: +new Date()
 	};
 	return o;
 };
@@ -43,7 +42,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-.vue-comp {
+.page-test {
 	
 }
 </style>
