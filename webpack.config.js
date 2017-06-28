@@ -10,6 +10,8 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 var JS_DIR = path.resolve(__dirname, 'js');
 var distPath = path.resolve(__dirname, './dist');
 
+const SERVER_PORT = 8003;
+
 module.exports = function (env) {
     if (env === 'production') {
         var publicPath = '/wboo/dist/';
@@ -49,7 +51,7 @@ module.exports = function (env) {
             })
         ],
         devServer: {
-            port: 8001,
+            port: SERVER_PORT,
             historyApiFallback: true,
             noInfo: false
         },

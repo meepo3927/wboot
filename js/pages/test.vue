@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import {LOG} from 'root';
+import 'root';
 let methods = {};
 methods.e1 = function () {
 	require.ensure([], (require) => {
