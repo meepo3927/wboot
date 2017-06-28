@@ -20,5 +20,6 @@ module.exports = {
     mounted,
     activated,
     deactivated,
-    beforeDestroy
+    beforeDestroy,
+    components: {}
 };

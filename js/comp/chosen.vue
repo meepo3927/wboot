@@ -1,7 +1,10 @@
 <template>
 <select class="m-chosen" data-placeholder="请选择..">
 	<slot></slot>
-	<option v-for="v in o" v-text="v.text" :value="v.value"></option>
+	<option v-for="v in o" v-text="v.text" 
+		:disabled="v.disabled"
+		:value="v.value"
+		v-bind="v.data"></option>
 </select>
 </template>
 

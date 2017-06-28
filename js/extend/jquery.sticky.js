@@ -4,6 +4,8 @@
  */
 
 define(['jquery'], function ($) {
+    var ua = window.navigator.userAgent;
+    var firefox = ua.match(/Firefox\/([\d.]+)/);
     // var $ = window.jQuery;
     var X_CLASSNAME = 'x-sticky';
     var X_BLOCK_CLASSNAME = 'x-sticky-block';
@@ -76,8 +78,12 @@ define(['jquery'], function ($) {
         for (var i in this.replaceProperties) {
             $elem.css(i, this.replaceProperties[i]);
         }
+        var width = 'auto';
+        if (firefox) {
+            width = elemWidth + 'px';
+        }
         $elem.css({
-            width: 'auto',
+            width: width,
             left: offset.left + 'px'
         });
         $elem.addClass(X_CLASSNAME);
