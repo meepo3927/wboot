@@ -30,7 +30,8 @@ module.exports = function (env) {
             rules: util.getRules(env)
         },
         resolve: {
-            alias: config.alias
+            alias: config.alias,
+            extensions: ['.js', '.vue']
         },
         plugins: [
             new webpack.optimize.CommonsChunkPlugin({
