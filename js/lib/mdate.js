@@ -500,13 +500,20 @@
     };
 
     proto.renderHead = function (date, ymd) {
-        this.$year.text(ymd.y + '年').attr('data-y', ymd.y);
-        this.$month.text(ymd.m + '月').attr('data-m', ymd.m);
+        if (this.$year) {
+            this.$year.text(ymd.y + '年').attr('data-y', ymd.y);
+        }
+        if (this.$month) {
+            this.$month.text(ymd.m + '月').attr('data-m', ymd.m);
+        }
     };
 
     proto.renderBody = function (date, ymd) {
         var bodyHtml = this.getDateHtml(date, ymd);
-        this.$list.html(bodyHtml);
+        if (this.$list) {
+            this.$list.html(bodyHtml);
+        }
+        
     };
 
     proto.isCurDay = function (y, m, d) {

@@ -9,7 +9,11 @@
 		:for="elemId" 
 		v-text="myText"></label>
 	<!-- Error Msg -->
-	<span class="error-msg ml10" v-show="errmsg" v-text="errmsg"></span>
+	<span class="error-msg ml10" v-show="errmsgVisible" 
+		v-text="errmsg"></span>
+	<!-- Current File -->
+	<a :href="value" class="open-file" target="_blank" v-show="openFileVisible"
+		click-jump >查看文件</a>
 	<form :action="formAction" style="display: none;" ref="form">
 		<slot name="form"></slot>
 		<!-- input elem -->
@@ -117,7 +121,13 @@ methods.change = function (e) {
 		return false;
 	}
 
-	this.preview(elem.files);
+	// this.preview(elem.files);
+
+	// 没有选择文件
+	if (!value) {
+		return false;
+	}
+
 	this.fileValue = value;
 	if (this.checkNull()) {
 		this.errmsg = '';
@@ -167,13 +177,18 @@ methods.check = function () {
 	return true;
 };
 methods.send = function () {
+	this.loading = true;
 	var fa = formAsync(this.$refs.form, {
 		success: (json) => {
+			this.loading = false;
+			mlayer.iconMsg('上传成功');
 			if (json.success) {
 				this.$emit('input', json.data);
 			}
+
 		},
 		error: () => {
+			this.loading = false;
 			this.fileValue = '';
 			this.errmsg = '上传失败';
 			// LOG('upload error');
@@ -186,6 +201,9 @@ computed.elemId = function () {
 	return 'v_file_upload_' + this.id;
 };
 computed.myText = function () {
+	if (this.loading) {
+		return '上传中..';
+	}
 	return this.labelText || '选择文件';
 };
 computed.myElemName = function () {
@@ -202,6 +220,21 @@ computed.fileName = function () {
 computed.formAction = function () {
 	return this.action || config.uploadUrl;
 };
+computed.errmsgVisible = function () {
+	if (this.errmsg) {
+		return true;
+	}
+	return false;;
+};
+computed.openFileVisible = function () {
+	if (this.errmsgVisible) {
+		return false;
+	}
+	if (!this.value) {
+		return false;
+	}
+	return true;
+};
 var mounted = function () {};
 export default {
 	data: function () {
@@ -210,12 +243,16 @@ export default {
 			id,
 			fileValue: '',
 			filePath: '',
-			errmsg: ''
+			errmsg: '',
+			loading: false
 		};
 	},
 	methods,
 	computed,
-	props: ['labelText', 'elemName', 'filetype', 'silent', 'action'],
+	props: [
+		'labelText', 'elemName', 'filetype',
+		'silent', 'action',
+		'value'],
 	mounted
 };
 </script>
@@ -277,5 +314,9 @@ export default {
 }
 .v-file {
 	display: none;
+}
+.open-file {
+	margin-left: 12px;
+	line-height: @height;
 }
 </style>

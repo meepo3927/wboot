@@ -64,6 +64,28 @@
         return str.join('&');
     };
 
+    exports.getHash = function () {
+        var str = location.hash;
+        if (!str) {
+            return '';
+        }
+        var charFound = false;
+        var result = '';
+        for (var i = 0; i < str.length; i++) {
+            var char = str.charAt(i);
+            if (char === '#') {
+                if (charFound) {
+                    break;
+                } else {
+                    continue;
+                }
+            }
+            charFound = true;
+            result += char;
+        }
+        return result;
+    };
+
     exports.getHashArray = function (split) {
         split = split || '-';
         var hash = location.hash.substr(1);
