@@ -2,7 +2,7 @@
 <span class="v-file-upload">
 	<!-- for click -->
 	<label class="v-file-name" :for="elemId" >
-		<div v-text="fileName" :title="fileName"></div>
+		<div v-text="file" :title="file"></div>
 	</label>
 	<!-- for click -->
 	<label class="v-file-label ml10" title="选择要上传的文件"
@@ -15,7 +15,7 @@
 	<a :href="value" class="open-file" target="_blank" v-show="openFileVisible"
 		click-jump >查看文件</a>
 	<form :action="formAction" style="display: none;" ref="form">
-		<slot name="form"></slot>
+		<slot></slot>
 		<!-- input elem -->
 		<input type="file" class="v-file" 
 			ref="file"
@@ -64,13 +64,13 @@ const valiFileObjectType = (allowType, type) => {
 		errmsg: getErrmsg(allowType)
 	};
 };
-const valiFileExtension = (allowType, fileName) => {
+const valiFileExtension = (allowType, file) => {
 	var ok = {ok: true};
 	var err = {ok: false, errmsg: getErrmsg(allowType)};
-	if (fileName.indexOf('.') === -1) {
+	if (file.indexOf('.') === -1) {
 		return err;
 	}
-	var ext = fileName.split('.').pop();
+	var ext = file.split('.').pop();
 	if (!ext) {
 		return err;
 	}
@@ -80,7 +80,7 @@ const valiFileExtension = (allowType, fileName) => {
 	}
 	return err;
 };
-const valiType = (el, filetype, fileName) => {
+const valiType = (el, filetype, file) => {
 	let r = {ok: true};
 	if (!filetype) {  // 没有type限制
 		return r;
@@ -92,7 +92,7 @@ const valiType = (el, filetype, fileName) => {
 	if (file) {
 		return valiFileObjectType(filetype, file.type);
 	}
-	return valiFileExtension(filetype, fileName);
+	return valiFileExtension(filetype, file);
 };
 
 var methods = {};
@@ -102,7 +102,7 @@ methods.reset = function () {
 	this.errmsg = '';
 };
 methods.checkType = function (el) {
-	var r = valiType(el, this.filetype, this.fileName);
+	var r = valiType(el, this.filetype, this.file);
 	if (r.ok) {
 		return true;
 	} else {
@@ -209,7 +209,7 @@ computed.myText = function () {
 computed.myElemName = function () {
 	return this.elemName || 'file';
 };
-computed.fileName = function () {
+computed.file = function () {
 	if (!this.filePath) {
 		return '';
 	}

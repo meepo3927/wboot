@@ -1,13 +1,4 @@
 
-let env = '';
-
-try {
-    let o = process.env || {};
-    env = env.RUN_ENV;
-} catch(e) {
-    LOG('get env error.', e);
-}
-
 const LOG = function () {
     if (window.console && window.console.log) {
         var len = arguments.length;
@@ -17,6 +8,14 @@ const LOG = function () {
     }
 };
 
+let env = '';
+
+try {
+    let o = process.env || {};
+    env = o.RUN_ENV;
+} catch(e) {
+    LOG('get env error.', e);
+}
 
 const tripNodes = () => {
     let list = document.querySelectorAll('[only-prod]');
@@ -27,7 +26,7 @@ const tripNodes = () => {
 };
 
 const processEnv = function () {
-    if (env !== 'production') {
+    if (env === 'development') {
         tripNodes();
     }
 };
