@@ -7,6 +7,12 @@ var CSSExtract = new ExtractTextPlugin({
     filename: 'style.css',
     allChunks: true
 });
+var vendorExtract = new ExtractTextPlugin({
+    filename: 'vendor.css',
+    allChunks: true
+});
+
+var CSSExtracts = [CSSExtract, vendorExtract];
 
 function getEntry(globPath) {
     var files = glob.sync(globPath);
@@ -30,26 +36,22 @@ var getRules = function (env) {
         exclude: /node_modules/
     };
     var vueloaders = {};
+    var lessloader = [
+        'style-loader', 'css-loader',
+        'postcss-loader', 'less-loader'
+    ];
+    var vendorloader = lessloader;
     if (env === 'production') {
-        vueloaders.css = ExtractTextPlugin.extract({
-            use: [
-                'vue-style-loader',
-                'css-loader',
-                'postcss-loader',
-                'less-loader'
-            ]
-        });
-        var lessloader = ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: ['css-loader','postcss-loader','less-loader'],
-        });
-    } else {
-        lessloader = [
-            'style-loader',
-            'css-loader',
-            'postcss-loader',
-            'less-loader'
-        ];
+        vueloaders.css = CSSExtract.extract([
+            'vue-style-loader', 'css-loader',
+            'postcss-loader', 'less-loader'
+        ]);
+        lessloader = CSSExtract.extract([
+            'css-loader','postcss-loader','less-loader'
+        ]);
+        vendorloader = vendorExtract.extract([
+            'css-loader','postcss-loader','less-loader'
+        ]);
     }
     var vueRule = {
         test: /\.vue$/,
@@ -73,15 +75,19 @@ var getRules = function (env) {
         }
     };
 
+    var vendorRule = {
+        test: /vendor\.less$/,
+        use: vendorloader
+    };
     var lessRule = {
-        test: /\.less$/,
+        test: /entry\.less$/,
         use: lessloader
     };
-    return [jsRule, vueRule, imgRule, fontRule, lessRule];
+    return [jsRule, vueRule, imgRule, fontRule, vendorRule, lessRule];
 };
 
 module.exports = {
     getEntry,
     getRules,
-    CSSExtract
+    CSSExtracts
 };

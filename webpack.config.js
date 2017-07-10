@@ -78,8 +78,8 @@ module.exports = function (env) {
                 ]
             })
         ]);
-        if (util.CSSExtract) {
-            r.plugins.push(util.CSSExtract);
+        if (util.CSSExtracts) {
+            r.plugins = r.plugins.concat(util.CSSExtracts);
         }
     }
     return r;
