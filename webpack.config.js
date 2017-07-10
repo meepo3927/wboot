@@ -78,11 +78,8 @@ module.exports = function (env) {
                 ]
             })
         ]);
-        if (config.cssExtract) {
-            r.plugins.push(new ExtractTextPlugin({
-                filename: 'style.css',
-                allChunks: true
-            }));
+        if (util.CSSExtract) {
+            r.plugins.push(util.CSSExtract);
         }
     }
     return r;

@@ -3,6 +3,11 @@ var path = require('path');
 var config = require('./config');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+var CSSExtract = new ExtractTextPlugin({
+    filename: 'style.css',
+    allChunks: true
+});
+
 function getEntry(globPath) {
     var files = glob.sync(globPath);
     var entries = {},
@@ -25,7 +30,7 @@ var getRules = function (env) {
         exclude: /node_modules/
     };
     var vueloaders = {};
-    if (env === 'production' && config.cssExtract) {
+    if (env === 'production') {
         vueloaders.css = ExtractTextPlugin.extract({
             use: [
                 'vue-style-loader',
@@ -34,6 +39,17 @@ var getRules = function (env) {
                 'less-loader'
             ]
         });
+        var lessloader = ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: ['css-loader','postcss-loader','less-loader'],
+        });
+    } else {
+        lessloader = [
+            'style-loader',
+            'css-loader',
+            'postcss-loader',
+            'less-loader'
+        ];
     }
     var vueRule = {
         test: /\.vue$/,
@@ -56,19 +72,6 @@ var getRules = function (env) {
             name: ('fonts/[name].[hash:7].[ext]')
         }
     };
-    if (env === 'production' && config.cssExtract) {
-        var lessloader = ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: ['css-loader','postcss-loader','less-loader'],
-        });
-    } else {
-        lessloader = [
-            'style-loader',
-            'css-loader',
-            'postcss-loader',
-            'less-loader'
-        ];
-    }
 
     var lessRule = {
         test: /\.less$/,
@@ -79,5 +82,6 @@ var getRules = function (env) {
 
 module.exports = {
     getEntry,
-    getRules
+    getRules,
+    CSSExtract
 };
