@@ -121,10 +121,14 @@
         if (isNaN(offsetNumber)) {
             return date;
         }
+        d.setTime(date.getTime());
         unit = unit || 'day';
         var offsetValue = 0;
         if (OFFSET_VALUE[unit]) {
             offsetValue = OFFSET_VALUE[unit] * offsetNumber;
+            d.setTime(date.getTime() + offsetValue);
+        } else if (unit === 'week') {
+            offsetValue = OFFSET_VALUE.day * 7 * offsetNumber;
             d.setTime(date.getTime() + offsetValue);
         } else if (unit === 'month') {
             d.setMonth(date.getMonth() + offsetNumber);
