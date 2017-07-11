@@ -3,12 +3,11 @@ var util = require('./build/util');
 var config = require('./build/config');
 var Webpack2Polyfill = require("webpack2-polyfill-plugin");
 var CleanWebpackPlugin = require('clean-webpack-plugin');
+var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const SERVER_PORT = config.SERVER_PORT;
 const JS_DIR = config.JS_DIR;
 const DIST_PATH = config.DIST_PATH;
-
-console.log(config);
 
 module.exports = function (env) {
     var isProduction = (env === 'production');
@@ -71,7 +70,7 @@ module.exports = function (env) {
                 }
             }),
             new webpack.LoaderOptionsPlugin({
-                // minimize: true
+                minimize: true
             }),
             new CleanWebpackPlugin(['dist'], {
                 exclude: [
@@ -79,6 +78,14 @@ module.exports = function (env) {
                 ]
             })
         ]);
+        if (config.cssMinimize) {
+            r.plugins.push(new OptimizeCssAssetsPlugin({
+                assetNameRegExp: /\.css$/g,
+                // cssProcessor: require('cssnano'),
+                cssProcessorOptions: { discardComments: {removeAll: true } },
+                canPrint: true
+            }));
+        }
         if (util.CSSExtracts) {
             r.plugins = r.plugins.concat(util.CSSExtracts);
         }
