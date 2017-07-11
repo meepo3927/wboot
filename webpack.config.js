@@ -1,27 +1,27 @@
-var path = require('path');
 var webpack = require('webpack');
 var util = require('./build/util');
 var config = require('./build/config');
 var Webpack2Polyfill = require("webpack2-polyfill-plugin");
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
-// var env = process.env.RUN_ENV || 'development';
 
-var JS_DIR = path.resolve(__dirname, 'js');
-var distPath = path.resolve(__dirname, './dist');
+const SERVER_PORT = config.SERVER_PORT;
+const JS_DIR = config.JS_DIR;
+const DIST_PATH = config.DIST_PATH;
 
-const SERVER_PORT = 8003;
+console.log(config);
 
 module.exports = function (env) {
-    if (env === 'production') {
-        var publicPath = '/wboo/dist/';
+    var isProduction = (env === 'production');
+    // publicPath
+    if (isProduction) {
+        var publicPath = config.productionPublicPath;
     } else {
-        publicPath = '/dist/';
+        publicPath = config.developmentPublicPath;
     }
     let r = {
         entry: util.getEntry(JS_DIR + '/entry/*.js'),
         output: {
-            path: distPath,
+            path: DIST_PATH,
             publicPath: publicPath,
             filename: '[name].js',
             chunkFilename: 'chunk.[name].js'
@@ -46,7 +46,7 @@ module.exports = function (env) {
                 }
             }),
             new webpack.DllReferencePlugin({
-                context: distPath,
+                context: DIST_PATH,
                 manifest: require('./build/dll-manifest.json'),
                 name: 'dll'
             })
@@ -54,11 +54,12 @@ module.exports = function (env) {
         devServer: {
             port: SERVER_PORT,
             historyApiFallback: true,
-            noInfo: false
+            noInfo: false,
+            contentBase: config.SERVER_DIR
         },
         devtool: '#cheap-module-source-map'
     }
-    if (env === 'production') {
+    if (isProduction) {
         r.devtool = '#source-map';
 
         // http://vue-loader.vuejs.org/en/workflow/production.html
