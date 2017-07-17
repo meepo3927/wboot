@@ -28,9 +28,7 @@ define(['jquery'], function ($) {
         return false;
     };
     mVali.prototype.pushInputs = function () {
-        if (!this.inputs) {
-            this.inputs = [];
-        }
+        this.inputs = [];
         var inputs = this.inputs;
         var self = this;
         this.$elem.find('[data-vali]').each(function () {
@@ -54,6 +52,10 @@ define(['jquery'], function ($) {
         }
         return isValid;
     };
+    mVali.prototype.reset = function () {
+        var $error = this.$elem.find('[error-for]');
+        $error.text('').hide();
+    };
 
     /**
      * 输入项
@@ -68,7 +70,11 @@ define(['jquery'], function ($) {
         this.inputName = this.$elem.attr('name');
         this.type = (elem.getAttribute('type') || '').toLowerCase();
         this.rules = (elem.getAttribute('data-vali') || '').split('|');
-        this.$form = this.$elem.parents('form');
+        this.$form = this.$elem.parents('[vali-form]');
+        if (this.$form.length === 0) {
+            this.$form = this.$elem.parents('form');
+        }
+        
 
         this.elem.mInput = this;
         // 类型判断
@@ -230,10 +236,13 @@ define(['jquery'], function ($) {
         return false;
     };
     mInput.prototype.showError = function (rule) {
-        var errmsg = this.getErrorMsg(rule);
         var $error = this.getErrorElem(rule);
         if ($error) {
-            $error.text(errmsg).show();
+            if (!$error.text()) {
+                var errmsg = this.getErrorMsg(rule);
+                $error.text(errmsg);
+            }
+            $error.show();
         }
         return errmsg;
     };
@@ -252,10 +261,15 @@ define(['jquery'], function ($) {
         version: '只输入正确格式，例如1.8.3',
         maxlen: '超过最大长度限制',
         mobile: '请输入11位有效手机号',
-        password: '密码为6-16位数字或字母'
+        password: '密码为6-16位数字或字母',
+        url: '请输入正确的URL'
     };
     mInput.prototype.getErrorMsg = function (rule) {
-        var elemMsg = this.$elem.attr('errmsg-' + rule);
+
+        var elemMsg = this.$elem.attr('errmsg-' + rule) || this.$elem.attr('errmsg');
+        if (elemMsg === ':placeholder') {
+            return this.$elem.attr('placeholder');
+        }
         if (elemMsg) {
             return elemMsg;
         }
@@ -342,6 +356,19 @@ define(['jquery'], function ($) {
         var val = this.getValue();
         return !!reg.test(val);
     };
+
+    mInput.prototype._url = function () {
+        var reg = /^((http|ftp|https):\/\/)(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*(\/[a-zA-Z0-9\&%_\./-~-]*)?$/;
+        var val = this.getValue();
+        return !!reg.test(val);
+    };
+
+    // Email正则
+    // var ePattern = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    
+    //身份证号（18位）正则
+    // var cP = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+
 
     /**
      * Exports

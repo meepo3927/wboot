@@ -121,14 +121,10 @@
         if (isNaN(offsetNumber)) {
             return date;
         }
-        d.setTime(date.getTime());
         unit = unit || 'day';
         var offsetValue = 0;
         if (OFFSET_VALUE[unit]) {
             offsetValue = OFFSET_VALUE[unit] * offsetNumber;
-            d.setTime(date.getTime() + offsetValue);
-        } else if (unit === 'week') {
-            offsetValue = OFFSET_VALUE.day * 7 * offsetNumber;
             d.setTime(date.getTime() + offsetValue);
         } else if (unit === 'month') {
             d.setMonth(date.getMonth() + offsetNumber);
@@ -137,6 +133,10 @@
         }
         return d;
     }
+    function getDateOffsetStr(date, offsetNumber, unit, format) {
+        var d = getDateOffset(date, offsetNumber, unit);
+        return getYMDStr(d, format);
+    }
     var Util = {
         getYMD: getYMDStr,
         getYMDStr: getYMDStr,
@@ -144,7 +144,8 @@
         getDateByYMD: getDateByYMD,
         parseDate: parseDate,
         padZero: padZero,
-        getDateOffset: getDateOffset
+        getDateOffset: getDateOffset,
+        getDateOffsetStr: getDateOffsetStr
     };
     /**
      * @constructor
@@ -504,20 +505,13 @@
     };
 
     proto.renderHead = function (date, ymd) {
-        if (this.$year) {
-            this.$year.text(ymd.y + '年').attr('data-y', ymd.y);
-        }
-        if (this.$month) {
-            this.$month.text(ymd.m + '月').attr('data-m', ymd.m);
-        }
+        this.$year.text(ymd.y + '年').attr('data-y', ymd.y);
+        this.$month.text(ymd.m + '月').attr('data-m', ymd.m);
     };
 
     proto.renderBody = function (date, ymd) {
         var bodyHtml = this.getDateHtml(date, ymd);
-        if (this.$list) {
-            this.$list.html(bodyHtml);
-        }
-        
+        this.$list.html(bodyHtml);
     };
 
     proto.isCurDay = function (y, m, d) {
