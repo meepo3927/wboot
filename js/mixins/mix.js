@@ -8,12 +8,14 @@ const beforeDestroy = function () {
 };
 let methods = {};
 let computed = {};
+let watch = {};
 module.exports = {
     props: [],
     data: function () {
         var o = {};
         return o;
     },
+    watch,
     methods,
     computed,
     created,
@@ -21,5 +23,6 @@ module.exports = {
     activated,
     deactivated,
     beforeDestroy,
+    mixins: [],
     components: {}
 };

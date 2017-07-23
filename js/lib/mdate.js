@@ -144,8 +144,8 @@
         getDateByYMD: getDateByYMD,
         parseDate: parseDate,
         padZero: padZero,
-        getDateOffset: getDateOffset,
-        getDateOffsetStr: getDateOffsetStr
+        getDateOffsetStr: getDateOffsetStr,
+        getDateOffset: getDateOffset
     };
     /**
      * @constructor
@@ -177,11 +177,19 @@
 
     proto.initInput = function () {
         var self = this;
-
+        var delayHide = function () {
+            setTimeout(function () {
+                self.hideBox();
+            }, 150);
+        };
         this.$elem.prop('readonly', true);
+        this.$elem.focus(function () {
+            self.showBox();
+        });
         this.$elem.click(function () {
             self.showBox();
         });
+        this.$elem.blur(delayHide);
         // 自动关闭
         $html.on('mouseup', function (e) {
             e = e || window.event;
