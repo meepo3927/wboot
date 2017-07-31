@@ -64,13 +64,13 @@ const valiFileObjectType = (allowType, type) => {
 		errmsg: getErrmsg(allowType)
 	};
 };
-const valiFileExtension = (allowType, file) => {
+const valiFileExtension = (allowType, fileName) => {
 	var ok = {ok: true};
 	var err = {ok: false, errmsg: getErrmsg(allowType)};
-	if (file.indexOf('.') === -1) {
+	if (fileName.indexOf('.') === -1) {
 		return err;
 	}
-	var ext = file.split('.').pop();
+	var ext = fileName.split('.').pop();
 	if (!ext) {
 		return err;
 	}
@@ -80,7 +80,7 @@ const valiFileExtension = (allowType, file) => {
 	}
 	return err;
 };
-const valiType = (el, filetype, file) => {
+const valiType = (el, filetype, fileName) => {
 	let r = {ok: true};
 	if (!filetype) {  // 没有type限制
 		return r;
@@ -88,11 +88,11 @@ const valiType = (el, filetype, file) => {
 	if (el.files && el.files.length === 0) { // 没有选中文件
 		return r;
 	}
-	var file = el.files && el.files[0];
-	if (file) {
-		return valiFileObjectType(filetype, file.type);
+	var fileInstance = el.files && el.files[0];
+	if (fileInstance) {
+		return valiFileObjectType(filetype, fileInstance.type);
 	}
-	return valiFileExtension(filetype, file);
+	return valiFileExtension(filetype, fileName);
 };
 
 var methods = {};

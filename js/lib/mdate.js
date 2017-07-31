@@ -121,10 +121,14 @@
         if (isNaN(offsetNumber)) {
             return date;
         }
+        d.setTime(date.getTime());
         unit = unit || 'day';
         var offsetValue = 0;
         if (OFFSET_VALUE[unit]) {
             offsetValue = OFFSET_VALUE[unit] * offsetNumber;
+            d.setTime(date.getTime() + offsetValue);
+        } else if (unit === 'week') {
+            offsetValue = OFFSET_VALUE.day * 7 * offsetNumber;
             d.setTime(date.getTime() + offsetValue);
         } else if (unit === 'month') {
             d.setMonth(date.getMonth() + offsetNumber);
@@ -179,6 +183,9 @@
         var self = this;
         var delayHide = function () {
             setTimeout(function () {
+                if (self.justActived()) {
+                    return;
+                }
                 self.hideBox();
             }, 150);
         };
@@ -205,6 +212,16 @@
                 return true;
             }
         });
+    };
+    proto.justActived = function () {
+        if (this.lastActiveTime) {
+            var time = (new Date()).getTime();
+            var diff = time - this.lastActiveTime;
+            if (diff < 200) {
+                return true;
+            }
+        }
+        return false;
     };
     proto.showBox = function () {
         if (!this.$box) {
@@ -258,6 +275,9 @@
     proto.bind = function () {
         
         var self = this;
+        this.$box.on('mousedown', function (e) {
+            self.lastActiveTime = (new Date()).getTime();
+        });
         this.$box.on('mouseup click', function (e) {
             return stopBubble(e);
         });
