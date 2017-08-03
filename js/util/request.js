@@ -74,5 +74,19 @@ let exports = {};
 exports.menu = function () {
     return fetch1(ajaxUrlBase + '/data_json/left_menu.json');
 };
+let UUID_SPACE = {};
+exports.U = (p, name = 'space') => {
+    UUID_SPACE[name] = UUID_SPACE[name] || 0;
+    UUID_SPACE[name]++;
+    let uuid = UUID_SPACE[name];
+    return p.then((result) => {
+        if (uuid === UUID_SPACE[name]) {
+            return result;
+        } else {
+            // will never resolve
+            return new Promise(() => {});
+        }
+    });
+};
 
 module.exports = exports;

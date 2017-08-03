@@ -46,7 +46,7 @@ computed.myAnim = function () {
 };
 let watch = {};
 const mounted = function () {};
-const destroyed = function () {};
+const beforeDestroy = function () {};
 const dataFunc = function () {
 	let o = {
 		visible: false
@@ -60,7 +60,7 @@ export default {
 	watch,
 	props: ['width', 'height', 'anim'],
 	mounted,
-	destroyed,
+	beforeDestroy,
 	components: {
 		'close-btn': require('comp/common/layer-close-btn.vue')
 	}

@@ -1,16 +1,12 @@
-/*jshint asi:true */
-/*global define window document */
 /**
- * cooki方法
- *
- * @module cookie
+ * cookie方法
  */
 define([], function () {
     "use strict";
-    var _exp = "; expires=",
-        _domain = "; domain=",
-        doc = document;
-
+    var doc = document;
+    var _exp = "; expires=";
+    var _domain = "; domain=";
+    var _path = '; path=/';
     var exports = {};
 
     /**
@@ -35,19 +31,22 @@ define([], function () {
      * @method set
      * @param name {String} key
      * @param value {String|Number} value
-     * @param expire {Date} expiration time(s)
+     * @param expire {Number} expiration time(s)
      * @param domain {String} domain
      */
     exports.set = function (name, value, expire, domain) {
         var str = name + '=' + value;
         if (expire) {
-            str += _exp + (new Date(getNowTime + expire * 1000)).toGMTString();
+            let d = new Date();
+            d.setTime(getNowTime() + expire * 1000);
+            str += _exp + d.toGMTString();
         }
         if (domain) {
             str += _domain + domain;
         }
-        str += '; path=/';
+        str += _path;
         doc.cookie = str;
+        return str;
     };
 
     /**
@@ -56,8 +55,8 @@ define([], function () {
      * @method remove
      * @param name {String} key
      */
-    exports.remove = function (name) {
-        doc.cookie = name + "=" + _exp + (new Date()).toGMTString();
+    exports.remove = function (name, domain) {
+        return exports.set(name, '', -3600 * 24);
     };
 
     return exports;

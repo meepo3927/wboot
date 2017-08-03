@@ -235,7 +235,8 @@ computed.openFileVisible = function () {
 	}
 	return true;
 };
-var mounted = function () {};
+const mounted = function () {};
+const beforeDestroy = function () {};
 export default {
 	data: function () {
 		const id = (uuid++);
@@ -253,7 +254,8 @@ export default {
 		'labelText', 'elemName', 'filetype',
 		'silent', 'action',
 		'value'],
-	mounted
+	mounted,
+	beforeDestroy
 };
 </script>
 

@@ -1,6 +1,6 @@
 let mounted = function () {
 };
-let destroyed = function () {
+const beforeDestroy = function () {
 };
 let activated = function () {
 };
@@ -51,5 +51,6 @@ module.exports = {
     computed,
     activated,
     deactivated,
+    beforeDestroy,
     mounted: mounted
 };

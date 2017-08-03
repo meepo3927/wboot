@@ -94,7 +94,7 @@ var mounted = function () {
 	});
 	this.update();
 };
-let destroyed = function () {
+const beforeDestroy = function () {
 	$(this.$el).chosen("destroy");
 };
 let dataFunc = function () {
@@ -110,7 +110,7 @@ export default {
 	watch,
 	props: ['options', 'value', 'defaultIndex', 'defaultValue'],
 	mounted,
-	destroyed,
+	beforeDestroy,
 	components: {}
 };
 </script>
