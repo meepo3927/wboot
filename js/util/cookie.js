@@ -39,7 +39,7 @@ define([], function () {
         if (expire) {
             let d = new Date();
             d.setTime(getNowTime() + expire * 1000);
-            str += _exp + d.toGMTString();
+            str += _exp + d.toUTCString();
         }
         if (domain) {
             str += _domain + domain;
