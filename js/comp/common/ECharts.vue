@@ -11,6 +11,12 @@
 <script>
 import echarts from 'echarts';
 import Vue from 'vue';
+import 'lib/echarts_theme/vintage';
+import 'lib/echarts_theme/roma.js';
+import 'lib/echarts_theme/bigshow.js';
+import 'lib/echarts_theme/shine.js';
+import 'lib/echarts_theme/dark.js';
+import 'lib/echarts_theme/infographic.js';
 
 // enumerating ECharts events for now
 const ACTION_EVENTS = [
@@ -54,7 +60,8 @@ export default {
     theme: String,
     initOptions: Object,
     group: String,
-    loading: Boolean
+    loading: Boolean,
+    autoResize: Boolean
   },
   data () {
     return {
@@ -193,11 +200,12 @@ export default {
           this.$emit('chart' + event, params)
         })
       })
-
-      this.__resizeHanlder = () => {
-        chart.resize()
-      };
-      window.addEventListener('resize', this.__resizeHanlder);
+      if (this.autoResize !== false) {
+        this.__resizeHanlder = () => {
+          chart.resize()
+        };
+        window.addEventListener('resize', this.__resizeHanlder);
+      }
 
       this.chart = chart
     }
@@ -217,8 +225,9 @@ export default {
     if (!this.chart) {
       return
     }
-
-    window.removeEventListener('resize', this.__resizeHanlder)
+    if (this.__resizeHanlder) {
+      window.removeEventListener('resize', this.__resizeHanlder)
+    }
 
     this.dispose()
   },
