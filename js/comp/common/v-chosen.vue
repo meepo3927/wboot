@@ -12,47 +12,26 @@
 import 'lib/chosen.jquery.js';
 let uuid = 1;
 var methods = {};
-methods.getCurrent = function () {
-	let option = this.$el.children[this.$el.selectedIndex];
-	return {
-		option,
-		value: $(this.$el).val()
-	};
+methods.getOptions = function () {
+	return $(this.$el).find('option:selected');
 };
-methods.selectByDefault = function () {
+methods.getOption = function () {
+	return this.$el.children[this.$el.selectedIndex];
+};
+methods.getCurrentValue = function () {
+	return $(this.$el).val();
+};
+methods.selectValue = function () {
 	let $el = $(this.$el);
-	if (this.defaultValue !== undefined) {
-		$el.val(this.defaultValue);
-		let v = $el.val();
-		if (Array.isArray(v)) {
-			let allEqual = true;
-			for (let i = 0; i < v.length; i++) {
-				if (v[i] !== this.defaultValue[i]) {
-					allEqual = false;
-				}
-			}
-			if (allEqual) {
-				return $el;
-			}
-		} else if (v === this.defaultValue) {
-			return $el;
-		}
-	}
-	if (this.defaultIndex !== undefined) {
-		this.$el.selectedIndex = this.defaultIndex;
+	if (this.value !== undefined) {
+		$el.val(this.value);
 	}
 	return $el;
 };
 methods.update = function () {
-	let $el = this.selectByDefault();
+	let $el = this.selectValue();
 	$el.trigger('chosen:updated');
-	let {value, option} = this.getCurrent();
-	if (option) {
-		this.$emit('update', value, option);
-		if (value !== this.value) {
-			this.$emit('input', value);
-		}
-	}
+	this.$emit('input', this.getCurrentValue());
 };
 methods.log = function (str) {
 	LOG(str + `[${this.uuid}]`);
@@ -63,10 +42,17 @@ computed.o = function () {
 	var arr = [];
 	this.options && this.options.forEach((v) => {
 		var item = {};
-		if (typeof v === 'object') {
-			item = v;
+		if (typeof v !== 'object') {
+			item.text = v;
 		} else {
-			item.text = item.value = ('' + v);
+			for (let p in v) {
+				item[p] = v[p];
+			}
+		}
+
+		// text, value
+		if (item.text && item.value === undefined) {
+			item.value = item.text;
 		}
 		arr.push(item);
 	});
@@ -77,27 +63,28 @@ computed.length = function () {
 };
 let watch = {};
 watch.o = function () {
+	// options变化
 	this.$nextTick(this.update);
 };
 watch.value = function (val) {
+	// 设置select值并更新chosen
 	$(this.$el).val(val).trigger('chosen:updated');
 };
-var mounted = function () {
+const mounted = function () {
 	$(this.$el).chosen().change((e, data) => {
 		let $el = $(this.$el);
-		// var selected = data.selected;
+		let val = $el.val();
 		var elem = e.currentTarget;
 		var option = elem.children[elem.selectedIndex];
-		let val = $el.val();
-		this.$emit('change', val, e, option);
 		this.$emit('input', val);
+		this.$emit('change', val, e, option);
 	});
 	this.update();
 };
 const beforeDestroy = function () {
 	$(this.$el).chosen("destroy");
 };
-let dataFunc = function () {
+const dataFunc = function () {
 	var o = {
 		uuid: (uuid++)
 	};
@@ -108,7 +95,7 @@ export default {
 	methods,
 	computed,
 	watch,
-	props: ['options', 'value', 'defaultIndex', 'defaultValue'],
+	props: ['options', 'value'],
 	mounted,
 	beforeDestroy,
 	components: {}
