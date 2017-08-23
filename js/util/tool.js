@@ -47,6 +47,17 @@
         return Math.floor((total - 1) / rows) + 1;
     };
 
+    exports.eacho = (o, f) => {
+        if (!o || !f) {
+            return;
+        }
+        for (let i in o) {
+            if (o.hasOwnProperty(i)) {
+                f(o[i], i, o);
+            }
+        }
+    };
+
     exports.padZero = function (num, len) {
         len = len || 2;
         num = num + '';
@@ -319,6 +330,13 @@
             return true;
         }
         return false;
+    };
+
+    exports.strlen = (str) => {
+        if (!str || !str.length) {
+            return 0;
+        }
+        return str.replace(/[^\x00-\xff]/g, '**').length;
     };
 
     return exports;
