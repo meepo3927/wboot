@@ -33,12 +33,12 @@
     }
     function getDateByYMD(y, m, d) {
         var date = new Date();
-        if (isNaN(y) || isNaN(m) || isNaN(d)) {
+        if (isNaN(y) || isNaN(m)) {
             return date;
         }
         date.setFullYear(y);
         date.setMonth(m - 1);
-        date.setDate(d);
+        date.setDate(d || 1);
         // date.setHours(0);
         // date.setMinutes(0);
         return date;
@@ -507,9 +507,10 @@
         ymd = ymd || getYMDByDate(date);
 
         this.curDate = date;
-
-        this.renderHead(date, ymd);
-        this.renderBody(date, ymd);
+        if (this.$box) {
+            this.renderHead(date, ymd);
+            this.renderBody(date, ymd);
+        }
     };
 
     proto.renderPosition = function () {
