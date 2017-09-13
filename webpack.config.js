@@ -72,7 +72,7 @@ module.exports = function (env) {
             new webpack.LoaderOptionsPlugin({
                 minimize: true
             }),
-            new CleanWebpackPlugin(['dist'], {
+            new CleanWebpackPlugin([DIST_PATH], {
                 exclude: [
                     'dll.js'
                 ]

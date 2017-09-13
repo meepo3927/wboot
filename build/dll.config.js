@@ -6,7 +6,7 @@ const vendors = [
     'jquery',
     'vue'
 ];
-var dist = path.resolve(__dirname, '../dist');
+var dist = config.DIST_PATH;
 module.exports = {
     output: {
         path: dist,
