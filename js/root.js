@@ -9,7 +9,7 @@ import request from 'util/request';
 window.LOG = dev.LOG;
 
 Vue.use(require('extend/vue.common.js'));
-
+Vue.component('file-upload', require('comp/common/file-upload.vue'));
 require('../less/vendor.less');
 require('../less/entry.less');
 

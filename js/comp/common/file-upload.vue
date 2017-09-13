@@ -7,7 +7,11 @@
 	<!-- for click -->
 	<label class="v-file-label ml10" title="选择要上传的文件"
 		:for="elemId" 
+		v-show="selectBtnVisible"
 		v-text="myText"></label>
+	<!-- send by hand -->
+	<button class="send-btn" v-show="sendBtnVisible"
+		@click="send">上传</button>
 	<!-- Error Msg -->
 	<span class="error-msg ml10" v-show="errmsgVisible" 
 		v-text="errmsg"></span>
@@ -28,7 +32,7 @@
 
 <script>
 import formAsync from 'util/form_async';
-import {config} from 'common';
+import config from 'global/config';
 let uuid = 1;
 let typeExtMap = {
 	image: 'jpg,png,jpeg,gif'
@@ -131,8 +135,10 @@ methods.change = function (e) {
 	this.fileValue = value;
 	if (this.checkNull()) {
 		this.errmsg = '';
-		// Send request to server
-		this.send();
+		if (this.sendOnSelect) {
+			// Send request to server
+			this.send();
+		}
 	} else {
 	}
 };
@@ -235,6 +241,15 @@ computed.openFileVisible = function () {
 	}
 	return true;
 };
+computed.selectBtnVisible = function () {
+	return !this.sendBtnVisible;
+};
+computed.sendBtnVisible = function () {
+	if (this.filePath) {
+		return true;
+	}
+	return false;
+};
 const mounted = function () {};
 const beforeDestroy = function () {};
 export default {
@@ -252,7 +267,7 @@ export default {
 	computed,
 	props: [
 		'labelText', 'elemName', 'filetype',
-		'silent', 'action',
+		'silent', 'action', 'sendOnSelect',
 		'value'],
 	mounted,
 	beforeDestroy
@@ -298,7 +313,8 @@ export default {
 	}
 }
 .v-file-name > div,
-.v-file-label {
+.v-file-label,
+.send-btn {
 	border: 1px solid @border-color;
 	background-color: @background-color;
 	color: @color;
@@ -307,12 +323,18 @@ export default {
 	white-space: nowrap;
 	border-radius: @border-radius;
 }
-.v-file-label {
+.v-file-label,
+.send-btn {
 	border: 1px solid @border-color;
 	width: 90px;
 	text-align: center;
 	background-color: #aaa;
 	color: #fff;
+}
+.send-btn {
+	height: @height;
+	background-color: #5faee3;
+	border-color: #49a3df;
 }
 .v-file {
 	display: none;
