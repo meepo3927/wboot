@@ -28,7 +28,7 @@ methods.getMenu = function () {
 };
 let computed = {};
 computed.avatarUrl = function () {
-	return this.vImgPath + '/gallery/12s.jpg';
+	return this.vImgPath + '/sidemenu/avatar.jpg';
 };
 let watch = {};
 const created = function () {};
@@ -76,7 +76,7 @@ export default {
 	width: 100%;
 	left: 0;
 	top: 0;
-	background: url("../../../css/patterns/header-profile.png");
+	background: url("../../../images/sidemenu/header-profile.png");
 	text-align: center;
 }
 .x-avatar {
