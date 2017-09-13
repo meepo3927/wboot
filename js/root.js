@@ -10,6 +10,8 @@ window.LOG = dev.LOG;
 
 Vue.use(require('extend/vue.common.js'));
 Vue.component('file-upload', require('comp/common/file-upload.vue'));
+// Vue.component('v-date', require('comp/common/date.vue'));
+// Vue.component('v-chosen', require('comp/common/v-chosen.vue'));
 require('../less/vendor.less');
 require('../less/entry.less');
 
