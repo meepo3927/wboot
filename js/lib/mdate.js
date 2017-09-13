@@ -141,6 +141,15 @@
         var d = getDateOffset(date, offsetNumber, unit);
         return getYMDStr(d, format);
     }
+    function checkDayHidden(format) {
+        if (!format) {
+            return false;
+        }
+        if (format.indexOf('DD') < 0) {
+            return true;
+        }
+        return false;
+    }
     var Util = {
         getYMD: getYMDStr,
         getYMDStr: getYMDStr,
@@ -169,6 +178,7 @@
         }
         this.options = options || {};
         this.options.format = this.options.format || 'YYYY-MM-DD';
+        this.isDayHidden = checkDayHidden(this.options.format);
         this.elem.mDate = this;
         if (this.elem.tagName === 'INPUT') {
             this.mode = 'input';
@@ -265,6 +275,8 @@
         this.$yearMonthPanel = $box.find('.x-year-month-panel');
         this.$yearPanelPrev = this.$yearMonthPanel.find('.x-year-panel-prev');
         this.$yearPanelNext = this.$yearMonthPanel.find('.x-year-panel-next');
+        this.$yearMonthCloseBtn = this.$yearMonthPanel.find('.x-close-year-month-panel-btn');
+        this.$monthConfirmBtn = this.$yearMonthPanel.find('.x-month-confirm-btn');
 
         this.$list = $box.find('.x-day-list');
 
@@ -304,11 +316,18 @@
             return stopBubble(e);
         });
         // 关闭选择年份
-        this.$yearMonthPanel.find('.x-close-year-month-panel-btn').click(function (e) {
-            self.hideYearMonthPanel();
+        this.$yearMonthCloseBtn.click(function (e) {
+            if (self.isDayHidden) {
+                self.showYearMonthPanel('month');
+            } else {
+                self.hideYearMonthPanel();
+            }
             self.panelValue = 0;
-
             return stopBubble(e);
+        });
+        // 确定选择月份
+        this.$monthConfirmBtn.click(function (e) {
+            self.onChoose();
         });
         // 年份上一页
         this.$yearPanelPrev.click(function (e) {
@@ -324,7 +343,7 @@
 
             return stopBubble(e);
         });
-        // 年份点击
+        // 年份or月份 点击
         this.$yearMonthPanel.delegate('li', 'click', function (e) {
             var year = parseInt(
                 this.getAttribute('data-y'),
@@ -335,14 +354,22 @@
                 10
             );
             self.curDate.setDate(1);
-            if (year) {
+
+            if (year) { // 选择年份
                 self.curDate.setFullYear(year);
-            } else if (month) {
+                self.render();
+            } else if (month) { // 选择月份
                 self.curDate.setMonth(month - 1);
+
+                if (self.isDayHidden) {
+                    self.onChoose();
+                } else {
+                    self.render();
+                }
             }
-            
-            self.render();
-            self.hideYearMonthPanel();
+            if (!self.isDayHidden) {
+                self.hideYearMonthPanel();
+            }
 
             return stopBubble(e);
         });
@@ -430,6 +457,8 @@
             this.$yearMonthPanel.addClass('x-choose-year-panel');
             this.$yearPanelPrev.show();
             this.$yearPanelNext.show();
+            this.$yearMonthCloseBtn.show();
+            this.$monthConfirmBtn.hide();
             var html = "";
             var year = this.panelValue;
             for (var i = -7; i <= 7; i++) {
@@ -448,6 +477,14 @@
             this.$yearMonthPanel.addClass('x-choose-month-panel');
             this.$yearPanelPrev.hide();
             this.$yearPanelNext.hide();
+            // 只能选择年 月
+            if (this.isDayHidden) {
+                this.$yearMonthCloseBtn.hide();
+                this.$monthConfirmBtn.show();
+            } else {
+                this.$yearMonthCloseBtn.show();
+                this.$monthConfirmBtn.hide();
+            }
             var html = '';
             for (var i = 1; i <= 12; i++) {
                 var attrs = {};
@@ -540,6 +577,9 @@
     proto.renderBody = function (date, ymd) {
         var bodyHtml = this.getDateHtml(date, ymd);
         this.$list.html(bodyHtml);
+        if (this.isDayHidden) {
+            this.showYearMonthPanel('month');
+        }
     };
 
     proto.isCurDay = function (y, m, d) {
@@ -671,6 +711,7 @@
                     '<span class="x-year-panel-prev">&#8592;</span>',
                     '<span class="x-year-panel-next">&#8594;</span>',
                     '<span class="x-close-year-month-panel-btn">关闭</span>',
+                    '<span class="x-month-confirm-btn">确定</span>',
                 '</p>',
             '</div>'
         ].join('') : [
