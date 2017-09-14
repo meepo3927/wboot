@@ -20,6 +20,7 @@ var alias = {
 
     // 工具,插件
     Promise$: 'lib/promise.js',
+    promise$: 'lib/promise.js',
     mlayer$: 'lib/mlayer.js',
     autoComplete$: 'extend/jquery.autocomplete.js',
     echarts$: 'lib/echarts.min.js',
