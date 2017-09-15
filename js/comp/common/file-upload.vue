@@ -11,7 +11,7 @@
 		v-text="myText"></label>
 	<!-- send by hand -->
 	<button class="send-btn" v-show="sendBtnVisible"
-		@click="send">上传</button>
+		@click="checkAndSend">上传</button>
 	<!-- Error Msg -->
 	<span class="error-msg ml10" v-show="errmsgVisible" 
 		v-text="errmsg"></span>
@@ -35,10 +35,12 @@ import formAsync from 'util/form_async';
 import config from 'global/config';
 let uuid = 1;
 let typeExtMap = {
-	image: 'jpg,png,jpeg,gif'
+	image: 'jpg,png,jpeg,gif',
+	excel: 'xlsx'
 };
 let typeTextMap = {
-	image: '图片'
+	image: '图片',
+	excel: 'Excel'
 };
 const isFilePreviewSupported = (typeof window.FileReader !== 'undefined');
 const getTypeText = (type) => {
@@ -94,8 +96,9 @@ const valiType = (el, filetype, fileName) => {
 	}
 	var fileInstance = el.files && el.files[0];
 	if (fileInstance) {
-		return valiFileObjectType(filetype, fileInstance.type);
+		// return valiFileObjectType(filetype, fileInstance.type);
 	}
+	// 校验扩展名
 	return valiFileExtension(filetype, fileName);
 };
 
@@ -182,16 +185,20 @@ methods.check = function () {
 	this.errmsg = '';
 	return true;
 };
+methods.checkAndSend = function () {
+	if (this.check()) {
+		return this.send();
+	}
+};
 methods.send = function () {
 	this.loading = true;
 	var fa = formAsync(this.$refs.form, {
 		success: (json) => {
 			this.loading = false;
-			mlayer.iconMsg('上传成功');
+			this.$emit('success', json);
 			if (json.success) {
 				this.$emit('input', json.data);
 			}
-
 		},
 		error: () => {
 			this.loading = false;
