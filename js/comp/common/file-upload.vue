@@ -20,12 +20,6 @@
 		click-jump >查看文件</a>
 	<form :action="formAction" style="display: none;" ref="form">
 		<slot></slot>
-		<!-- input elem -->
-		<input type="file" class="v-file" 
-			ref="file"
-			:id="elemId" 
-			:name="myElemName" 
-			@change="change($event)" />
 	</form>
 </span>
 </template>
@@ -103,12 +97,37 @@ const valiType = (el, filetype, fileName) => {
 };
 
 var methods = {};
+methods.removeFileInput = function () {
+	let $file = $(this.$refs.form).children('.v-file');
+	if ($file.length) {
+		$file.remove();
+	}
+};
+methods.makeFileInput = function () {
+	let $file = $('<input type="file" class="v-file" />');
+	$file.css('display', 'none');
+	$file.attr('id', this.elemId);
+	$file.attr('name', this.myElemName);
+	$file.on('change', (e) => {
+		this.change(e);
+	});
+	$(this.$refs.form).append($file);
+};
+methods.getFileInputElem = function () {
+	return $(this.$refs.form).children('.v-file')[0];
+};
 methods.reset = function () {
 	this.fileValue = '';
 	this.filePath = '';
 	this.errmsg = '';
+	this.removeFileInput();
+	this.makeFileInput();
 };
 methods.checkType = function (el) {
+	el = el || this.getFileInputElem();
+	if (!el) {
+		return true;
+	}
 	var r = valiType(el, this.filetype, this.file);
 	if (r.ok) {
 		return true;
@@ -172,11 +191,13 @@ methods.check = function () {
 	if (this.silent) {
 		return true;
 	}
-	let r = this.checkType(this.$refs.file);
+	// 类型不对
+	let r = this.checkType();
 	if (r !== true) {
 		this.errmsg = r;
 		return false;
 	}
+	// 没有上传文件
 	r = this.checkNull();
 	if (r !== true) {
 		this.errmsg = r;
@@ -186,9 +207,22 @@ methods.check = function () {
 	return true;
 };
 methods.checkAndSend = function () {
-	if (this.check()) {
-		return this.send();
+	if (this.loading) {
+		return false;
 	}
+	// 文件为空
+	if (!this.filePath) {
+		this.errmsg = '请选择文件';
+		return false;
+	}
+	// 类型不对
+	let r = this.checkType();
+	if (r !== true) {
+		this.errmsg = r;
+		return false;
+	}
+	return this.send();
+
 };
 methods.send = function () {
 	this.loading = true;
@@ -252,12 +286,17 @@ computed.selectBtnVisible = function () {
 	return !this.sendBtnVisible;
 };
 computed.sendBtnVisible = function () {
+	if (this.loading) {
+		return false;
+	}
 	if (this.filePath) {
 		return true;
 	}
 	return false;
 };
-const mounted = function () {};
+const mounted = function () {
+	this.makeFileInput();
+};
 const beforeDestroy = function () {};
 export default {
 	data: function () {
@@ -310,7 +349,7 @@ export default {
 	min-width: 200px;
 	padding-right: 10px;
 	& > div {
-		height: 100%;
+		height: @height;
 		padding-left: 8px;
 		padding-right: 8px;
 		overflow: hidden;
@@ -343,9 +382,7 @@ export default {
 	background-color: #5faee3;
 	border-color: #49a3df;
 }
-.v-file {
-	display: none;
-}
+
 .open-file {
 	margin-left: 12px;
 	line-height: @height;
