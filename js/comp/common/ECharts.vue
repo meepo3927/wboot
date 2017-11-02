@@ -11,12 +11,9 @@
 <script>
 import echarts from 'echarts';
 import Vue from 'vue';
-import 'lib/echarts_theme/vintage';
-import 'lib/echarts_theme/roma.js';
-import 'lib/echarts_theme/bigshow.js';
-import 'lib/echarts_theme/shine.js';
-import 'lib/echarts_theme/dark.js';
-import 'lib/echarts_theme/infographic.js';
+// import 'lib/echarts_theme/vintage';
+// import 'lib/echarts_theme/roma.js';
+// import 'lib/echarts_theme/shine.js';
 
 // enumerating ECharts events for now
 const ACTION_EVENTS = [

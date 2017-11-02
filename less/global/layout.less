@@ -8,20 +8,24 @@
 .m-row {
     display: table;
     width: 100%;
-    & > div {
+    & > div,
+    & > label {
         display: table-cell;
         vertical-align: top;
     }
-    & > div.v-mid {
+    & > div.v-mid,
+    & > label.v-mid {
         vertical-align: middle;
     }
-    & > div.v-top {
+    & > div.v-top,
+    & > label.v-top {
         vertical-align: top;
     }
 }
 .m-row-mid {
     .m-row;
-    & > div {
+    & > div,
+    & > label {
         vertical-align: middle;
     }
 }
@@ -39,5 +43,13 @@ html.html-100 {
     height: 100%;
     & > body {
         height: 100%;
+    }
+}
+.flex-layout {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .flex-main {
+        flex: 1;
     }
 }
