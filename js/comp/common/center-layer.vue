@@ -4,6 +4,10 @@
 		<div class="x-wrapper-2" ref="w2">
 			<div class="x-wrapper-3" ref="w3">
 				<slot></slot>
+				<a href="javascript:;" class="close-btn" v-if="close"
+					@click="$emit('close')">
+					<i class="fa fa-times"></i>
+				</a>
 			</div>
 		</div>
 	</div>
@@ -11,7 +15,8 @@
 </template>
 
 <script>
-var $ = require('jquery');
+import $ from 'jquery';
+import Cover from 'util/cover.js';
 
 let isPercent = function (str) {
 	if (!str || !str.charAt) {
@@ -99,6 +104,9 @@ watch.height = function () {
 	this.$nextTick(this.renderHeight);
 };
 const mounted = function () {
+	if (this.cover !== false && this.cover !== 'false') {
+		this.c = new Cover({show: true});
+	}
 	this.render({
 		complete: () => {
 			this.$emit('ready');
@@ -106,6 +114,10 @@ const mounted = function () {
 	});
 };
 const beforeDestroy = function () {
+	if (this.c) {
+		this.c.remove();
+		this.c = null;
+	}
 	this.$emit('beforeDestroy');
 };
 const destroyed = function () {
@@ -122,7 +134,7 @@ export default {
 	methods,
 	watch,
 	computed,
-	props: ['width', 'height', 'anim'],
+	props: ['width', 'height', 'anim', 'cover', 'close'],
 	mounted,
 	beforeDestroy,
 	destroyed,
@@ -132,5 +144,17 @@ export default {
 
 <style scoped lang="less">
 .m-center-layer {
+}
+.close-btn {
+	position: absolute;
+	right: 5px;
+	top: 4px;
+	.fa {
+		color: #333;
+		font-size: 26px;
+	}
+	&:hover .fa {
+		color: #f00;
+	}
 }
 </style>
