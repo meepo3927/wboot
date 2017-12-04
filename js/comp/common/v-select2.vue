@@ -14,6 +14,9 @@ let uuid = 1;
 var methods = {};
 methods.init = function () {
 	let $el = $(this.$el);
+	if (this.value) {
+		$el.val(this.value);
+	}
 	$el.select2({
 		// placeholder: '请选择'
 	});

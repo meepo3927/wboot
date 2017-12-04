@@ -2,7 +2,11 @@ var path = require('path');
 
 var JS_DIR = path.resolve(__dirname, '../js');
 var DIST_PATH = path.resolve(__dirname, '../dist');
-
+var SERVER_DIR = path.resolve(__dirname, '..');
+// var DIST_PATH = path.resolve(__dirname, '../../webapp/bigdata/dist');
+// var SERVER_DIR = path.resolve(__dirname, '../../webapp/bigdata/');
+var productionPublicPath = '/wboo/dist/';
+var SERVER_PORT = 8003;
 var alias = {
     // 目录
     lib: JS_DIR + '/lib',
@@ -37,10 +41,10 @@ module.exports = {
         jQuery: 'jquery',
         'window.jQuery': 'jquery'
     },
-    productionPublicPath: '/wboo/dist/',
+    productionPublicPath,
     developmentPublicPath: '/dist/',
     JS_DIR,
     DIST_PATH,
-    SERVER_PORT: 8003,
-    SERVER_DIR: path.resolve(__dirname, '..')
+    SERVER_PORT,
+    SERVER_DIR
 };
