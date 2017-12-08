@@ -1,5 +1,5 @@
 <template>
-<div class="vue-comp">
+<div class="my-root">
 
 </div>
 </template>
@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-.vue-comp {
+.my-root {
 	
 }
 </style>

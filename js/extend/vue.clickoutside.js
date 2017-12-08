@@ -1,4 +1,5 @@
 export default {
+    // Vue.directive('clickoutside', vueClickOutSide);
     bind (el, binding, vnode) {
         function documentHandler (e) {
             if (el.contains(e.target)) {
