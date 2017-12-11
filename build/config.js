@@ -28,6 +28,7 @@ var alias = {
     mlayer$: 'lib/mlayer.js',
     autoComplete$: 'extend/jquery.autocomplete.js',
     echarts$: 'lib/echarts.min.js',
+    select2$: 'lib/select2.min.js',
     // 通用
     polyfill$: JS_DIR + '/global/polyfill',
     config$: JS_DIR + '/global/config.js',

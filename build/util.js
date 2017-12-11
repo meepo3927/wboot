@@ -64,7 +64,7 @@ var getRules = function (env) {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
         options: {
-            name: 'img/[name].[ext]?[hash]'
+            name: 'img/[name]_[hash:7].[ext]'
         }
     };
     var fontRule = {

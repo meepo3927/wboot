@@ -5,6 +5,8 @@
 
 @select2-arrow-size: 6px;
 @select2-arrow-color: #888;
+@select2-text-color:  #333;
+
 .select2-container {
   box-sizing: border-box;
   display: inline-block;
@@ -84,6 +86,10 @@
   left: -100000px;
   width: 100%;
   z-index: 1051;
+  color: @select2-text-color;
+  span {
+    color: @select2-text-color;
+  }
 }
 
 .select2-results {
@@ -606,6 +612,7 @@
 .select2-container--classic .select2-dropdown {
   background-color: #fff;
   border: 1px solid transparent;
+  color: @select2-text-color;
 }
 
 .select2-container--classic .select2-dropdown--above {
