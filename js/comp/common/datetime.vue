@@ -18,7 +18,9 @@ const mounted = function () {
 		this.$emit('input', val);
 	});
 };
-const beforeDestroy = function () {};
+const beforeDestroy = function () {
+	$(this.$el).datetimepicker('remove');
+};
 const dataFunc = function () {
 	let o = {};
 	return o;
