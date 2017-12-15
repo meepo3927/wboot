@@ -38,7 +38,13 @@
     .m-row-mid;
     width: auto;
 }
-
+.d-row {
+    & > label,
+    & > div {
+        display: inline-block;
+        vertical-align: top;
+    }
+}
 html.html-100 {
     height: 100%;
     & > body {
