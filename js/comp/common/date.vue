@@ -15,6 +15,7 @@ var computed = {};
 var mounted = function () {
 	let vm = this;
 	this.date = new MDate(this.$el, {
+		format: this.format,
 		onChoose: function (v) {
 			vm.$emit('input', v);
 		}
@@ -34,7 +35,7 @@ export default {
 	watch,
 	methods,
 	computed,
-	props: ['value'],
+	props: ['value', 'format'],
 	mounted
 };
 </script>

@@ -8,12 +8,14 @@
 </template>
 
 <script>
-let MAX_LEN = 24;
+let MAX_LEN = 50;
 let MAX_LEN_HAFT = Math.round(MAX_LEN / 2);
 let uuid = 1;
 let methods = {};
 methods.onChange = function (e) {
-	this.fileName = this.$refs.file.value;
+	let v = this.$refs.file.value;
+	this.fileName = v.split('\\').pop();
+	this.$emit('input', v);
 };
 let computed = {};
 computed.text = function () {
