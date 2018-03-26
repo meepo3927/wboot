@@ -4,6 +4,12 @@ var request = require('util/request.js');
 var Plugin = {};
 Plugin.install = function (Vue, options) {
     let methods = {};
+    methods.getPageUrl = function (path, param = '') {
+        if (config.isProduction) {
+            return config.basePath + path + '.jsp' + param;
+        }
+        return config.basePath + path + '.html' + param;
+    };
     let computed = {};
     computed.vImgPath = function () {
         if (config.isProduction) {
@@ -16,6 +22,9 @@ Plugin.install = function (Vue, options) {
     };
     computed.vRequest = function () {
         return request;
+    };
+    computed.vSpace = function () {
+        return '　';
     };
     const mounted = function () {
     };
