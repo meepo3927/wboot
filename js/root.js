@@ -7,7 +7,11 @@ import dev from 'global/dev';
 import request from 'util/request';
 
 import Msg from 'extend/vue.mui-msg.js';
+import MsgBox from 'extend/vue.mui-msgbox.js';
 Vue.prototype.$msg = Msg;
+Vue.prototype.$alert = MsgBox.alert;
+Vue.prototype.$confirm = MsgBox.confirm;
+Vue.prototype.$prompt = MsgBox.prompt;
 
 window.LOG = dev.LOG;
 

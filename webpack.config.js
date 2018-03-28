@@ -52,8 +52,10 @@ module.exports = function (env) {
         ],
         devServer: {
             port: SERVER_PORT,
+            host: '0.0.0.0',
             historyApiFallback: true,
             noInfo: false,
+            disableHostCheck: true,
             contentBase: config.SERVER_DIR
         },
         devtool: '#cheap-module-source-map'

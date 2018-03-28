@@ -4,15 +4,14 @@ let MsgConstructor = Vue.extend(Main);
 
 // let instances = [];
 const convertOptions = (options) => {
-    if (!options) {
+    if (options === undefined || options === null) {
         return {};
     }
-    if (typeof options === 'string') {
-        return {text: options};
-    } else if (typeof options === 'number') {
+    if (typeof options === 'object') {
+        return options;
+    } else {
         return {text: options + ''}
     }
-    return options;
 };
 let Msg = function (options) {
     options = convertOptions(options);

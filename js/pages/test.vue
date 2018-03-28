@@ -3,22 +3,41 @@
 	<form class="p15" @submit.prevent>
 		<input type="text" class="form-control" v-model="name">
 		<p v-text="name"></p>
-		<button class="btn btn-default" @click="alert" type="button">
-			MUI-Msg
+		<div>
+			<button class="btn btn-default" @click="msg0" type="button">
+				msg 0
+			</button>
+			<button class="btn btn-default" @click="msg1" type="button">
+				msg 1
+			</button>
+			<button class="btn btn-default" @click="msg2" type="button">
+				msg 2
+			</button>
+			<button class="btn btn-default" @click="msg3" type="button">
+				msg 3
+			</button>
 		</button>
-		<button class="btn btn-default" @click="alertSuccess" type="button">
-			MUI-Success
-		</button>
-		<button class="btn btn-default" @click="alertWarning" type="button">
-			MUI-Warning
-		</button>
-		<button class="btn btn-default" @click="alertInfo" type="button">
-			MUI-Info
-		</button>
-		<button class="btn btn-default" @click="alertError" type="button">
-			MUI-Error
-		</button>
+		</div>
+		<div class="mt20">
+			<button class="btn btn-default" @click="alert" type="button">
+				MUI-Alert
+			</button>
+			<button class="btn btn-default" @click="alert2" type="button">
+				MUI-Confirm
+			</button>
+			<button class="btn btn-default" @click="alertWarning" type="button">
+				MUI-Warning
+			</button>
+			<button class="btn btn-default" @click="alertInfo" type="button">
+				MUI-Info
+			</button>
+			<button class="btn btn-default" @click="alertError" type="button">
+				MUI-Error
+			</button>
+		</div>
+		
 	</form>
+
 </div>
 </template>
 
@@ -27,32 +46,47 @@ import 'root';
 const duration = 999999999;
 const longMsg = '一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十';
 let methods = {};
-methods.alert = function () {
-    this.$msg(this.name);
+methods.msg0 = function () {
+	this.$msg(longMsg);
 };
-methods.alertSuccess = function () {
-	this.$msg.success({
-		text: this.name ,
-		duration
+methods.msg1 = function () {
+	this.$msg.success(longMsg);
+};
+methods.msg2 = function () {
+	this.$msg.warning(longMsg);
+};
+methods.msg3 = function () {
+	this.$msg.error(longMsg);
+};
+methods.alert = function () {
+	let text = 'ae' + longMsg;
+    this.$alert(text);
+};
+methods.alert2 = function () {
+	let text = '确定删除吗？';
+	let title = '提示';
+	this.$confirm(text, title, (v) => {
+		this.$msg(v);
 	});
 };
 methods.alertWarning = function () {
-	this.$msg.warning({
-		text: this.name,
-		duration
+	let text = '确定删除吗？';
+	let title = '提示';
+	this.$confirm({
+		text, title,
+		icon: 'warning',
+		callback: (v) => { this.$msg(v) }
 	});
 };
 methods.alertInfo = function () {
-	this.$msg.info({
-		text: this.name + longMsg,
-		duration
+	let text = '请输入姓名';
+	let title = '提示';
+	this.$prompt(null, text, (v) => {
+		this.$msg(v);
 	});
 };
 methods.alertError = function () {
-	this.$msg.error({
-		text: this.name + longMsg + longMsg + longMsg + longMsg,
-		duration
-	});
+
 };
 let computed = {};
 let watch = {};
