@@ -6,6 +6,9 @@ import config from 'config';
 import dev from 'global/dev';
 import request from 'util/request';
 
+import Msg from 'extend/vue.mui-msg.js';
+Vue.prototype.$msg = Msg;
+
 window.LOG = dev.LOG;
 
 Vue.use(require('extend/vue.common.js'));
