@@ -12,6 +12,7 @@
 let methods = {};
 methods.close = function () {
     this.$el.parentNode.removeChild(this.$el);
+    this.$destroy(true);
 };
 let computed = {};
 computed.contentClass = function () {

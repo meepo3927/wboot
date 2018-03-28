@@ -8,12 +8,13 @@
             <i class="fa" :class="[iconClass]" v-if="iconClass"></i>
             <p v-text="text"></p>
             <input type="text" class="form-control" v-if="inputVisible"
-                ref="input" 
+                ref="input" @keyup.enter="onEnterUp"
                 v-model="inputValue" />
         </div>
         <div class="mui-msgbox-btnbox">
-            <button class="btn btn-primary" @click="ok" ref="okBtn">确定</button>
-            <button class="btn btn-cancel" @click="cancel"
+            <button class="btn btn-primary" type="button" 
+                @click="ok" ref="okBtn">确定</button>
+            <button class="btn btn-cancel" type="button" @click="cancel"
                 v-if="cancelBtnVisible">取消</button>
         </div>
     </div>
@@ -31,6 +32,20 @@ const iconMap = {
     error: 'fa-times-circle'
 };
 let methods = {};
+methods.onEnterUp = function (e) {
+    if (e.preventDefault) {
+        e.preventDefault();
+    }
+    this.ok();
+};
+methods.onKeyUp = function (e) {
+    let code = e.keyCode;
+    if (code === 27) { // esc关闭消息
+        this.close();
+    } else if (code === 13 ) {
+        this.ok();
+    }
+};
 methods.emitCallback = function (status) {
     let func = this.callback;
     if (!func) {
@@ -54,14 +69,15 @@ methods.cancel = function () {
     this.close();
 };
 methods.close = function () {
-    this.mCover.remove();
     this.$el.parentNode.removeChild(this.$el);
+    this.$destroy(true);
 };
 methods.autoFocus = function () {
-    if (this.inputVisible) {
+    if (this.type === 'prompt') {
         this.$refs.input.focus();
     } else {
         this.$refs.okBtn.focus();
+        this.$refs.okBtn.blur();
     }
 };
 let computed = {};
@@ -95,9 +111,13 @@ let watch = {};
 const created = function () {};
 const mounted = function () {
     this.mCover = new Cover({show: true});
+    document.addEventListener('keyup', this.onKeyUp);
     setTimeout(this.autoFocus, 50);
 };
-const beforeDestroy = function () {};
+const beforeDestroy = function () {
+    this.mCover.remove();
+    document.removeEventListener('keyup', this.onKeyUp);
+};
 const dataFunc = function () {
     let o = {
         title: '',
