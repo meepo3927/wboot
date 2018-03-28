@@ -1,0 +1,23 @@
+
+.mui-loading {
+    @size: 48px;
+    background: url("@{mui-img-path}/loading_1.gif") no-repeat center center;
+    background-size: 100% 100%;
+    width: @size;
+    height: @size;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left: -(@size / 2);
+    margin-top: -(@size / 2);
+    z-index: 960000;
+}
+.mui-loading-inline {
+    @size:  24px;
+    background: url("@{mui-img-path}/loading_2.gif") no-repeat center center;
+    background-size: 100% 100%;
+    display: inline-block;
+    width: @size;
+    height: @size;
+    vertical-align: middle;
+}

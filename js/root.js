@@ -1,17 +1,18 @@
 import 'polyfill';
 // 基础库
 import Vue from 'vue';
-import mlayer from 'mlayer';
 import config from 'config';
 import dev from 'global/dev';
 import request from 'util/request';
-
+// 扩展库
 import Msg from 'extend/vue.mui-msg.js';
 import MsgBox from 'extend/vue.mui-msgbox.js';
+import loading from 'extend/vue.mui-loading.js';
 Vue.prototype.$msg = Msg;
 Vue.prototype.$alert = MsgBox.alert;
 Vue.prototype.$confirm = MsgBox.confirm;
 Vue.prototype.$prompt = MsgBox.prompt;
+Vue.prototype.$loading = loading;
 
 window.LOG = dev.LOG;
 
@@ -26,6 +27,5 @@ dev.processEnv();
 
 export {
     Vue,
-    mlayer,
     request
 };

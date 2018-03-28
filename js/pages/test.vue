@@ -37,12 +37,13 @@
 		</div>
 		
 	</form>
-
+	
 </div>
 </template>
 
 <script>
 import 'root';
+
 const duration = 999999999;
 const longMsg = '一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十';
 let methods = {};
@@ -86,7 +87,10 @@ methods.alertInfo = function () {
 	});
 };
 methods.alertError = function () {
-
+	let ld = this.$loading();
+	setTimeout(() => {
+		ld.remove()
+	}, 1500)
 };
 let computed = {};
 let watch = {};

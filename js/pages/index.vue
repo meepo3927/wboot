@@ -11,10 +11,9 @@
 </template>
 
 <script>
-import {mlayer} from 'root';
+import 'root';
 let methods = {};
 methods.alert = function () {
-    mlayer.msg(this.name);
 };
 let computed = {};
 let watch = {};

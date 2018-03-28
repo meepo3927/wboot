@@ -14,50 +14,7 @@
 @error-back-color:    #fef0f0;
 @error-text-color:    #f56c6c;
 
-@keyframes mui-msg-show-anim {
-    0% {
-        opacity: 0;
-        transform: scale(.5)
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1)
-    }
-}
-.mui-msg-anim-bouncein {
-    animation-name: mui-msg-show-anim;
-}
-.mui-msg {
-    @z-index:     19900420;
+@mui-img-path:        "../../images/mui";
 
-    position: fixed;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    z-index: @z-index;
-    text-align: center;
-    pointer-events: none;
-    animation-duration: 0.3s;
-    animation-fill-mode: both;
-    .mui-msg-anim-bouncein;
-    // fix jquery-ui
-    & ~ .ui-front {
-        z-index: @z-index + 10;
-    }
-    &:after {
-        display: inline-block;
-        vertical-align: middle;
-        width: 0;
-        height: 100%;
-        content: '';
-        font-size: 0;
-    }
-}
-.mui-msg-content {
-    display: inline-block;
-    margin: auto;
-    pointer-events: auto;
-    position: relative;
-    vertical-align: middle;
-}
+@import "./mui-msg.less";
+@import "./mui-loading.less";
