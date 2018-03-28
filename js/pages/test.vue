@@ -34,6 +34,7 @@
 			<button class="btn btn-default" @click="alertError" type="button">
 				MUI-Error
 			</button>
+			<v-switch v-model="ss" />
 		</div>
 		
 	</form>
@@ -101,7 +102,8 @@ const mounted = function () {
 const beforeDestroy = function () {};
 const dataFunc = function () {
 	let o = {
-		name: +new Date()
+		name: +new Date(),
+		ss: true
 	};
 	return o;
 };
@@ -116,6 +118,7 @@ export default {
 	mixins: [],
 	beforeDestroy,
 	components: {
+		'v-switch': require('comp/mui/switch.vue')
 	}
 };
 </script>
