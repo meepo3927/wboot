@@ -1,7 +1,9 @@
 <template>
 <div class="page-test">
 	<form class="p15" @submit.prevent>
-		<input type="text" class="form-control" v-model="name">
+		<button v-tooltip="tooltipStr" @click="PPP">PPPPPPPPP</button>
+		<input type="text" class="form-control" v-model="name"
+			v-tooltip="tooltipStr">
 		<p v-text="name"></p>
 		<div>
 			<button class="btn btn-default" @click="msg0" type="button">
@@ -35,6 +37,11 @@
 				MUI-Error
 			</button>
 			<v-switch v-model="ss" />
+			<button class="btn btn-default" style="float: right;"
+				v-tooltip="tooltipStr"
+				@click="onTooltipTestClick">
+				测试tooltip
+			</button>
 		</div>
 		
 	</form>
@@ -44,7 +51,8 @@
 			<div class="m-row-mid">
 				<label for="">姓名：</label>
 				<div>
-					<input type="text" class="form-control">
+					<input type="text" class="form-control"
+						v-tooltip="tooltipObj">
 				</div>
 			</div>
 			<div class="mt15 text-right">
@@ -52,6 +60,25 @@
 			</div>
 		</div>
 	</mui-layer>
+
+	<button class="btn btn-success"
+		v-tooltip="我是猪">MUI Tooltip1</button>
+
+	<button class="btn btn-success"
+		v-tooltip="tooltipStr">MUI Tooltip2</button>
+
+
+	<button class="btn btn-success"
+		v-tooltip2="tooltipObj">MUI Tooltip3</button>
+
+	<br /><br /><br /><br /><br /><br /><br /><br /><br />
+	<textarea class="form-control" v-tooltip="tooltipStr" 
+		style="float: right;"></textarea>
+	<br /><br /><br /><br /><br /><br /><br /><br /><br />
+	<textarea class="form-control" v-tooltip="tooltipStr"></textarea>
+	<br /><br /><br /><br /><br /><br /><br /><br /><br />
+	<button class="btn btn-default"
+		v-tooltip="tooltipStr">呃呃呃呃呃呃</button>
 </div>
 </template>
 
@@ -63,6 +90,12 @@ const longMsg = '一二三四五六七八九十一二三四五六七八九十一
 let methods = {};
 methods.layerClose = function () {
 	this.ss = false;
+};
+methods.onTooltipTestClick = function () {
+	this.tooltipStr = Math.random();
+};
+methods.PPP = function () {
+	this.tooltipStr = Math.random() + longMsg + longMsg + longMsg;
 };
 methods.msg0 = function () {
 	this.$msg(longMsg);
@@ -119,7 +152,11 @@ const beforeDestroy = function () {};
 const dataFunc = function () {
 	let o = {
 		name: +new Date(),
-		ss: false
+		ss: false,
+		tooltipStr: 'mmmmmmeepo' + longMsg,
+		tooltipObj: {
+			text: '我还是猪'
+		}
 	};
 	return o;
 };
@@ -143,5 +180,9 @@ export default {
 <style scoped lang="less">
 .page-test {
 	
+}
+textarea {
+	width: 600px;
+	height: 400px;
 }
 </style>
