@@ -38,7 +38,20 @@
 		</div>
 		
 	</form>
-	
+	<mui-layer v-if="ss" @close="layerClose">
+		<div slot="header">哈哈哈</div>
+		<div style="min-width: 400px;">
+			<div class="m-row-mid">
+				<label for="">姓名：</label>
+				<div>
+					<input type="text" class="form-control">
+				</div>
+			</div>
+			<div class="mt15 text-right">
+				<button class="btn btn-primary" @click="layerClose">确定</button>
+			</div>
+		</div>
+	</mui-layer>
 </div>
 </template>
 
@@ -48,6 +61,9 @@ import 'root';
 const duration = 999999999;
 const longMsg = '一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十';
 let methods = {};
+methods.layerClose = function () {
+	this.ss = false;
+};
 methods.msg0 = function () {
 	this.$msg(longMsg);
 };
@@ -103,7 +119,7 @@ const beforeDestroy = function () {};
 const dataFunc = function () {
 	let o = {
 		name: +new Date(),
-		ss: true
+		ss: false
 	};
 	return o;
 };
@@ -118,7 +134,8 @@ export default {
 	mixins: [],
 	beforeDestroy,
 	components: {
-		'v-switch': require('comp/mui/switch.vue')
+		'v-switch': require('comp/mui/switch.vue'),
+		'mui-layer': require('comp/mui/center-layer.vue')
 	}
 };
 </script>

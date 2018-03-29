@@ -15,6 +15,11 @@ computed.statusClass = function () {
     return this.checked === true ? 'checked' : '';
 };
 let watch = {};
+watch.value = function (v) {
+    if (v !== this.checked) {
+        this.checked = v;
+    }
+};
 const created = function () {};
 const mounted = function () {
     if (this.value !== undefined) {
