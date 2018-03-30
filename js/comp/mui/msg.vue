@@ -24,13 +24,7 @@ computed.iconVisible = function () {
     return this.iconClass ? true : false;
 };
 computed.iconClass = function () {
-    let map = {
-        success: 'fa-check-circle',
-        warning: 'fa-exclamation-circle',
-        info: 'fa-info-circle',
-        error: 'fa-times-circle'
-    };
-    return map[this.type] || '';
+    return this.muiAlertIconMap[this.type] || '';
 };
 let watch = {};
 const created = function () {};
@@ -56,7 +50,9 @@ export default {
     watch,
     props: [],
     mounted,
-    mixins: [],
+    mixins: [
+        require('mixins/mui.js')
+    ],
     beforeDestroy,
     components: {}
 };

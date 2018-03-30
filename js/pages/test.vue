@@ -71,6 +71,22 @@
 	<button class="btn btn-success"
 		v-tooltip2="tooltipObj">MUI Tooltip3</button>
 
+	<mui-alertspan type="success">
+		Heads up! This alert needs your attention, but it's not super important.
+	</mui-alertspan>
+	<p></p>
+	<mui-alertspan type="info">
+		Heads up! This alert needs your attention, but it's not super important.
+	</mui-alertspan>
+	<p></p>
+
+	<mui-alertspan type="warning">
+		Heads up! This alert needs your attention, but it's not super important.
+	</mui-alertspan>
+	<p></p>
+	<mui-alertspan type="error">
+		Heads up! This alert needs your attention, but it's not super important.
+	</mui-alertspan>
 	<br /><br /><br /><br /><br /><br /><br /><br /><br />
 	<textarea class="form-control" v-tooltip="tooltipStr" 
 		style="float: right;"></textarea>
@@ -172,7 +188,8 @@ export default {
 	beforeDestroy,
 	components: {
 		'v-switch': require('comp/mui/switch.vue'),
-		'mui-layer': require('comp/mui/center-layer.vue')
+		'mui-layer': require('comp/mui/center-layer.vue'),
+		'mui-alertspan': require('comp/mui/alert-span.vue')
 	}
 };
 </script>
