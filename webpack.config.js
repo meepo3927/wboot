@@ -61,12 +61,13 @@ module.exports = function (env) {
         devtool: '#cheap-module-source-map'
     }
     if (isProduction) {
-        r.devtool = '#source-map';
+        //r.devtool = '#source-map';
+        r.devtool = false;
 
         // http://vue-loader.vuejs.org/en/workflow/production.html
         r.plugins = (r.plugins || []).concat([
             new webpack.optimize.UglifyJsPlugin({
-                sourceMap: true,
+                sourceMap: false,
                 compress: {
                     warnings: false
                 }
