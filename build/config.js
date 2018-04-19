@@ -32,7 +32,8 @@ var alias = {
     // 通用
     polyfill$: JS_DIR + '/global/polyfill',
     config$: JS_DIR + '/global/config.js',
-    root$: JS_DIR + '/root.js'
+    root$: JS_DIR + '/root.js',
+    dll_less$: JS_DIR + '/dll_less.js'
 };
 
 module.exports = {

@@ -2,31 +2,24 @@ var webpack = require('webpack');
 var util = require('./build/util');
 var config = require('./build/config');
 var Webpack2Polyfill = require("webpack2-polyfill-plugin");
-var CleanWebpackPlugin = require('clean-webpack-plugin');
-var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const SERVER_PORT = config.SERVER_PORT;
 const JS_DIR = config.JS_DIR;
 const DIST_PATH = config.DIST_PATH;
 
 module.exports = function (env) {
-    var isProduction = (env === 'production');
-    // publicPath
-    if (isProduction) {
-        var publicPath = config.productionPublicPath;
-    } else {
-        publicPath = config.developmentPublicPath;
-    }
+    let isProduction = (env === 'production');
+    let moduleConfig = util.getModuleConfig(env, 'build');
     let r = {
         entry: util.getEntry(JS_DIR + '/entry/*.js'),
         output: {
             path: DIST_PATH,
-            publicPath: publicPath,
+            publicPath: isProduction ? config.productionPublicPath : config.developmentPublicPath,
             filename: '[name].js',
             chunkFilename: 'chunk.[name].js'
         },
         module: {
-            rules: util.getRules(env)
+            rules: moduleConfig.rules
         },
         resolve: {
             alias: config.alias,
@@ -60,12 +53,11 @@ module.exports = function (env) {
         },
         devtool: '#cheap-module-source-map'
     }
+    r.plugins = r.plugins.concat(moduleConfig.extractPlugins);
     if (isProduction) {
-        //r.devtool = '#source-map';
         r.devtool = false;
-
         // http://vue-loader.vuejs.org/en/workflow/production.html
-        r.plugins = (r.plugins || []).concat([
+        r.plugins = r.plugins.concat([
             new webpack.optimize.UglifyJsPlugin({
                 sourceMap: false,
                 compress: {
@@ -74,24 +66,8 @@ module.exports = function (env) {
             }),
             new webpack.LoaderOptionsPlugin({
                 minimize: true
-            }),
-            new CleanWebpackPlugin([DIST_PATH], {
-                exclude: [
-                    'dll.js'
-                ]
             })
         ]);
-        if (config.cssMinimize) {
-            r.plugins.push(new OptimizeCssAssetsPlugin({
-                assetNameRegExp: /\.css$/g,
-                // cssProcessor: require('cssnano'),
-                cssProcessorOptions: { discardComments: {removeAll: true } },
-                canPrint: true
-            }));
-        }
-        if (util.CSSExtracts) {
-            r.plugins = r.plugins.concat(util.CSSExtracts);
-        }
     }
     return r;
 };
