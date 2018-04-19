@@ -41,7 +41,7 @@ module.exports = function (env) {
             new Webpack2Polyfill(),
             new webpack.DefinePlugin({
                 'process.env': {
-                    RUN_ENV: `"${env}"`
+                    NODE_ENV: `"${env}"`
                 }
             }),
             new webpack.DllReferencePlugin({

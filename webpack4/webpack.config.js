@@ -38,11 +38,6 @@ module.exports = function (env) {
         },
         plugins: [
             new webpack.ProvidePlugin(config.provide),
-            new webpack.DefinePlugin({
-                'process.env': {
-                    RUN_ENV: `"${env}"`
-                }
-            }),
             new webpack.DllReferencePlugin({
                 context: DIST_PATH,
                 manifest: require('./build/dll-manifest.json'),

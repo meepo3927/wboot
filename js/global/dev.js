@@ -11,8 +11,7 @@ const LOG = function () {
 let env = '';
 
 try {
-    let o = process.env || {};
-    env = o.RUN_ENV;
+    env = process.env.NODE_ENV;
 } catch(e) {
     LOG('get env error.', e);
 }
