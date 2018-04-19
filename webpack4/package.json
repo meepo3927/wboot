@@ -1,0 +1,28 @@
+{
+  "name": "wboot4",
+  "description": "a web project",
+  "version": "1.0.0",
+  "author": "guoye",
+  "scripts": {
+    "start": "webpack-dev-server --mode development --env=development --hot --colors",
+    "build": "webpack --mode production --env=production --progress --hide-modules --colors",
+    "dll": " webpack --mode production --progress --colors --config ./build/dll.config.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.11",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "^1.1.11",
+    "less": "^3.0.1",
+    "less-loader": "^4.1.0",
+    "postcss-loader": "^2.1.4",
+    "style-loader": "^0.21.0",
+    "vue-loader": "^14.2.2",
+    "vue-template-compiler": "^2.5.16",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.0.14",
+    "webpack-dev-server": "^3.1.3"
+  }
+}
