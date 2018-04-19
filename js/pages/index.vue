@@ -14,6 +14,7 @@
 import 'root';
 let methods = {};
 methods.alert = function () {
+    this.$msg(this.name);
 };
 let computed = {};
 let watch = {};
