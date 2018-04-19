@@ -8,6 +8,7 @@ const DIST_PATH = config.DIST_PATH;
 
 module.exports = function (env) {
     var isProduction = (env === 'production');
+    var mode = env;
     // publicPath
     if (isProduction) {
         var publicPath = config.productionPublicPath;
@@ -15,6 +16,7 @@ module.exports = function (env) {
         publicPath = config.developmentPublicPath;
     }
     let r = {
+        mode: mode,
         entry: util.getEntry(JS_DIR + '/entry/*.js'),
         output: {
             path: DIST_PATH,

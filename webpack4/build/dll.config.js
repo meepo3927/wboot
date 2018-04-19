@@ -8,6 +8,7 @@ const vendors = [
 ];
 var dist = config.DIST_PATH;
 module.exports = {
+    mode: 'production',
     output: {
         path: dist,
         filename: '[name].js',
