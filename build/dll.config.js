@@ -17,16 +17,18 @@ var plugins = [
         name: '[name]',
         context: config.DIST_PATH
     }),
-    new webpack.optimize.UglifyJsPlugin({
+    new webpack.ProvidePlugin(config.provide)
+];
+if (config.VERSION === 2) {
+    plugins.push(new webpack.optimize.UglifyJsPlugin({
         sourceMap: false,
         compress: {
             warnings: false
         }
-    }),
-    new webpack.ProvidePlugin(config.provide)
-];
+    }));
+}
 plugins = plugins.concat(moduleConfig.extractPlugins);
-module.exports = {
+let dllConfig = {
     output: {
         path: config.DIST_PATH,
         filename: '[name].js',
@@ -43,3 +45,7 @@ module.exports = {
         alias: config.alias
     }
 };
+if (config.VERSION === 4) {
+    dllConfig.mode = 'production';
+}
+module.exports = dllConfig;

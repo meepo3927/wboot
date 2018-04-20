@@ -1,7 +1,7 @@
-var glob = require('glob');
-var path = require('path');
-var config = require('./config');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const glob = require('glob');
+const path = require('path');
+const config = require('./config');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 function getEntry(globPath) {
     var files = glob.sync(globPath);
@@ -21,11 +21,15 @@ function getEntry(globPath) {
 var getModuleConfig = function (env, command) {
     let rules = [];
     // JS loader
-    rules.push({
+    let JSloader = {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/
-    });
+    };
+    if (config.VERSION === 4) {
+        JSloader.type = 'javascript/auto';
+    }
+    rules.push(JSloader);
     // 图片loader
     rules.push({
         test: /\.(png|jpg|gif|svg)$/,
@@ -81,13 +85,17 @@ var getModuleConfig = function (env, command) {
         });
     }
     // vue loader
-    rules.push({
+    let vueloader = {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
             loaders: vueloaders
         }
-    });
+    };
+    if (config.VERSION === 4) {
+        vueloader.type = 'javascript/auto';
+    }
+    rules.push(vueloader);
 
     return {
         rules: rules,

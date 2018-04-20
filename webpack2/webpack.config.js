@@ -1,17 +1,16 @@
-const webpack = require('webpack');
-const util = require('./build/util');
-const config = require('./build/config');
+var webpack = require('webpack');
+var util = require('./build/util');
+var config = require('./build/config');
+var Webpack2Polyfill = require("webpack2-polyfill-plugin");
 
 const SERVER_PORT = config.SERVER_PORT;
 const JS_DIR = config.JS_DIR;
 const DIST_PATH = config.DIST_PATH;
 
 module.exports = function (env) {
-    const isProduction = (env === 'production');
-    const moduleConfig = util.getModuleConfig(env, 'build');
-    const mode = env;
+    let isProduction = (env === 'production');
+    let moduleConfig = util.getModuleConfig(env, 'build');
     let r = {
-        mode: mode,
         entry: util.getEntry(JS_DIR + '/entry/*.js'),
         output: {
             path: DIST_PATH,
@@ -26,15 +25,18 @@ module.exports = function (env) {
             alias: config.alias,
             extensions: ['.js', '.vue']
         },
-        optimization: {
-            splitChunks: {
-                chunks: 'all',
-                minChunks: 2,
-                name: 'commons'
-            }
-        },
         plugins: [
+            new webpack.optimize.CommonsChunkPlugin({
+                name: 'commons',
+                minChunks: 2
+            }),
             new webpack.ProvidePlugin(config.provide),
+            new Webpack2Polyfill(),
+            new webpack.DefinePlugin({
+                'process.env': {
+                    NODE_ENV: `"${env}"`
+                }
+            }),
             new webpack.DllReferencePlugin({
                 context: DIST_PATH,
                 manifest: require('./build/dll-manifest.json'),
@@ -49,10 +51,24 @@ module.exports = function (env) {
             disableHostCheck: true,
             contentBase: config.SERVER_DIR
         },
-        devtool: false
+        devtool: '#cheap-module-source-map'
     }
     r.plugins = r.plugins.concat(moduleConfig.extractPlugins);
-
+    if (isProduction) {
+        r.devtool = false;
+        // http://vue-loader.vuejs.org/en/workflow/production.html
+        r.plugins = r.plugins.concat([
+            new webpack.optimize.UglifyJsPlugin({
+                sourceMap: false,
+                compress: {
+                    warnings: false
+                }
+            }),
+            new webpack.LoaderOptionsPlugin({
+                minimize: true
+            })
+        ]);
+    }
     return r;
 };
 

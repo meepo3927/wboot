@@ -48,5 +48,6 @@ module.exports = {
     JS_DIR,
     DIST_PATH,
     SERVER_PORT,
-    SERVER_DIR
+    SERVER_DIR,
+    VERSION: 2
 };
