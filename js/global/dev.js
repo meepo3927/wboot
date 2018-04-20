@@ -28,8 +28,8 @@ const processEnv = function () {
     if (env === 'development') {
         tripNodes();
     }
+    window.LOG = LOG;
 };
-
 exports.env = env;
 exports.LOG = LOG;
 exports.processEnv = processEnv;

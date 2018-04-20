@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import formAsync from 'util/form_async';
-import config from 'global/config';
+let formAsync = require('util/form_async');
+let config = require('global/config');
 let uuid = 1;
 let typeExtMap = {
 	image: 'jpg,png,jpeg,gif',
@@ -298,7 +298,7 @@ const mounted = function () {
 	this.makeFileInput();
 };
 const beforeDestroy = function () {};
-export default {
+module.exports = {
 	data: function () {
 		const id = (uuid++);
 		return {

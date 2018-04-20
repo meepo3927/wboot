@@ -16,6 +16,7 @@
 </template>
 
 <script>
+
 let methods = {};
 methods.getMenu = function () {
 	return this.vRequest.menu().then((data) => {
@@ -44,7 +45,7 @@ const dataFunc = function () {
 	};
 	return o;
 };
-export default {
+module.exports = {
 	data: dataFunc,
 	created,
 	methods,

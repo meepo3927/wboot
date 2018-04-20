@@ -19,10 +19,9 @@
 </template>
 
 <script>
-import 'slimscroll';
-
+require('slimscroll');
 const beforeCreate = function () {
-	this.$options.components['v-list'] = require('./sidemenu-list.vue')
+	this.$options.components['v-list'] = require('./sidemenu-list.vue');
 };
 let methods = {};
 methods.onClick = function (item, i) {
@@ -87,7 +86,7 @@ const dataFunc = function () {
 	};
 	return o;
 };
-export default {
+module.exports = {
 	data: dataFunc,
 	beforeCreate,
 	created,

@@ -1,4 +1,4 @@
-import Tooltip from './mui-tooltip.js';
+const Tooltip = require('./mui-tooltip.js');
 // Vue.directive('tooltip', MUITooltip);
 const buildOptions = (targetElem, binding) => {
     let text;
@@ -17,7 +17,7 @@ const buildOptions = (targetElem, binding) => {
         text
     };
 };
-export default {
+module.exports = {
     bind (el, binding, vnode) {
         let options = buildOptions(el, binding);
         el.__MUITooltip = new Tooltip(options);

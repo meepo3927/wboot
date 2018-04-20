@@ -1,4 +1,4 @@
-export default {
+module.exports = {
     // Vue.directive('clickoutside', vueClickOutSide);
     bind (el, binding, vnode) {
         function documentHandler (e) {

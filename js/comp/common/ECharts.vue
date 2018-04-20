@@ -9,11 +9,8 @@
 </style>
 
 <script>
-import echarts from 'echarts';
-import Vue from 'vue';
-// import 'lib/echarts_theme/vintage';
-// import 'lib/echarts_theme/roma.js';
-// import 'lib/echarts_theme/shine.js';
+let echarts = require('echarts');
+let Vue = require('vue');
 
 // enumerating ECharts events for now
 const ACTION_EVENTS = [
@@ -51,7 +48,7 @@ const MOUSE_EVENTS = [
   'globalout'
 ]
 
-export default {
+module.exports = {
   props: {
     options: Object,
     theme: String,

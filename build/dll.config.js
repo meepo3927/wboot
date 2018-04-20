@@ -7,7 +7,6 @@ const vendors = [
     'jquery',
     'vue',
     'polyfill',
-    'global/dev',
     'dll_less'
 ];
 const env = 'production';

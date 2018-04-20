@@ -38,7 +38,7 @@ const dataFunc = function () {
 	};
 	return o;
 };
-export default {
+module.exports = {
 	data: dataFunc,
 	created,
 	methods,

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import $ from 'jquery';
+let $ = require('jquery');
 
 let methods = {};
 methods.onClick = function () {
@@ -28,7 +28,7 @@ const dataFunc = function () {
     let o = {};
     return o;
 };
-export default {
+module.exports = {
     data: dataFunc,
     created,
     methods,

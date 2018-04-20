@@ -1,5 +1,6 @@
-import Vue from 'vue';
-import Main from 'comp/mui/msg.vue';
+
+let Vue = require('vue');
+let Main = require('comp/mui/msg.vue');
 let MsgConstructor = Vue.extend(Main);
 
 // let instances = [];
@@ -32,4 +33,4 @@ let Msg = function (options) {
     };
 });
 
-export default Msg;
+module.exports = Msg;

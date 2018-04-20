@@ -1,6 +1,6 @@
-import Cover from 'util/cover.js';
+const Cover = require('util/cover.js');
 
-let loading = function (options = {}) {
+const loading = function (options = {}) {
     let elem = document.createElement('div');
     elem.className = 'mui-loading';
 
@@ -25,4 +25,4 @@ let loading = function (options = {}) {
 };
 
 
-export default loading;
+module.exports = loading;

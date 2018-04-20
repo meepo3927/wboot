@@ -1,7 +1,10 @@
+
 import {Vue} from 'root';
+import vMain from 'pages/test.vue';
+
 new Vue({
     el: '#main',
     components: {
-        'v-main': require('pages/test.vue')
+        'v-main': vMain
     }
 });

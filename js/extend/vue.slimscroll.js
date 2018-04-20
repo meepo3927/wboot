@@ -1,8 +1,8 @@
-import Vue from 'vue';
-import 'lib/jquery.slimscroll.min.js';
+const Vue = require('vue');
+const $ = require('jquery');
+require('lib/jquery.slimscroll.min.js');
 
-export default {
-    // Vue.directive('slimscroll', vueSlimScroll);
+module.exports = {
     bind (el, binding, vnode) {
         let c = binding.value || {
             // width

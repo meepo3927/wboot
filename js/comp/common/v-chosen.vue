@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import 'lib/chosen.jquery.js';
+require('lib/chosen.jquery.js');
 let uuid = 1;
 var methods = {};
 methods.getOptions = function () {
@@ -90,7 +90,7 @@ const dataFunc = function () {
 	};
 	return o;
 };
-export default {
+module.exports = {
 	data: dataFunc,
 	methods,
 	computed,

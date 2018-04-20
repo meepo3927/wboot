@@ -6,12 +6,14 @@
         <button class="btn btn-default" @click="alert" type="button">
             确定
         </button>
+
     </form>
 </div>
 </template>
 
 <script>
-import 'root';
+require('root');
+
 let methods = {};
 methods.alert = function () {
     this.$msg(this.name);
@@ -27,7 +29,7 @@ const dataFunc = function () {
     };
     return o;
 };
-export default {
+module.exports = {
     data: dataFunc,
     created,
     methods,
@@ -35,9 +37,12 @@ export default {
     watch,
     props: [],
     mounted,
-    mixins: [],
+    mixins: [
+    ],
     beforeDestroy,
-    components: {}
+    components: {
+        
+    }
 };
 </script>
 

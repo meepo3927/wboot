@@ -99,7 +99,7 @@
 </template>
 
 <script>
-import 'root';
+require('root');
 
 const duration = 999999999;
 const longMsg = '一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十';
@@ -176,7 +176,7 @@ const dataFunc = function () {
 	};
 	return o;
 };
-export default {
+module.exports = {
 	data: dataFunc,
 	created,
 	methods,

@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import 'lib/bootstrap-datetimepicker.min.js';
-import 'lib/locales/bootstrap-datetimepicker.zh-CN.js';
+require('lib/bootstrap-datetimepicker.min.js');
+require('lib/locales/bootstrap-datetimepicker.zh-CN.js');
 let methods = {};
 let computed = {};
 let watch = {};
@@ -25,7 +25,7 @@ const dataFunc = function () {
 	let o = {};
 	return o;
 };
-export default {
+module.exports = {
 	data: dataFunc,
 	created,
 	methods,
