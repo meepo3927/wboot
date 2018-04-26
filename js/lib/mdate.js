@@ -117,6 +117,9 @@
      * @param  {unit} unit 单位
      */
     function getDateOffset(date, offsetNumber, unit) {
+        if (typeof date === 'string') {
+            date = parseDate(date);
+        }
         var d = new Date();
         if (isNaN(offsetNumber)) {
             return date;

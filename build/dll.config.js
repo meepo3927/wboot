@@ -10,12 +10,13 @@ const vendors = [
     'dll_less'
 ];
 const env = 'production';
+let DIST_PATH = config.DIST_PATH + '/../bundle';
 var moduleConfig = util.getModuleConfig(env, 'dll');
 var plugins = [
     new webpack.DllPlugin({
         path: path.join(__dirname, 'dll-manifest.json'),
         name: '[name]',
-        context: config.DIST_PATH
+        context: DIST_PATH
     }),
     new webpack.ProvidePlugin(config.provide)
 ];
@@ -30,7 +31,7 @@ if (config.VERSION === 2) {
 plugins = plugins.concat(moduleConfig.extractPlugins);
 let dllConfig = {
     output: {
-        path: config.DIST_PATH,
+        path: DIST_PATH,
         filename: '[name].js',
         library: '[name]'
     },

@@ -16,7 +16,7 @@ module.exports = function (env) {
             path: DIST_PATH,
             publicPath: isProduction ? config.productionPublicPath : config.developmentPublicPath,
             filename: '[name].js',
-            chunkFilename: 'chunk.[name].js'
+            chunkFilename: 'chunk.[name].[hash:8].js'
         },
         module: {
             rules: moduleConfig.rules
