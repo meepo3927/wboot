@@ -5,8 +5,9 @@
   "author": "guoye <guoye@nmcc.ncr>",
   "scripts": {
     "start": "webpack-dev-server --env=development --hot --colors",
-    "build": "webpack --env=production --progress --hide-modules --colors",
-    "dll": " webpack --progress --colors --config ./build/dll.config.js"
+    "build": "node ./build/clean.js && webpack --env=production --progress --hide-modules --colors",
+    "dll": " webpack --progress --colors --config ./build/dll.config.js",
+    "clean": "node ./build/clean.js"
   },
   "dependencies": {},
   "devDependencies": {

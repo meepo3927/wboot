@@ -163,6 +163,9 @@ let watch = {};
 const created = function () {};
 const mounted = function () {
 	window.Test = this;
+	require.ensure([], () => {
+		let v = require('extend/jquery.sticky.js');
+	});
 };
 const beforeDestroy = function () {};
 const dataFunc = function () {
@@ -171,7 +174,7 @@ const dataFunc = function () {
 		ss: false,
 		tooltipStr: 'mmmmmmeepo' + longMsg,
 		tooltipObj: {
-			text: '我还是猪'
+			text: 'Yep'
 		}
 	};
 	return o;
