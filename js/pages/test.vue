@@ -1,10 +1,13 @@
 <template>
 <div class="page-test">
 	<form class="p15" @submit.prevent>
-		<button v-tooltip="tooltipStr" @click="PPP">PPPPPPPPP</button>
-		<input type="text" class="form-control" v-model="name"
-			v-tooltip="tooltipStr">
-		<p v-text="name"></p>
+		<button v-tooltip="tooltipStr" @click="PPP"
+			class="btn btn-primary">改变tooltip内容</button>
+
+		<div class="mt15">
+			<input type="text" class="form-control" v-model="name" />
+			<p v-text="name"></p>
+		</div>
 		<div>
 			<button class="btn btn-default" @click="msg0" type="button">
 				msg 0
@@ -21,22 +24,22 @@
 		</button>
 		</div>
 		<div class="mt20">
-			<button class="btn btn-default" @click="alert" type="button">
+			<button class="btn btn-default" @click="muiAlert" type="button">
 				MUI-Alert
 			</button>
-			<button class="btn btn-default" @click="alert2" type="button">
+			<button class="btn btn-default" @click="muiConfirm" type="button">
 				MUI-Confirm
 			</button>
-			<button class="btn btn-default" @click="alertWarning" type="button">
+			<button class="btn btn-default" @click="muiAlertWarning" type="button">
 				MUI-Warning
 			</button>
-			<button class="btn btn-default" @click="alertInfo" type="button">
-				MUI-Info
+			<button class="btn btn-default" @click="muiPrompt" type="button">
+				MUI-Prompt
 			</button>
-			<button class="btn btn-default" @click="alertError" type="button">
-				MUI-Error
+			<button class="btn btn-default" @click="muiloading" type="button">
+				MUI-loading
 			</button>
-			<v-switch v-model="ss" />
+			<v-switch v-model="switchValue" />
 			<button class="btn btn-default" style="float: right;"
 				v-tooltip="tooltipStr"
 				@click="onTooltipTestClick">
@@ -45,7 +48,7 @@
 		</div>
 		
 	</form>
-	<mui-layer v-if="ss" @close="layerClose">
+	<mui-layer v-if="switchValue" @close="layerClose">
 		<div slot="header">哈哈哈</div>
 		<div style="min-width: 400px;">
 			<div class="m-row-mid">
@@ -105,7 +108,7 @@ const duration = 999999999;
 const longMsg = '一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十';
 let methods = {};
 methods.layerClose = function () {
-	this.ss = false;
+	this.switchValue = false;
 };
 methods.onTooltipTestClick = function () {
 	this.tooltipStr = Math.random();
@@ -125,18 +128,18 @@ methods.msg2 = function () {
 methods.msg3 = function () {
 	this.$msg.error(longMsg);
 };
-methods.alert = function () {
+methods.muiAlert = function () {
 	let text = 'ae' + longMsg;
     this.$alert(text);
 };
-methods.alert2 = function () {
+methods.muiConfirm = function () {
 	let text = '确定删除吗？';
 	let title = '提示';
 	this.$confirm(text, title, (v) => {
 		this.$msg(v);
 	});
 };
-methods.alertWarning = function () {
+methods.muiAlertWarning = function () {
 	let text = '确定删除吗？';
 	let title = '提示';
 	this.$confirm({
@@ -145,14 +148,14 @@ methods.alertWarning = function () {
 		callback: (v) => { this.$msg(v) }
 	});
 };
-methods.alertInfo = function () {
+methods.muiPrompt = function () {
 	let text = '请输入姓名';
 	let title = '提示';
 	this.$prompt(null, text, (v) => {
 		this.$msg(v);
 	});
 };
-methods.alertError = function () {
+methods.muiloading = function () {
 	let ld = this.$loading();
 	setTimeout(() => {
 		ld.remove()
@@ -171,7 +174,7 @@ const beforeDestroy = function () {};
 const dataFunc = function () {
 	let o = {
 		name: +new Date(),
-		ss: false,
+		switchValue: false,
 		tooltipStr: 'mmmmmmeepo' + longMsg,
 		tooltipObj: {
 			text: 'Yep'

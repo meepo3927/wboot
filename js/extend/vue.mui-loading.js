@@ -2,7 +2,7 @@ const Cover = require('util/cover.js');
 
 const loading = function (options = {}) {
     let elem = document.createElement('div');
-    elem.className = 'mui-loading';
+    elem.className = 'loading-1 loading-fixed';
 
     if (options.className) {
         elem.className += ' ' + options.className;
@@ -12,7 +12,7 @@ const loading = function (options = {}) {
         elem.style.zIndex = options.zIndex;
     }
     let mCover = new Cover({
-        opacity: 0.5
+        opacity: 0.3
     });
     document.body.appendChild(elem);
     const remove = () => {
