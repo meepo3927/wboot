@@ -319,7 +319,6 @@ proto.renderText = function () {
 proto.makeElem = function () {
     let elem = document.createElement('div');
     elem.className = 'mui-tooltip';
-    elem.style.visibility = 'hidden';
     document.body.appendChild(elem);
     elem.innerHTML = [
         '<div class="mui-tooltip-content"></div>',
@@ -327,14 +326,27 @@ proto.makeElem = function () {
     ].join('');
     this.elem = elem;
     this.$elem = $(elem);
+    this.hide();
+};
+proto.show = function () {
+    //this.$elem.css('visibility', 'visible');
+    this.$elem.css('opacity', '1');
+};
+proto.hide = function () {
+    this.$elem.attr('m-placement', null);
+    this.$elem.css({
+        opacity: '0',
+        top: '-99999px',
+        left: '-99999px'
+    });
 };
 proto._onMouseEnter = function (e) {
     this.renderPosition();
-    this.elem.style.visibility = 'visible';
+    this.show();
     this.elemVisible = true;
 };
 proto._onMouseLeave = function (e) {
-    this.elem.style.visibility = 'hidden';
+    this.hide();
     this.elemVisible = false;
 };
 proto._onWindowScroll = function (e) {
