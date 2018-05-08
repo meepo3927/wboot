@@ -72,32 +72,19 @@
 
 
 	<button class="btn btn-success"
-		v-tooltip2="tooltipObj">MUI Tooltip3</button>
+		v-tooltip="tooltipObj">MUI Tooltip3</button>
 
 	<mui-alertspan type="success">
 		Heads up! This alert needs your attention, but it's not super important.
 	</mui-alertspan>
-	<p></p>
-	<mui-alertspan type="info">
+	<br />
+	<div class="alert alert-warning mt15">
 		Heads up! This alert needs your attention, but it's not super important.
-	</mui-alertspan>
-	<p></p>
-
-	<mui-alertspan type="warning">
-		Heads up! This alert needs your attention, but it's not super important.
-	</mui-alertspan>
-	<p></p>
-	<mui-alertspan type="error">
-		Heads up! This alert needs your attention, but it's not super important.
-	</mui-alertspan>
-	<br /><br /><br /><br /><br /><br /><br /><br /><br />
-	<textarea class="form-control" v-tooltip="tooltipStr" 
-		style="float: right;"></textarea>
-	<br /><br /><br /><br /><br /><br /><br /><br /><br />
-	<textarea class="form-control" v-tooltip="tooltipStr"></textarea>
-	<br /><br /><br /><br /><br /><br /><br /><br /><br />
-	<button class="btn btn-default"
-		v-tooltip="tooltipStr">呃呃呃呃呃呃</button>
+	</div>
+	
+	<mui-slider v-model="sliderValue" min="1000" max="10000" />
+	<input type="text" v-model="sliderValue" />
+	
 </div>
 </template>
 
@@ -178,7 +165,9 @@ const dataFunc = function () {
 		tooltipStr: 'mmmmmmeepo' + longMsg,
 		tooltipObj: {
 			text: 'Yep'
-		}
+		},
+
+		sliderValue: 6000
 	};
 	return o;
 };
@@ -195,7 +184,8 @@ module.exports = {
 	components: {
 		'v-switch': require('comp/mui/switch.vue'),
 		'mui-layer': require('comp/mui/center-layer.vue'),
-		'mui-alertspan': require('comp/mui/alert-span.vue')
+		'mui-alertspan': require('comp/mui/alert-span.vue'),
+		'mui-slider': require('comp/mui/slider.vue')
 	}
 };
 </script>
