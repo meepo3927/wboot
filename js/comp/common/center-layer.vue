@@ -1,16 +1,16 @@
 <template>
 <div class="m-center-layer" >
-	<div class="x-wrapper-1">
-		<div class="x-wrapper-2" ref="w2">
-			<div class="x-wrapper-3" ref="w3">
-				<slot></slot>
-				<a href="javascript:;" class="close-btn" v-if="close"
-					@click="$emit('close')">
-					<i class="fa fa-times"></i>
-				</a>
-			</div>
-		</div>
-	</div>
+    <div class="x-wrapper-1">
+        <div class="x-wrapper-2" ref="w2">
+            <div class="x-wrapper-3" ref="w3">
+                <slot></slot>
+                <a href="javascript:;" class="close-btn" v-if="close"
+                    @click="$emit('close')">
+                    <i class="fa fa-times"></i>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
 </template>
 
@@ -19,126 +19,126 @@ let $ = require('jquery');
 let Cover = require('util/cover.js');
 
 let isPercent = function (str) {
-	if (!str || !str.charAt) {
-		return false;
-	}
-	str = str.trim();
-	return str.charAt(str.length - 1) === '%';
+    if (!str || !str.charAt) {
+        return false;
+    }
+    str = str.trim();
+    return str.charAt(str.length - 1) === '%';
 };
 const animDuration = 350;
 const noop = function () {};
 
 var methods = {};
 methods.fullMode = function (callback) {
-	this.full = true;
-	let o = {};
-	if (callback) {
-		o.complete = callback;
-	}
-	this.render(o);
+    this.full = true;
+    let o = {};
+    if (callback) {
+        o.complete = callback;
+    }
+    this.render(o);
 };
 methods.restoreMode = function (callback) {
-	this.full = false;
-	let o = {};
-	if (callback) {
-		o.complete = callback;
-	}
-	this.render(o);
+    this.full = false;
+    let o = {};
+    if (callback) {
+        o.complete = callback;
+    }
+    this.render(o);
 };
 methods.renderWidth = function (options = {}) {
-	let val = this.width || 'auto';
-	if (this.full) {
-		val = '100%';
-	}
+    let val = this.width || 'auto';
+    if (this.full) {
+        val = '100%';
+    }
 
-	let complete = options.complete || noop;
-	var $w3 = $(this.$refs.w3);
-	if (this.isAnim && val !== 'auto') {
-		$w3.stop().animate({width: val}, animDuration, complete);
-	} else {
-		$w3.css('width', val);
-		setTimeout(complete);
-	}
+    let complete = options.complete || noop;
+    var $w3 = $(this.$refs.w3);
+    if (this.isAnim && val !== 'auto') {
+        $w3.stop().animate({width: val}, animDuration, complete);
+    } else {
+        $w3.css('width', val);
+        setTimeout(complete);
+    }
 };
 methods.renderHeight = function (options = {}) {
-	let val = this.height || 'auto';
-	if (this.full) {
-		val = '100%';
-	}
-	let complete = options.complete || noop;
-	var $w2 = $(this.$refs.w2);
-	if (this.isAnim && val !== 'auto') {
-		$w2.stop().animate({'height': val}, animDuration, complete);
-	} else {
-		$w2.css('height', val);
-		setTimeout(complete);
-	}
+    let val = this.height || 'auto';
+    if (this.full) {
+        val = '100%';
+    }
+    let complete = options.complete || noop;
+    var $w2 = $(this.$refs.w2);
+    if (this.isAnim && val !== 'auto') {
+        $w2.stop().animate({'height': val}, animDuration, complete);
+    } else {
+        $w2.css('height', val);
+        setTimeout(complete);
+    }
 };
 methods.render = function (options = {}) {
-	let completeCount = 0;
-	let allComplete = options.complete || noop;
-	let wComplete = () => {
-		completeCount++;
-		if (completeCount >= 2) {
-			allComplete();
-		}
-	};
-	let hComplete = () => {
-		completeCount++;
-		if (completeCount >= 2) {
-			allComplete();
-		}
-	};
-	this.renderWidth({complete: wComplete});
-	this.renderHeight({complete: hComplete});
+    let completeCount = 0;
+    let allComplete = options.complete || noop;
+    let wComplete = () => {
+        completeCount++;
+        if (completeCount >= 2) {
+            allComplete();
+        }
+    };
+    let hComplete = () => {
+        completeCount++;
+        if (completeCount >= 2) {
+            allComplete();
+        }
+    };
+    this.renderWidth({complete: wComplete});
+    this.renderHeight({complete: hComplete});
 };
 var computed = {};
 computed.isAnim = function () {
-	return this.anim === 'true' || this.anim === true;
+    return this.anim === 'true' || this.anim === true;
 };
 let watch = {};
 watch.width = function () {
-	this.$nextTick(this.renderWidth);
+    this.$nextTick(this.renderWidth);
 };
 watch.height = function () {
-	this.$nextTick(this.renderHeight);
+    this.$nextTick(this.renderHeight);
 };
 const mounted = function () {
-	if (this.cover !== false && this.cover !== 'false') {
-		this.c = new Cover({show: true});
-	}
-	this.render({
-		complete: () => {
-			this.$emit('ready');
-		}
-	});
+    if (this.cover !== false && this.cover !== 'false') {
+        this.c = new Cover({show: true});
+    }
+    this.render({
+        complete: () => {
+            this.$emit('ready');
+        }
+    });
 };
 const beforeDestroy = function () {
-	if (this.c) {
-		this.c.remove();
-		this.c = null;
-	}
-	this.$emit('beforeDestroy');
+    if (this.c) {
+        this.c.remove();
+        this.c = null;
+    }
+    this.$emit('beforeDestroy');
 };
 const destroyed = function () {
-	this.$emit('destroyed');
+    this.$emit('destroyed');
 };
 const dataFunc = function () {
-	var o = {
-		full: false
-	};
-	return o;
+    var o = {
+        full: false
+    };
+    return o;
 };
 module.exports = {
-	data: dataFunc,
-	methods,
-	watch,
-	computed,
-	props: ['width', 'height', 'anim', 'cover', 'close'],
-	mounted,
-	beforeDestroy,
-	destroyed,
-	components: {}
+    data: dataFunc,
+    methods,
+    watch,
+    computed,
+    props: ['width', 'height', 'anim', 'cover', 'close'],
+    mounted,
+    beforeDestroy,
+    destroyed,
+    components: {}
 };
 </script>
 
@@ -146,15 +146,15 @@ module.exports = {
 .m-center-layer {
 }
 .close-btn {
-	position: absolute;
-	right: 5px;
-	top: 4px;
-	.fa {
-		color: #333;
-		font-size: 26px;
-	}
-	&:hover .fa {
-		color: #f00;
-	}
+    position: absolute;
+    right: 5px;
+    top: 4px;
+    .fa {
+        color: #333;
+        font-size: 26px;
+    }
+    &:hover .fa {
+        color: #f00;
+    }
 }
 </style>
