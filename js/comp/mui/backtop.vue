@@ -1,5 +1,5 @@
 <template>
-<div class="v-backtop" title="回到顶部" @click="onClick">
+<div class="v-backtop" title="回到顶部" @click="onClick" :class="{vhidden}">
     <span></span>
     <i class="fa fa-arrow-up"></i>
 </div>
@@ -7,7 +7,10 @@
 
 <script>
 let $ = require('jquery');
-
+const getScrollTop = () => {
+    return document.documentElement.scrollTop
+        || document.body.scrollTop;
+};
 let methods = {};
 methods.onClick = function () {
     let $html = $(document.documentElement);
@@ -19,13 +22,28 @@ methods.onClick = function () {
         scrollTop: 0
     });
 };
+methods.onScroll = function () {
+    this.bodyScrollTop = getScrollTop();
+};
+
 let computed = {};
+computed.vhidden = function () {
+    return (this.bodyScrollTop < 100);
+};
 let watch = {};
 const created = function () {};
-const mounted = function () {};
-const beforeDestroy = function () {};
+const mounted = function () {
+    window.vBacktop = this;
+    this.bodyScrollTop = getScrollTop();
+    $(window).on('scroll', this.onScroll);
+};
+const beforeDestroy = function () {
+    $(window).off('scroll', this.onScroll);
+};
 const dataFunc = function () {
-    let o = {};
+    let o = {
+        bodyScrollTop: 0
+    };
     return o;
 };
 module.exports = {
@@ -55,6 +73,9 @@ module.exports = {
     border-radius: 4px;
     padding: 8px 10px 6px;
     background-color: #ddd;
+    &.vhidden {
+        display: none;
+    }
     &:hover > span {
         background-color: @hover-color;
     }

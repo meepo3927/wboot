@@ -111,12 +111,19 @@ module.exports = {
             if (this.chart) {
                 v ? this.chart.showLoading() : this.chart.hideLoading();
             }
+        },
+        autoResize: function (v) {
+            if (v === false) {
+                this.unbindResize();
+            } else {
+                this.bindResize();
+            }
         }
     },
     methods: {
         reset () {
             this.clear();
-            if (this.loading) {
+            if (this.loading && this.chart) {
                 this.chart.showLoading();
             }
         },
@@ -160,6 +167,17 @@ module.exports = {
             this._delegateMethod('dispose');
             this.chart = null;
         },
+        resizeHanlder () {
+            if (this.chart) {
+                this.chart.resize();
+            }
+        },
+        bindResize() {
+            window.addEventListener('resize', this.resizeHanlder);
+        },
+        unbindResize() {
+            window.removeEventListener('resize', this.resizeHanlder)
+        },
         _delegateMethod (name, ...args) {
             if (!this.chart) {
                 Vue.util.warn(`Cannot call [${name}] before the chart is initialized. Set prop [options] first.`, this)
@@ -193,12 +211,9 @@ module.exports = {
                     // for backward compatibility, may remove in the future
                     this.$emit('chart' + event, params)
                 })
-            })
+            });
             if (this.autoResize !== false) {
-                this.__resizeHanlder = () => {
-                    chart.resize()
-                };
-                window.addEventListener('resize', this.__resizeHanlder);
+                this.bindResize();
             }
 
             this.chart = chart
@@ -219,10 +234,7 @@ module.exports = {
         if (!this.chart) {
             return
         }
-        if (this.__resizeHanlder) {
-            window.removeEventListener('resize', this.__resizeHanlder)
-        }
-
+        this.unbindResize();
         this.dispose()
     },
     connect (group) {
