@@ -306,14 +306,4 @@
         window.cancelAnimationFrame = clearTimeout;
     }
 
-    window.getIEVersion = function () {
-        var versions = {
-            objectobject: 7, //IE7-8
-            objectundefined: 6, //IE6
-            undefinedfunction: NaN, // other modern browsers
-            undefinedobject: NaN
-        };
-        return document.documentMode || versions[typeof document.all + typeof XMLHttpRequest];
-    };
-
 })(window, document);

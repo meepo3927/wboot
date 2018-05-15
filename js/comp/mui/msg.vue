@@ -1,5 +1,5 @@
 <template>
-<div class="mui-msg" >
+<div class="mui-msg-fixed" >
     <div class="mui-msg-content" :class="contentClass">
         <i class="fa" :class="[iconClass]" v-if="iconVisible"></i>
         <p v-text="text"></p>
@@ -62,14 +62,11 @@ export default {
 
 @import "./ref";
 
-.wordwrap() {
-    word-wrap: break-word;
-    word-break: break-all;
-}
 
 .mui-msg-content {
-    .wordwrap();
     font-size: 16px;
+    min-width: 120px;
+    display: block;
     &.type-success,
     &.type-warning,
     &.type-info,
@@ -77,6 +74,9 @@ export default {
         border-width: 1px;
         border-style: solid;
         padding: 15px 15px 15px 40px;
+        p {
+            padding-left: 8px;
+        }
     }
     & > i.fa {
         position: absolute;
@@ -90,7 +90,8 @@ export default {
         line-height: 1.4;
         margin-top: 0;
         margin-bottom: 0;
-        max-width: 380px;
+        max-width: 75vw;
+        word-wrap: break-word;
     }
 }
 .mui-msg-content.type-msg {
@@ -102,7 +103,6 @@ export default {
     background-color: #000;
     filter: alpha(opacity=80);
     background-color: rgba(0, 0, 0, 0.6);
-    max-width: 75%;
     box-shadow: 0px 0px 15px #666;
 }
 .mui-msg-content.type-success {

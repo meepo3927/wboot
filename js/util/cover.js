@@ -34,6 +34,10 @@ define([], function () {
         if (this.options.show !== false) {
             this.show();
         }
+        // 点击事件
+        if (this.options.onClick) {
+            this.elem.onClick = this.options.onClick;
+        }
     };
     proto.show = function () {
         this.elem.style.display = 'block';

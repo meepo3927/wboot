@@ -153,9 +153,6 @@ let watch = {};
 const created = function () {};
 const mounted = function () {
     window.Test = this;
-    require.ensure([], () => {
-        let v = require('extend/jquery.sticky.js');
-    });
 };
 const beforeDestroy = function () {};
 const dataFunc = function () {

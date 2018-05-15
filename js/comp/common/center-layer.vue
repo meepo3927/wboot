@@ -1,12 +1,12 @@
 <template>
-<div class="m-center-layer" >
-    <div class="x-wrapper-1">
-        <div class="x-wrapper-2" ref="w2">
+<div class="m-center-layer" :class="rootClass">
+    <div class="x-wrapper-1" @click.self="onCoverClick">
+        <div class="x-wrapper-2" ref="w2" @click.self="onCoverClick">
             <div class="x-wrapper-3" ref="w3">
                 <slot></slot>
                 <a href="javascript:;" class="close-btn" v-if="close"
                     @click="$emit('close')">
-                    <i class="fa fa-times"></i>
+                    <i class="glyphicon glyphicon-remove"></i>
                 </a>
             </div>
         </div>
@@ -29,6 +29,9 @@ const animDuration = 350;
 const noop = function () {};
 
 var methods = {};
+methods.onCoverClick = function () {
+    this.$emit('cover-click');
+};
 methods.fullMode = function (callback) {
     this.full = true;
     let o = {};
@@ -96,6 +99,20 @@ var computed = {};
 computed.isAnim = function () {
     return this.anim === 'true' || this.anim === true;
 };
+computed.withCover = function () {
+    if (this.cover === false || this.cover === 'false') {
+        return false;
+    }
+    return true;
+};
+computed.rootClass = function () {
+    let arr = [];
+    if (this.withCover) {
+        arr.push('with-cover');
+    }
+    return arr;
+};
+
 let watch = {};
 watch.width = function () {
     this.$nextTick(this.renderWidth);
@@ -104,8 +121,11 @@ watch.height = function () {
     this.$nextTick(this.renderHeight);
 };
 const mounted = function () {
-    if (this.cover !== false && this.cover !== 'false') {
-        this.c = new Cover({show: true});
+    if (this.withCover) {
+        this.coverInstance = new Cover({
+            show: true,
+            onClick: this.onCoverClick
+        });
     }
     this.render({
         complete: () => {
@@ -114,9 +134,9 @@ const mounted = function () {
     });
 };
 const beforeDestroy = function () {
-    if (this.c) {
-        this.c.remove();
-        this.c = null;
+    if (this.coverInstance) {
+        this.coverInstance.remove();
+        this.coverInstance = null;
     }
     this.$emit('beforeDestroy');
 };
@@ -146,15 +166,21 @@ module.exports = {
 .m-center-layer {
 }
 .close-btn {
-    position: absolute;
-    right: 5px;
-    top: 4px;
-    .fa {
+    position: fixed;
+    right: 12px;
+    top: 10px;
+    .glyphicon {
         color: #333;
-        font-size: 26px;
+        font-size: 32px;
+        font-weight: lighter;
     }
-    &:hover .fa {
-        color: #f00;
+    &:hover .glyphicon {
+        color: #1296DB;
+    }
+}
+.m-center-layer.with-cover .close-btn {
+    .glyphicon {
+        color: #fff;
     }
 }
 </style>
