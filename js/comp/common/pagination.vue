@@ -102,7 +102,10 @@ module.exports = {
     methods,
     computed,
     watch,
-    props: ['curPage', 'totalPage'],
+    props: {
+        curPage: Number,
+        totalPage: Number
+    },
     mounted,
     mixins: [],
     beforeDestroy,

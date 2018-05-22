@@ -5,6 +5,14 @@
 <script>
 let MDate = require('lib/mdate.js');
 var methods = {};
+methods.initValue = function (v) {
+    if (typeof v === 'number') {
+        let str = MDate.Util.getDateOffsetStr(new Date, v)
+        this.setValue(str);
+    } else {
+        this.setValue(v);
+    }
+};
 methods.setValue = function (v) {
     if (v !== undefined) {
         this.$el.value = v;
@@ -21,7 +29,11 @@ var mounted = function () {
         }
     });
     if (this.value) {
-        this.setValue(this.value);
+        this.initValue(this.value);
+    } else if (this.value === undefined) {
+        let v = MDate.Util.getYMDStr();
+        this.setValue(v)
+        this.$emit('input', v);
     }
 };
 let watch = {};

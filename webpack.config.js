@@ -49,7 +49,10 @@ module.exports = function (env) {
             historyApiFallback: true,
             noInfo: false,
             disableHostCheck: true,
-            contentBase: config.SERVER_DIR
+            contentBase: config.SERVER_DIR,
+            proxy: {
+                "/api": "http://localhost:8333"
+            }
         },
         devtool: '#cheap-module-source-map'
     }

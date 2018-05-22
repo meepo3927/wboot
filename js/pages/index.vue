@@ -13,10 +13,16 @@
 
 <script>
 require('root');
-
+const $ = require('jquery');
 let methods = {};
 methods.alert = function () {
     this.$msg(this.name);
+    $.ajax({
+        url: '/api/m',
+        dataType: 'json'
+    }).then((r) => {
+        LOG(r);
+    });
 };
 let computed = {};
 let watch = {};
