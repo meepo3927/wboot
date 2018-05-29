@@ -2,106 +2,111 @@
  * 基础通用样式
  */
 .clearfix {
-	*zoom:1; /*兼容IE6/IE7*/
-	&:after {
-		visibility: hidden;
-		display: block;
-		font-size: 0;
-		content: ".";
-		clear: both;
-		height: 0;
-	}
+    *zoom:1; /*兼容IE6/IE7*/
+    &:after {
+        visibility: hidden;
+        display: block;
+        font-size: 0;
+        content: ".";
+        clear: both;
+        height: 0;
+    }
 }
 .fl {
-	float: left;
+    float: left;
 }
 .fr {
-	float: right;
+    float: right;
 }
 .m-auto {
-	margin-left: auto;
-	margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 /*对齐方式设置*/
 .tal {
-	text-align: left;
+    text-align: left;
 }
 .tar {
-	text-align: right;
+    text-align: right;
 }
 .tac {
-	text-align: center;
+    text-align: center;
 }
 /*width常用设置*/
 .w-50p {
-	width: 50%;
+    width: 50%;
 }
 .w-100p {
-	width: 100%;
+    width: 100%;
 }
 
 /*定位*/
 .pos-r {
-	position: relative;
+    position: relative;
 }
 .pos-a {
-	position: absolute;
+    position: absolute;
 }
 .pos-f {
-	position: fixed;
+    position: fixed;
 }
 /*显示/隐藏样式*/
 .dis-n {
-	display: none;
+    display: none;
 }
 .dis-b {
-	display: block;
+    display: block;
 }
 .dis-i {
-	display: inline;
+    display: inline;
 }
 .dis-i-b {
-	display: inline-block;
+    display: inline-block;
 }
 
 .ver-top {
     vertical-align: top;
 }
 .do-wrap {
-	word-wrap: break-word;
-	word-break: break-all;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 .no-wrap {
-	white-space: nowrap;
+    white-space: nowrap;
 }
 
 .cb {
-	clear: both;
+    clear: both;
 }
 .y-scroll {
-	overflow-x: hidden;
-	overflow-y: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 em.red-star {
-	font-style: normal;
-	color: #f00;
+    font-style: normal;
+    color: #f00;
 }
 .text-error {
-	color: #f00;
+    color: #f00;
 }
 iframe.size-100p {
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
+}
+.common-layer-wrapper {
+    height: 100%;
+    width: 100%;
+    position: relative;
 }
 /**
  * 快捷fontSize定义
  */
 .gen-fontsize(@n) when (@n > 10) {
-	@val: @n * 1px;
-	.fs@{n} {
-		font-size: @val !important;
-	}
-	.gen-fontsize((@n - 1));
+    @val: @n * 1px;
+    .fs@{n} {
+        font-size: @val !important;
+    }
+    .gen-fontsize((@n - 1));
 }
 .gen-fontsize(24);
 
@@ -110,32 +115,32 @@ iframe.size-100p {
  */
 .generate-margins(10);
 .generate-margins(@n, @i: 1) when (@i =< @n) {
-	@val: @i * 5;
-	@px: @val * 1px;
-	.m@{val} {
-		margin: @px !important;
-	}
-	.mt@{val} {
-		margin-top: @px !important;
-	}
-	.mb@{val} {
-		margin-bottom: @px !important;
-	}
-	.mr@{val} {
-		margin-right: @px !important;
-	}
-	.ml@{val} {
-		margin-left: @px !important;
-	}
-	.mv@{val} {
-		margin-top: @px !important;
-		margin-bottom: @px !important;
-	}
-	.mh@{val} {
-		margin-right: @px !important;
-		margin-left: @px !important;
-	}
-	.generate-margins(@n, (@i + 1));
+    @val: @i * 5;
+    @px: @val * 1px;
+    .m@{val} {
+        margin: @px !important;
+    }
+    .mt@{val} {
+        margin-top: @px !important;
+    }
+    .mb@{val} {
+        margin-bottom: @px !important;
+    }
+    .mr@{val} {
+        margin-right: @px !important;
+    }
+    .ml@{val} {
+        margin-left: @px !important;
+    }
+    .mv@{val} {
+        margin-top: @px !important;
+        margin-bottom: @px !important;
+    }
+    .mh@{val} {
+        margin-right: @px !important;
+        margin-left: @px !important;
+    }
+    .generate-margins(@n, (@i + 1));
 }
 
 /**
@@ -143,30 +148,30 @@ iframe.size-100p {
  */
 .generate-paddings(10);
 .generate-paddings(@n, @i: 1) when (@i =< @n) {
-	@val: @i * 5;
-	@px: @val * 1px;
-	.p@{val} {
-		padding: @px !important;
-	}
-	.pt@{val} {
-		padding-top: @px !important;
-	}
-	.pb@{val} {
-		padding-bottom: @px !important;
-	}
-	.pr@{val} {
-		padding-right: @px !important;
-	}
-	.pl@{val} {
-		padding-left: @px !important;
-	}
-	.pv@{val} {
-		padding-top: @px !important;
-		padding-bottom: @px !important;
-	}
-	.ph@{val} {
-		padding-right: @px !important;
-		padding-left: @px !important;
-	}
-	.generate-paddings(@n, (@i + 1));
+    @val: @i * 5;
+    @px: @val * 1px;
+    .p@{val} {
+        padding: @px !important;
+    }
+    .pt@{val} {
+        padding-top: @px !important;
+    }
+    .pb@{val} {
+        padding-bottom: @px !important;
+    }
+    .pr@{val} {
+        padding-right: @px !important;
+    }
+    .pl@{val} {
+        padding-left: @px !important;
+    }
+    .pv@{val} {
+        padding-top: @px !important;
+        padding-bottom: @px !important;
+    }
+    .ph@{val} {
+        padding-right: @px !important;
+        padding-left: @px !important;
+    }
+    .generate-paddings(@n, (@i + 1));
 }

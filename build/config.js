@@ -27,7 +27,7 @@ var alias = {
     promise$: 'lib/promise.js',
     mlayer$: 'lib/mlayer.js',
     autoComplete$: 'extend/jquery.autocomplete.js',
-    echarts$: 'lib/echarts.min.js',
+    echarts$: 'lib/echarts-4.0.2.min.js',
     select2$: 'lib/select2.min.js',
     // 通用
     polyfill$: JS_DIR + '/global/polyfill',

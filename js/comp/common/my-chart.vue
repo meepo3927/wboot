@@ -9,7 +9,7 @@
 
 <script>
 require('echarts');
-require('lib/echarts/six.js');
+
 var methods = {};
 var computed = {};
 computed.loading = function () {
@@ -19,7 +19,7 @@ computed.loading = function () {
     return false;
 };
 computed.myTheme = function () {
-    return this.theme || 'six';
+    return this.theme || '';
 };
 computed.options = function () {
     if (this.o === 'empty') {

@@ -13,7 +13,11 @@ module.exports = {
             $(el).slimScroll(c);
         });
     },
-    update () {
+    update (el, binding, vnode) {
+        let c = binding.value || {};
+        Vue.nextTick(() => {
+            $(el).slimScroll(c);
+        });
     },
     unbind (el, binding) {
     }
