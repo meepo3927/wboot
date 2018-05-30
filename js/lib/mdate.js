@@ -36,9 +36,9 @@
         if (isNaN(y) || isNaN(m)) {
             return date;
         }
-        date.setFullYear(y);
-        date.setMonth(m - 1);
         date.setDate(d || 1);
+        date.setMonth(m - 1);
+        date.setFullYear(y);
         // date.setHours(0);
         // date.setMinutes(0);
         return date;
