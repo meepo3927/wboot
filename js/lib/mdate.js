@@ -134,7 +134,12 @@
             offsetValue = OFFSET_VALUE.day * 7 * offsetNumber;
             d.setTime(date.getTime() + offsetValue);
         } else if (unit === 'month') {
+            // 防止日期溢出，先设置天为1，再修正
+            let originDay = d.getDate();
+            d.setDate(1);
             d.setMonth(date.getMonth() + offsetNumber);
+            let maxDay = getMaxDay(d.getFullYear(), d.getMonth() + 1);
+            d.setDate(Math.min(originDay, maxDay));
         } else if (unit === 'year') {
             d.setFullYear(date.getFullYear() + offsetNumber);
         }
