@@ -209,20 +209,24 @@
         };
         this.$elem.prop('readonly', true);
         this.$elem.focus(function () {
+            self.lastFocusTime = (new Date()).getTime();
             self.showBox();
         });
         this.$elem.click(function () {
+            if (self.justFocused()) {
+                return;
+            }
             self.showBox();
         });
         this.$elem.blur(delayHide);
         // 自动关闭
-        $html.on('mouseup', function (e) {
+        $html.on('click', function (e) {
             e = e || window.event;
             var target = e.target || e.srcElement;
             if (!self.$box) {
                 return true;
             }
-            if ($.contains(self.$box[0], target)) {
+            if ($.contains(self.$box[0], target) || target === self.elem || $.contains(self.elem, target)) {
                 stopBubble(e);
                 return false;
             } else {
@@ -235,6 +239,16 @@
         if (this.lastActiveTime) {
             var time = (new Date()).getTime();
             var diff = time - this.lastActiveTime;
+            if (diff < 200) {
+                return true;
+            }
+        }
+        return false;
+    };
+    proto.justFocused = function () {
+        if (this.lastFocusTime) {
+            var time = (new Date()).getTime();
+            var diff = time - this.lastFocusTime;
             if (diff < 200) {
                 return true;
             }
@@ -275,6 +289,9 @@
         ].join('');
 
         var $box = $(html);
+        $box.css({
+            top: '-999999px'
+        });
         $body.append($box);
 
         this.$head = $box.find('.x-box-head');
