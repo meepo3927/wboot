@@ -2,6 +2,7 @@
 
 .comp-mdate-box {
     @main-color: #3385FF;
+    @text-hover-color: #fff;
     @item-hover-color: lighten(@main-color, 5%);
     @btn-hover-color: darken(@main-color, 15%);
     @prev-next-color: #999;
@@ -153,6 +154,7 @@
                 cursor: pointer;
                 &:hover {
                     background-color: @item-hover-color;
+                    color: @text-hover-color;
                 }
                 &.action {
                     background-color: @main-color;

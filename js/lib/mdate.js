@@ -220,7 +220,7 @@
         });
         this.$elem.blur(delayHide);
         // 自动关闭
-        $html.on('click', function (e) {
+        $html.on('mouseup', function (e) {
             e = e || window.event;
             var target = e.target || e.srcElement;
             if (!self.$box) {

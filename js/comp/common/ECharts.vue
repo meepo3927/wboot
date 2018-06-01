@@ -11,7 +11,7 @@
 <script>
 let echarts = require('echarts');
 let Vue = require('vue');
-
+const loadingColor = '#30D434';
 // enumerating ECharts events for now
 const ACTION_EVENTS = [
     'legendselectchanged',
@@ -109,7 +109,9 @@ module.exports = {
         },
         loading: function (v) {
             if (this.chart) {
-                v ? this.chart.showLoading() : this.chart.hideLoading();
+                v ? this.chart.showLoading('default', {
+                    color: loadingColor
+                }) : this.chart.hideLoading();
             }
         },
         autoResize: function (v) {
@@ -124,7 +126,9 @@ module.exports = {
         reset () {
             this.clear();
             if (this.loading && this.chart) {
-                this.chart.showLoading();
+                this.chart.showLoading('default', {
+                    color: loadingColor
+                });
             }
         },
         // provide a explicit merge option method
@@ -227,7 +231,9 @@ module.exports = {
 
         if (this.loading) {
             this._init();
-            this.showLoading();
+            this.showLoading('default', {
+                color: loadingColor
+            });
         }
     },
     beforeDestroy () {
