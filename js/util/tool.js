@@ -339,5 +339,17 @@
         return str.replace(/[^\x00-\xff]/g, '**').length;
     };
 
+    exports.isNotBlankObject = (o) => {
+        if (!isObject(o)) {
+            return false;
+        }
+        for (let i in o) {
+            if (o.hasOwnProperty(i)) {
+                return true;
+            }
+        }
+        return false;
+    };
+
     return exports;
 }));

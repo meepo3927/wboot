@@ -1,6 +1,4 @@
-let EChartUtil = require('util/echart.js');
 let tool = require('util/tool');
-
 const created = function () {
 };
 const mounted = function () {
@@ -10,12 +8,58 @@ const deactivated = function () {};
 const beforeDestroy = function () {
 };
 let methods = {};
+methods.getChartTitle = function (o) {
+    return tool.extend({
+    }, o);
+};
+methods.getAverageMarkLine = function () {
+    return {
+        precision: 0,
+        data: [{
+            type: 'average',
+            name: '平均值',
+            label: {
+                normal: {
+                    position: 'middle',
+                    textStyle: {
+                        fontSize: 16
+                    }
+                },
+                emphasis: {
+                    textStyle: {
+                        fontSize: 22
+                    },
+                    formatter: (p) => {
+                        return p.name + '：' + p.value;
+                    }
+                }
+            }
+        }]
+    }
+};
 methods.getPieSeries = function (o) {
     return tool.extend({
         type: 'pie',
-        startAngle: 0,
-        radius: [35, 60],
-        label: EChartUtil.getPieSeriesLabel()
+        // startAngle: 0,
+        center: ['50%', '60%'],
+        radius: [35, 55],
+        minAngle: 10,
+        label: {
+            position: 'outside'
+        },
+        labelLine: {
+            length: 8,
+            length2: 3
+        }
+    }, o);
+};
+methods.getPieTooltip = function (o) {
+    return tool.extend({
+        confine: true,
+        formatter: (p) => {
+            return this.getTooltipDotHtml(p) + p.name + '：' + p.value
+                + ' (' + p.percent + '%)';
+        }
     }, o);
 };
 methods.getPieTopLegend = function (o, data = []) {
@@ -24,10 +68,17 @@ methods.getPieTopLegend = function (o, data = []) {
         data
     }, o);
 };
+methods.getPieRightLegend = function (o) {
+    return tool.extend({
+        top: 'middle',
+        left: '75%',
+        orient: 'vertical',
+        align: 'left'
+    }, o);
+};
 methods.getPieBottomLegend = function (o, data = []) {
     return tool.extend({
         left: 'center',
-        
         bottom: 20,
         data
     }, o);
@@ -35,7 +86,7 @@ methods.getPieBottomLegend = function (o, data = []) {
 methods.getBarSeries = function (o, data = []) {
     return tool.extend({
         type: 'bar',
-        barMaxWidth: 60,
+        barMaxWidth: 25,
         data
     }, o);
 };
@@ -54,73 +105,85 @@ methods.getBarLegend = function (o) {
         left: 'center'
     }, o);
 };
-methods.getSankeyOption = function (o) {
+// 地理
+methods.getChartGeo = function (o) {
     return tool.extend({
-        tooltip: {
-            trigger: 'item',
-            triggerOn: 'mousemove'
-        },
-        series: [{
-            type: 'sankey',
-            layout: 'none',
-            itemStyle: {
-                normal: {
-                    borderWidth: 1,
-                    borderColor: '#aaa'
-                }
-            },
-            lineStyle: {
-                normal: {
-                    color: 'source',
-                    curveness: 0.5
-                }
-            }
-        }]
-    }, o);
-};
-methods.getTreeSeries = function (o) {
-    return tool.extend({
-        type: 'tree',
-        top: '2%',
-        bottom: '2%',
-        symbolSize: 10,
+        top: 40,
+        left: 6,
+        right: 14,
+        roam: true,
         label: {
-            normal: {
-                position: 'left',
-                verticalAlign: 'middle',
-                align: 'right',
-                fontSize: 14
+            emphasis: {
+                show: false
             }
         },
-        leaves: {
-            label: {
-                normal: {
-                    position: 'right',
-                    verticalAlign: 'middle',
-                    align: 'left'
-                }
+        itemStyle: {
+            normal: {
+                areaColor: '#667491',
+                borderColor: '#ffffff'
+            },
+            emphasis: {
+                areaColor: '#2a333d',
             }
         }
     }, o)
 };
-methods.getTreeRootLeft = function (o) {
-    let defaults = '5%';
-    if (!o) {
-        return defaults;
-    }
-    if (typeof o === 'string') {
-        var name = o;
-    } else if (typeof o === 'object') {
-        name = o.name;
-    }
-    if (!name) {
-        return defaults;
-    }
-    let len = tool.strlen(name);
-    return len * 7 + 25;
+
+// 地图 圆圈波纹
+methods.getGeoCircleBorderOption = function (o, itemColor = '#FF799D') {
+    return tool.extend({
+        type: 'effectScatter',
+        coordinateSystem: 'geo',
+        symbolSize: function (val) {
+            let v = val[2];
+            let MIN = 8;
+            let ratio = 5;
+            return Math.max(Math.sqrt(v) / ratio, MIN);
+        },
+        showEffectOn: 'render',
+        rippleEffect: {
+            brushType: 'stroke'
+        },
+        hoverAnimation: true,
+        label: {
+            normal: {
+                fontWeight: 'lighter',
+                formatter: '{b}',
+                position: 'right',
+                color: '#eee',
+                show: true
+            }
+            
+        },
+        itemStyle: {
+            normal: {
+                color: itemColor,
+                shadowBlur: 10,
+                shadowColor: itemColor
+            }
+        },
+        zlevel: 4
+    }, o)
+};
+// geo lines 数据格式
+methods.getGeoFromToData = function (arr) {
+    return (arr || []).map((item) => {
+        var fromCoord = [
+            item.province_clogiitud,
+            item.province_clatitude
+        ];
+        var toCoord = [
+            item.scenery_clogiitud,
+            item.scenery_clatitude
+        ];
+        return [{coord: fromCoord}, {coord: toCoord}];
+    });
 };
 
 let computed = {};
+computed.pieCenter2 = () => {
+    return ['40%', '50%'];
+};
 module.exports = {
     props: [],
     data: function () {
@@ -134,7 +197,9 @@ module.exports = {
     activated,
     deactivated,
     beforeDestroy,
-    mixins: [],
+    mixins: [
+        require('mixins/echarts.js')
+    ],
     components: {
         'my-chart': require('comp/common/my-chart.vue'),
     }
