@@ -4,56 +4,32 @@ const beforeDestroy = function () {
 };
 
 let methods = {};
-methods.pagingCut = function ({list, page} = {}) {
-    if (page === undefined) {
-        page = this.curPage;
-    }
-    if (list === undefined) {
-        list = this.olist;
-    }
-    let start = (page - 1) * this.pagePerNum;
-    let end = start + this.pagePerNum;
-    return list.slice(start, end);
-};
-methods.processPaging = function (alist) {
-    this.olist = alist || [];
 
-    return this.pagingCut(this.olist, this.curPage);
-};
 let computed = {};
-computed.paging = function () {
-    return {
-        start: this.pagingStart,
-        end: this.pagingEnd,
-        totalCount: this.totalCount,
-        curPage: this.curPage,
-        totalPage: this.pagingTotalPage
-    };
+computed.mlist = function () {
+    if (!this.olist) {
+        return this.olist;
+    }
+    let start = (this.curPage - 1) * this.NUM_PER_PAGE;
+    let end = start + this.NUM_PER_PAGE;
+    return this.olist.slice(start, end);
 };
 computed.totalCount = function () {
-    return this.olist.length;
+    return (this.olist ? this.olist.length : 0);
 };
-computed.pagingStart = function () {
-    return (this.curPage - 1) * this.pagePerNum + 1;
-};
-computed.pagingEnd = function () {
-    let end = this.pagingStart * this.pagePerNum;
-    if (end > this.totalCount) {
-        return this.totalCount;
+computed.totalPage = function () {
+    if (this.totalCount <= 0) {
+        return 0;
     }
-    return end;
+    return Math.floor((this.totalCount - 1) / this.NUM_PER_PAGE) + 1;
 };
-computed.pagingTotalPage = function () {
-    return Math.floor((this.totalCount - 1) / this.pagePerNum) + 1;
-};
-computed.pagePerNum = function () {
+computed.NUM_PER_PAGE = function () {
     return 20;
 };
 module.exports = {
     props: [],
     data: function () {
         var o = {
-            olist: [],
             curPage: 1
         };
         return o;

@@ -351,5 +351,20 @@
         return false;
     };
 
+    exports.addNumDot = (num) => {
+        let str = num + '';
+        let len = str.length;
+        let arr = [];
+        let count = 0;
+        for (let i = len - 1; i >= 0; i--) {
+            arr.unshift(str.charAt(i))
+            if ((++count % 3) === 0 && (i !== 0)) {
+                arr.unshift(',');
+            }
+        }
+
+        return arr.join('')
+    };
+
     return exports;
 }));

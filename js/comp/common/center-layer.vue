@@ -6,7 +6,7 @@
                 <slot></slot>
                 <a href="javascript:;" class="close-btn" v-if="close"
                     @click="$emit('close')">
-                    <i class="glyphicon glyphicon-remove"></i>
+                    <i class="fa fa-times-circle"></i>
                 </a>
             </div>
         </div>
@@ -166,20 +166,20 @@ module.exports = {
 .m-center-layer {
 }
 .close-btn {
-    position: fixed;
-    right: 12px;
-    top: 10px;
-    .glyphicon {
+    position: absolute;
+    right: -1px;
+    top: -40px;
+    i {
         color: #333;
         font-size: 32px;
         font-weight: lighter;
     }
-    &:hover .glyphicon {
+    &:hover i {
         color: #1296DB;
     }
 }
 .m-center-layer.with-cover .close-btn {
-    .glyphicon {
+    i {
         color: #fff;
     }
 }
