@@ -74,6 +74,17 @@ function parseDate(str) {
     var p = (str + '').split('-');
     return getDateByYMD.apply(null, p);
 }
+function parseDatetime(str) {
+    let a = str.split(' ');
+    let dateStr = a[0];
+    let timeStr = a[1];
+    let date = getDateByYMD.apply(null, dateStr.split('-'));
+    let timeArr = timeStr.split(':');
+    date.setHours(parseInt(timeArr[0], 10));
+    date.setMinutes(parseInt(timeArr[1], 10));
+    date.setSeconds(parseInt(timeArr[2], 10));
+    return date;
+}
 function getYMDByDate(date) {
     date = date || new Date();
     return {
@@ -238,6 +249,7 @@ function getHoliday(item) {
 var exports = {
     getDateByYMD,
     parseDate,
+    parseDatetime,
     getYMD,
     isLeapYear,
     getMaxDay,
