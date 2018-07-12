@@ -20,6 +20,7 @@ var alias = {
     // 基础库
     jquery$: 'lib/jquery-2.1.1.min.js',
     vue$: 'lib/vue.min.js',
+    vuex$: 'lib/vuex-2.3.1.js',
     velocity$: 'lib/velocity.min.js',
 
     // 工具,插件

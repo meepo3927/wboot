@@ -53,3 +53,19 @@
         margin-top: -(@loading-height-3 / 3);
     }
 }
+.loading-circle {
+    @size:  32px;
+    width: @size;
+    height: @size;
+    background-image: url("../../images/mlayer/loading.gif");
+    background-repeat: no-repeat;
+    background-position: center center;
+    &.loading-fixed {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        margin-top: -(@size / 2);
+        margin-left: -(@size / 2);
+        z-index: 1000;
+    }
+}
