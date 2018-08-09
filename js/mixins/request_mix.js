@@ -17,6 +17,12 @@ methods.setPromise = function (name, p) {
     this.promiseHolder[name] = p;
     return p;
 };
+methods.cancelPromise = function (name) {
+    if (this.promiseHolder[name]) {
+        this.promiseHolder[name].cancel();
+        this.promiseHolder[name] = null;
+    }
+};
 methods.cleanPromise = function () {
     for (let i in this.promiseHolder) {
         if (this.promiseHolder.hasOwnProperty(i)) {

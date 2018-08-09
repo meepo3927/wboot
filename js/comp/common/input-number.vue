@@ -4,29 +4,42 @@
 
 <script>
 let methods = {};
-const fix = (v) => {
-    let n = parseFloat(v);
+methods.getFixedValue = function () {
+    let oValue = this.$el.value.trim();
+    if (oValue === '') {
+        return oValue;
+    }
+    if (oValue === '-') {
+        if (this.min !== undefined && this.min >= 0) {
+            return '';
+        } else {
+            return '-';
+        }
+    }
+    let n = parseFloat(oValue);
     if (isNaN(n)) {
         return 0;
     }
-    if (v.charAt(v.length - 1) === '.') {
-        return n + '.';
+    let subfix = '';
+    if (this.numType === 'integer') { // 仅整数
+        oValue = parseInt(oValue, 10) || 0;
+    } else if (oValue[oValue.length - 1] === '.') {
+        subfix = '.';
+        oValue = parseInt(oValue, 10) || 0;
+    } else {
+        oValue = n;
     }
-    return n;
+
+    if (this.min !== undefined && oValue < this.min) {
+        oValue = this.min;
+    }
+    if (this.max !== undefined && oValue > this.max) {
+        oValue = this.max;
+    }
+    return oValue + subfix;
 };
 methods.onInput = function () {
-    let oValue = this.$el.value.trim();
-    let val = fix(oValue);
-
-    if (this.numType === 'integer') {
-        val = parseInt(val, 10);
-    }
-
-    if (this.min !== undefined) {
-        if (val < this.min) {
-            val = this.min;
-        }
-    }
+    let val = this.getFixedValue();
     this.$el.value = val;
     this.$emit('input', val);
 };
@@ -45,7 +58,7 @@ module.exports = {
     methods,
     computed,
     watch,
-    props: ['value', 'numType', 'min'],
+    props: ['value', 'numType', 'min', 'max'],
     mounted,
     mixins: [],
     beforeDestroy,

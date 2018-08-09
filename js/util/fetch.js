@@ -4,7 +4,7 @@
  */
 
 var $ = require('jquery');
-var Promise = require('promise');
+var Promise = require('Promise');
 
 let fetch = (url, data = {}, method = 'GET', dataType = 'json') => {
     return new Promise((resolve, reject) => {
@@ -52,9 +52,13 @@ fetch.onceParam = function (func) {
             key = 'default';
         }
         if (result[key] === undefined) {
-            result[key] = func.apply(null, args);
+            return func.apply(null, args).then((r) => {
+                result[key] = r;
+                return r;
+            });
+        } else {
+            return Promise.resolve(result[key]);
         }
-        return result[key];
     };
 };
 

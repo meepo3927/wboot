@@ -162,7 +162,7 @@ const getLeftLeft = (rect, elemRect) => {
 // 上左
 proto.getPositionTopLeft = function (rect, elemRect) {
     let top = getTopTop(rect, elemRect);
-    let left = rect.x;
+    let left = rect.x - 11;
     return {
         placement: 'top-left',
         top, left
