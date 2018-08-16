@@ -31,7 +31,10 @@ methods.selectValue = function () {
 methods.update = function () {
     let $el = this.selectValue();
     $el.trigger('chosen:updated');
-    this.$emit('input', this.getCurrentValue());
+    let currentValue = this.getCurrentValue();
+    if (currentValue != this.value) {
+        this.$emit('input', currentValue);
+    }
 };
 methods.log = function (str) {
     LOG(str + `[${this.uuid}]`);
