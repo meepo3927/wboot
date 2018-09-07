@@ -1,6 +1,6 @@
 
 var prefixerConfig = {
-    browsers: ["last 37 versions", "> 1%"],
+    browsers: ["last 100 versions", "> 1%"],
     cascade: false
 };
 

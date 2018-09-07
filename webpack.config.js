@@ -51,7 +51,7 @@ module.exports = function (env) {
             disableHostCheck: true,
             contentBase: config.SERVER_DIR,
             proxy: {
-                "/api": "http://localhost:8333"
+                "/TD-common-web": "http://localhost:8080"
             }
         },
         devtool: '#cheap-module-source-map'
@@ -66,9 +66,6 @@ module.exports = function (env) {
                 compress: {
                     warnings: false
                 }
-            }),
-            new webpack.LoaderOptionsPlugin({
-                minimize: true
             })
         ]);
     }
