@@ -73,8 +73,8 @@ methods.getPieSeries = function (o) {
     return tool.extend({
         type: 'pie',
         // startAngle: 0,
-        center: ['50%', '60%'],
-        radius: [35, 55],
+        center: ['50%', '55%'],
+        radius: [55, 75],
         minAngle: 10,
         label: {
             position: 'outside'
