@@ -8,6 +8,7 @@ const JS_DIR = config.JS_DIR;
 const DIST_PATH = config.DIST_PATH;
 
 module.exports = function (env) {
+    process.env.NODE_ENV = env;
     let isProduction = (env === 'production');
     let moduleConfig = util.getModuleConfig(env, 'build');
     let r = {
