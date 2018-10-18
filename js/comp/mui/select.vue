@@ -109,7 +109,16 @@ methods.documentHandler = function (e) {
     this.hideOptions();
     return true;
 };
-
+methods.getItemByValues = function (values) {
+    let arr = [];
+    values.forEach((v) => {
+        let item = this.getItemByValue(v);
+        if (item) {
+            arr.push(item);
+        }
+    });
+    return arr;
+};
 let computed = {};
 computed.myPlaceholder = function () {
     return this.placeholder || '请选择';
@@ -182,7 +191,7 @@ module.exports = {
 @my-height:  30px;
 @v0-margin:  4px;
 @v0-height:  @my-height - (@v0-margin * 2);
-@list-max-height: 282px;
+@list-max-height: 482px;
 .mui-select {
     display: inline-block;
     position: relative;
