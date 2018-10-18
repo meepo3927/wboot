@@ -2,7 +2,7 @@
 <div class="mui-select">
     <div class="v-holder" @click="onHolderClick">
         <!-- 没有选中 -->
-        <span v-text="placeholder" v-if="len === 0" class="v-placeholder"></span>
+        <span v-text="myPlaceholder" v-if="len === 0" class="v-placeholder"></span>
 
         <!-- 第一项 -->
         <div class="selected-0" v-if="len" :class="{vshort: (len > 1)}">
@@ -111,8 +111,8 @@ methods.documentHandler = function (e) {
 };
 
 let computed = {};
-computed.placeholder = function () {
-    return '请选择';
+computed.myPlaceholder = function () {
+    return this.placeholder || '请选择';
 };
 computed.v = function () {
     return this.value || [];
@@ -170,7 +170,7 @@ module.exports = {
     methods,
     computed,
     watch,
-    props: ['options', 'value', 'max'],
+    props: ['options', 'value', 'max', 'placeholder'],
     mounted,
     mixins: [],
     beforeDestroy,
@@ -179,9 +179,10 @@ module.exports = {
 </script>
 
 <style scoped lang="less">
-@my-height:  36px;
-@v0-margin:  5px;
+@my-height:  30px;
+@v0-margin:  4px;
 @v0-height:  @my-height - (@v0-margin * 2);
+@list-max-height: 282px;
 .mui-select {
     display: inline-block;
     position: relative;
@@ -192,9 +193,11 @@ module.exports = {
     height: @my-height;
     border: 1px solid #dcdfe6;
     line-height: @my-height;
-    padding: 0 5px;
+    padding: 0 @v0-margin;
     cursor: pointer;
     border-radius: 4px;
+    font-size: 13px;
+    background-color: #fff;
     &:hover {
         border-color: #c0c4cc;
     }
@@ -205,7 +208,6 @@ module.exports = {
         border-radius: 4px;
         height: @v0-height;
         line-height: @v0-height;
-        font-size: 13px;
         color: #909399;
         padding: 0 15px 0 10px;
     }
@@ -222,11 +224,13 @@ module.exports = {
             text-overflow: ellipsis;
             vertical-align: 0;
             max-width: 100%;
+            line-height: @v0-height;
         }
         & > a {
             color: #999;
-            vertical-align: 7px;
             font-size: 15px;
+            vertical-align: 5px;
+            line-height: 1.4;
         }
     }
     & > .selected-else {
@@ -252,10 +256,12 @@ module.exports = {
     border-radius: 4px;
     box-shadow: 0 2px 4px #ccc;
     background-color: #fff;
-    max-height: 282px;
+    max-height: @list-max-height;
     overflow-x: hidden;
     overflow-y: auto;
     position: absolute;
+    z-index: 333;
+    width: 100%;
     & > li {
         padding: 8px 12px;
         color: #666;
@@ -263,6 +269,7 @@ module.exports = {
         position: relative;
         word-wrap: break-word;
         word-break: break-all;
+        font-size: 13px;
         &:nth-last-child(1) {
             border-bottom: none;
         }
