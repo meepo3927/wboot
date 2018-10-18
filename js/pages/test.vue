@@ -85,6 +85,11 @@
     <mui-slider v-model="sliderValue" min="1000" max="10000" />
     <input type="text" v-model="sliderValue" />
     
+    <div class="mt30">
+        <mui-select :options="o2" class="m-sel-1" ref="muiS" 
+            v-model="s2" />
+        <p v-text="s2"></p>
+    </div>
 </div>
 </template>
 
@@ -149,6 +154,21 @@ methods.muiloading = function () {
     }, 1500)
 };
 let computed = {};
+computed.o2 = function () {
+    let arr = [
+        {name: '全区'},
+        {name: '呼和浩特'},
+        {name: '包头'},
+        {name: '非常长的选项一二三四4567890'},
+        {name: '<span>123</span>'},
+        {name: '<strong>123</strong>'},
+        {name: '1234567890aaaaaaaaaaaaaaaaaaaaeeeeee'}
+    ];
+    for (let i = 0; i < 2; i++) {
+        arr.push({name: 'oe-' + Math.random()});
+    }
+    return arr;
+};
 let watch = {};
 const created = function () {};
 const mounted = function () {
@@ -164,7 +184,9 @@ const dataFunc = function () {
             text: 'Yep'
         },
 
-        sliderValue: 6000
+        sliderValue: 6000,
+
+        s2: undefined
     };
     return o;
 };
@@ -182,7 +204,8 @@ module.exports = {
         'v-switch': require('comp/mui/switch.vue'),
         'mui-layer': require('comp/mui/center-layer.vue'),
         'mui-alertspan': require('comp/mui/alert-span.vue'),
-        'mui-slider': require('comp/mui/slider.vue')
+        'mui-slider': require('comp/mui/slider.vue'),
+        'mui-select': require('comp/mui/select.vue')
     }
 };
 </script>
@@ -194,5 +217,9 @@ module.exports = {
 textarea {
     width: 600px;
     height: 400px;
+}
+.mui-select.m-sel-1 {
+    width: 25%;
+    //width: 60%;
 }
 </style>
