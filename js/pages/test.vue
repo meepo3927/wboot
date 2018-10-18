@@ -156,16 +156,22 @@ methods.muiloading = function () {
 let computed = {};
 computed.o2 = function () {
     let arr = [
-        {name: '全区'},
-        {name: '呼和浩特'},
-        {name: '包头'},
-        {name: '非常长的选项一二三四4567890'},
-        {name: '<span>123</span>'},
-        {name: '<strong>123</strong>'},
-        {name: '1234567890aaaaaaaaaaaaaaaaaaaaeeeeee'}
+        {
+            text: '全区', value: '400'
+        },
+        {
+            text: '呼和浩特', value: '471'
+        },
+        {
+            text: '包头', value: '472'
+        },
+        {
+            text: '非常长的选项一二三四4567890aaaaaaaaaaaaaa',
+            value: 'abedd3'
+        }
     ];
     for (let i = 0; i < 2; i++) {
-        arr.push({name: 'oe-' + Math.random()});
+        //arr.push({name: 'oe-' + Math.random()});
     }
     return arr;
 };
@@ -186,7 +192,7 @@ const dataFunc = function () {
 
         sliderValue: 6000,
 
-        s2: undefined
+        s2: ['472', '400', 'aaa']
     };
     return o;
 };

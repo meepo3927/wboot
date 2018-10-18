@@ -2,18 +2,18 @@
 <div class="mui-select">
     <div class="v-holder" @click="onHolderClick">
         <!-- 没有选中 -->
-        <span v-text="placeholder" v-if="vlen === 0" class="v-placeholder"></span>
+        <span v-text="placeholder" v-if="len === 0" class="v-placeholder"></span>
 
         <!-- 第一项 -->
-        <div class="selected-0" v-if="vlen" :class="{vshort: (vlen > 1)}">
-            <span v-text="t0" :title="t0"></span>
+        <div class="selected-0" v-if="len" :class="{vshort: (len > 1)}">
+            <span v-text="firstChoosedText" :title="firstChoosedText"></span>
             <a href="javascript:;" @click.stop="remove0">
                 <i class="fa fa-times-circle"></i>
             </a>
         </div>
         <!-- 其他项 -->
-        <div class="selected-else" v-if="vlen > 1" :title="telse">
-            +<span v-text="vlen - 1"></span>
+        <div class="selected-else" v-if="len > 1" :title="telse">
+            +<span v-text="len - 1"></span>
         </div>
         <i class="fa fa-caret-down"></i>
     </div>
@@ -47,12 +47,32 @@ methods.getItemText = function (item) {
         return '';
     }
 };
+methods.getItemByValue = function (val) {
+    for (let i = 0; i < this.options.length; i++) {
+        if (this.options[i].value == val) {
+            return this.options[i];
+        }
+    }
+};
 methods.getItemClass = function (item) {
     let arr = [];
-    if (this.v.indexOf(item) >= 0) {
+    if (this.isItemSelected(item)) {
         arr.push('active');
     }
     return arr;
+};
+methods.getItemIndex = function (item) {
+    for (var i = 0; i < this.v.length; i++) {
+        let v1 = this.v[i];
+        let v2 = item.value;
+        if (v1 == v2) {
+            return i;
+        }
+    }
+    return -1;
+};
+methods.isItemSelected = function (item) {
+    return (this.getItemIndex(item) >= 0);
 };
 methods.onHolderClick = function () {
     this.optionsVisible = !this.optionsVisible;
@@ -62,22 +82,22 @@ methods.onItemClick = function (item, e) {
     } else {
         this.hideOptions();
     }
-    let pos = this.v.indexOf(item);
+    let pos = this.getItemIndex(item);
     if (pos >= 0) {
         var arr = this.v.slice();
         arr.splice(pos, 1);
     } else {
-        arr = this.v.concat(item);
+        arr = this.v.concat(item.value);
     }
     this.$emit('input', arr);
-    this.$msg(this.getItemText(item));
 };
 methods.remove0 = function () {
-    var arr = this.v.slice();
-    if (arr.length > 0) {
-        arr.splice(0, 1);
+    var pos = this.getItemIndex(this.l[0]);
+    let arr = this.v.slice();
+    if (arr[pos]) {
+        arr.splice(pos, 1);
+        this.$emit('input', arr);
     }
-    this.$emit('input', arr);
 };
 methods.hideOptions = function () {
     this.optionsVisible = false;
@@ -88,7 +108,8 @@ methods.documentHandler = function (e) {
     }
     this.hideOptions();
     return true;
-}
+};
+
 let computed = {};
 computed.placeholder = function () {
     return '请选择';
@@ -96,19 +117,29 @@ computed.placeholder = function () {
 computed.v = function () {
     return this.value || [];
 };
-computed.vlen = function () {
-    return this.v.length;
+computed.l = function () {
+    let arr = [];
+    this.v.forEach((v) => {
+        let item = this.getItemByValue(v);
+        if (item) {
+            arr.push(item);
+        }
+    });
+    return arr;
 };
-computed.t0 = function () {
-    return this.getItemText(this.v[0]);
+computed.len = function () {
+    return this.l.length;
+};
+computed.firstChoosedText = function () {
+    return this.getItemText(this.l[0]);
 };
 computed.telse = function () {
-    if (this.vlen <= 1) {
+    if (this.len <= 1) {
         return undefined;
     }
     let arr = [];
-    for (let i = 1; i < this.vlen; i++) {
-        arr.push(this.getItemText(this.v[i]));
+    for (let i = 1; i < this.len; i++) {
+        arr.push(this.getItemText(this.l[i]));
     }
     return arr.join('\n');
 };
