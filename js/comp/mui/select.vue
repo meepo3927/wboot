@@ -48,6 +48,9 @@ methods.getItemText = function (item) {
     }
 };
 methods.getItemByValue = function (val) {
+    if (!this.options) {
+        return null;
+    }
     for (let i = 0; i < this.options.length; i++) {
         if (this.options[i].value == val) {
             return this.options[i];
