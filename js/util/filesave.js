@@ -36,7 +36,7 @@ function fileSave(content, fileName) {
         var frame = document.createElement('iframe');
         document.body.appendChild(frame);
         frame.style.display = 'none';
-        frame.contentDocument.open('txt/html', 'replace');
+        frame.contentDocument.open('text/html', 'replace');
         // data 是 string 类型
         frame.contentDocument.write(content); 
         frame.contentDocument.close();
