@@ -23,8 +23,7 @@
         <li v-if="!optionEmpty" v-for="v in options" 
             class="o-item"
             :class="getItemClass(v)"
-            @click="onItemClick(v, $event)">
-            {{getItemText(v)}}
+            @click="onItemClick(v, $event)">{{getItemText(v)}} 
             <i class="fa fa-check-circle"></i>
         </li>
     </ul>
