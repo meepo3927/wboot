@@ -1,20 +1,17 @@
-const glob = require('glob');
+const fs = require('fs');
 const path = require('path');
 const config = require('./config');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-function getEntry(globPath) {
-    var files = glob.sync(globPath);
-    var entries = {},
-        entry, dirname, basename, extname;
-
+function getEntry(dirPath) {
+    var files = fs.readdirSync(dirPath);
+    var entries = {};
     for (var i = 0; i < files.length; i++) {
-        entry = files[i];
-        dirname = path.dirname(entry);
-        extname = path.extname(entry);
-        basename = path.basename(entry, extname);
-        // pathname = path.join(dirname, basename);
-        entries[basename] = entry;
+        let fileName = files[i];
+        let extname = path.extname(fileName);
+        let basename = path.basename(fileName, extname);
+        // Full Path
+        entries[basename] = dirPath + fileName;
     }
     return entries;
 }

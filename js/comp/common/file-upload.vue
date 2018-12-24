@@ -30,7 +30,7 @@ let config = require('global/config');
 let uuid = 1;
 let typeExtMap = {
     image: 'jpg,png,jpeg,gif',
-    excel: 'xlsx'
+    excel: 'xlsx,xls'
 };
 let typeTextMap = {
     image: '图片',

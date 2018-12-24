@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var util = require('./build/util');
 var config = require('./build/config');
 var Webpack2Polyfill = require("webpack2-polyfill-plugin");
+var ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 
 const SERVER_PORT = config.SERVER_PORT;
 const JS_DIR = config.JS_DIR;
@@ -12,7 +13,7 @@ module.exports = function (env) {
     let isProduction = (env === 'production');
     let moduleConfig = util.getModuleConfig(env, 'build');
     let r = {
-        entry: util.getEntry(JS_DIR + '/entry/*.js'),
+        entry: util.getEntry(JS_DIR + '/entry/'),
         output: {
             path: DIST_PATH,
             publicPath: isProduction ? config.productionPublicPath : config.developmentPublicPath,
@@ -61,14 +62,16 @@ module.exports = function (env) {
     if (isProduction) {
         r.devtool = false;
         // http://vue-loader.vuejs.org/en/workflow/production.html
-        r.plugins = r.plugins.concat([
-            new webpack.optimize.UglifyJsPlugin({
-                sourceMap: false,
+        r.plugins.push(new ParallelUglifyPlugin({
+            uglifyJS: {
+                output: {
+                    comments: false
+                },
                 compress: {
                     warnings: false
                 }
-            })
-        ]);
+            }
+        }));
     }
     return r;
 };

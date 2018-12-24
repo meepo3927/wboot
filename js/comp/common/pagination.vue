@@ -96,16 +96,13 @@ const dataFunc = function () {
     let o = {};
     return o;
 };
-module.exports = {
+export default {
     data: dataFunc,
     created,
     methods,
     computed,
     watch,
-    props: {
-        curPage: Number,
-        totalPage: Number
-    },
+    props: ['curPage', 'totalPage'],
     mounted,
     mixins: [],
     beforeDestroy,
@@ -114,7 +111,7 @@ module.exports = {
 </script>
 
 <style scoped lang="less">
-.vue-comp {
-    
+.pagination {
+    margin-bottom: 0;
 }
 </style>
