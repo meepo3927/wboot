@@ -1,5 +1,5 @@
-const Tooltip = require('./mui-tooltip.js');
 // Vue.directive('tooltip', MUITooltip);
+const Tooltip = require('./mui-tooltip.js');
 const buildOptions = (targetElem, binding) => {
     let text;
     let o = binding.value;

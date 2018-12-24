@@ -1,4 +1,3 @@
-const Vue = require('vue');
 const $ = require('jquery');
 
 const EMPTY_CLASSNAME = 'placeholder-empty';

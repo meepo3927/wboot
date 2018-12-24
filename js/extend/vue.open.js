@@ -1,4 +1,4 @@
-const config = require('global/config.js');
+
 const wParam = [
     'toolbar=no',
     'menubar=no',
@@ -9,6 +9,7 @@ const wParam = [
     'width=1024px',
     'height=768px'
 ].join(',');
+
 module.exports = {
     // Vue.directive('clickoutside', vueClickOutSide);
     bind (el, binding, vnode) {

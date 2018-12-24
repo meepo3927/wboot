@@ -4,6 +4,8 @@
 
     <div>
         <file-upload action="http://localhost/upload" />
+    </div>
+    <div class="mt10">
         <file-upload action="http://localhost/never" />
     </div>
 </div>

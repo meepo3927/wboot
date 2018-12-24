@@ -1,6 +1,3 @@
-var config = require('config');
-var request = require('util/request.js');
-
 var Plugin = {};
 var localEnv = !(location.host);
 Plugin.install = function (Vue, options) {
@@ -31,19 +28,10 @@ Plugin.install = function (Vue, options) {
         }
         return '/images';
     };
-    computed.vConfig = function () {
-        return config;
-    };
-    computed.vRequest = function () {
-        return request;
-    };
     computed.vSpace = function () {
         return '　';
     };
-    const mounted = function () {
-    };
     Vue.mixin({
-        mounted,
         methods,
         computed
     });
