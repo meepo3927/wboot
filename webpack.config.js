@@ -63,6 +63,7 @@ module.exports = function (env) {
         r.devtool = false;
         // http://vue-loader.vuejs.org/en/workflow/production.html
         r.plugins.push(new ParallelUglifyPlugin({
+            cacheDir: './jscached/',
             uglifyJS: {
                 output: {
                     comments: false

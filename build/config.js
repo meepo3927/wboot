@@ -40,8 +40,8 @@ var alias = {
 module.exports = {
     alias,
     provide: {
-        $: 'jquery',
-        jQuery: 'jquery',
+        '$': 'jquery',
+        'jQuery': 'jquery',
         'window.jQuery': 'jquery'
     },
     productionPublicPath,
