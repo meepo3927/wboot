@@ -1,9 +1,22 @@
 <template>
-<input type="text" :value="value" @input="onInput" />
+    <input type="text" :value="value" @input="onInput" 
+        @blur="onBlur" />
 </template>
 
 <script>
 let methods = {};
+methods.onBlur = function () {
+    let val = this.getFixedValue();
+    if (isNaN(val)) {
+        this.$el.value = '';
+        this.$emit('input', '');
+    }
+    if (val[val.length - 1] === '.') {
+        let n = parseFloat(val);
+        this.$el.value = n;
+        this.$emit('input', n);
+    }
+};
 methods.getFixedValue = function () {
     let oValue = this.$el.value.trim();
     if (oValue === '') {
@@ -23,12 +36,21 @@ methods.getFixedValue = function () {
     let subfix = '';
     if (this.numType === 'integer') { // 仅整数
         oValue = parseInt(oValue, 10) || 0;
-    } else if (oValue[oValue.length - 1] === '.') {
+    } else if (oValue[oValue.length - 1] === '.') { // 正在输入小数
         subfix = '.';
         oValue = parseInt(oValue, 10) || 0;
     } else {
+        // 处理末尾0的情况
+        if (~oValue.indexOf('.')) {
+            let j = oValue.length - 1;
+            while (oValue[j] === '0') {
+                subfix += '0';
+                j--;
+            }
+        }
         oValue = n;
     }
+
 
     if (this.min !== undefined && oValue < this.min) {
         oValue = this.min;

@@ -6,26 +6,19 @@ const wParam = [
     'location=yes',
     'scrollbars=yes',
     'resizable=yes',
-    'width=1024px',
+    'width=1366px',
     'height=768px'
 ].join(',');
 
 module.exports = {
-    // Vue.directive('clickoutside', vueClickOutSide);
+    // Vue.directive('open', vueOpen);
     bind (el, binding, vnode) {
         if (binding.value) {
             el.__VueOpenUrl = binding.value;
         }
         el.__VueOpenClickFunc = () => {
             if (el.__VueOpenUrl) {
-                let date = new Date();
-                let url = el.__VueOpenUrl;
-                if (~url.indexOf('?')) {
-                    url += '&var=' + date.getTime();
-                } else {
-                    url += '?var=' + date.getTime();
-                }
-                window.open(url, '', wParam);
+                window.open(el.__VueOpenUrl, '', wParam);
             }
         };
         el.addEventListener('click', el.__VueOpenClickFunc);
