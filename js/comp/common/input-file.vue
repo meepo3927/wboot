@@ -30,7 +30,9 @@ computed.text = function () {
 let watch = {};
 const created = function () {};
 const mounted = function () {};
-const beforeDestroy = function () {};
+const beforeDestroy = function () {
+    this.$emit('input', '');
+};
 const dataFunc = function () {
     let o = {
         id: 'vInputFile_' + (uuid++),

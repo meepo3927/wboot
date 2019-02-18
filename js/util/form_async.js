@@ -77,7 +77,7 @@ function FormAsync($form, options = {}) {
 var proto = FormAsync.prototype;
 proto.init = function () {
     this.$form.attr({
-        'method': 'POST',
+        //'method': 'POST',
         'enctype': 'multipart/form-data'
     });
 };

@@ -22,6 +22,8 @@
 </template>
 
 <script>
+const Cover = require('util/cover.js');
+
 const STATUS_OK = 1;
 const STATUS_CANCEL = 2;
 const iconMap = {
@@ -109,11 +111,15 @@ computed.inputVisible = function () {
 let watch = {};
 const created = function () {};
 const mounted = function () {
+    this.mixMyCover = new Cover({
+        zIndex: 19900420 + 10,
+        show: true
+    });
     document.addEventListener('keyup', this.onKeyUp);
     setTimeout(this.autoFocus, 50);
 };
 const beforeDestroy = function () {
-
+    this.mixMyCover.remove();
     document.removeEventListener('keyup', this.onKeyUp);
 };
 const dataFunc = function () {
@@ -136,7 +142,6 @@ module.exports = {
     props: [],
     mounted,
     mixins: [
-        require('mixins/with_cover.js')
     ],
     beforeDestroy,
     components: {}
