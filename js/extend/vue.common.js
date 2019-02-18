@@ -10,10 +10,10 @@ Plugin.install = function (Vue, options) {
                 return './' + path + '.html' + param;
             }
         }
-        if (config.isProduction) {
-            return config.basePath + path + '.jsp' + param;
+        if (Config.isProduction) {
+            return Config.basePath + path + '.jsp' + param;
         }
-        return config.basePath + path + '.html' + param;
+        return Config.basePath + path + '.html' + param;
     };
     methods.getImageUrl = function (path) {
         return this.vImgPath + path;
@@ -23,8 +23,8 @@ Plugin.install = function (Vue, options) {
         if (localEnv) {
             return './images';
         }
-        if (config.isProduction) {
-            return config.basePath + '/images';
+        if (Config.isProduction) {
+            return Config.basePath + '/images';
         }
         return '/images';
     };
