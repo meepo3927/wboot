@@ -20,6 +20,7 @@ var alias = {
     jquery$: 'lib/jquery-2.1.1.min.js',
     vue$: 'lib/vue.min.js',
     vuex$: 'lib/vuex-2.3.1.js',
+    vue_router$: 'lib/vue-router.js',
     // 工具,插件
     promise$: 'lib/promise.js',
     echarts$: 'lib/echarts-4.0.2.min.js',
