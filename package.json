@@ -8,7 +8,8 @@
     "build": "node ./build/clean.js && webpack --env=production --progress --hide-modules --colors",
     "dll": " webpack --progress --colors --config ./build/dll.config.js",
     "ver": "node ./build/modify_version.js",
-    "clean": "node ./build/clean.js"
+    "clean": "node ./build/clean.js",
+    "add": "node ./build/cli.js addentry"
   },
   "dependencies": {},
   "devDependencies": {
