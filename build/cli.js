@@ -40,19 +40,10 @@ const addEntry = (fileName) => {
     // vue:  config.JS_DIR + '/pages/app.vue'
     // html: config.SERVER_DIR + '/app.html'
     // jsp:  config.SERVER_DIR + '/app.jsp'
-    const MAX = 2;
-    let i = 0;
-    let done = () => {
-        i++;
-        if (i === MAX) {
-            process.exit();
-        }
-    };
     let jsFile = config.JS_DIR + '/entry/' + fileName + '.js';
     let vueFile = config.JS_DIR + '/pages/' + fileName + '.vue';
     let htmlFile = config.SERVER_DIR + '/' + fileName + '.html';
     let jspFile = config.SERVER_DIR + '/' + fileName + '.jsp';
-    /*
     fs.writeFile(jsFile, getEntryJSContent(fileName), (err) => {
         if (err) {
             console.log(`生成entry/${fileName}.js文件错误：`);
@@ -60,7 +51,6 @@ const addEntry = (fileName) => {
         } else {
             console.log('生成' + jsFile + '完成');
         }
-        done();
     });
     fs.writeFile(vueFile, getEntryVueContent(fileName), (err) => {
         if (err) {
@@ -69,9 +59,7 @@ const addEntry = (fileName) => {
         } else {
             console.log('生成' + vueFile + '完成');
         }
-        done();
     });
-    */
     fs.writeFile(htmlFile, getEntryHTMLContent(fileName), (err) => {
         if (err) {
             console.log(`生成${fileName}.html文件错误：`);
@@ -79,7 +67,6 @@ const addEntry = (fileName) => {
         } else {
             console.log('生成' + htmlFile + '完成');
         }
-        done();
     });
     fs.writeFile(jspFile, getEntryJSPContent(fileName), (err) => {
         if (err) {
@@ -88,7 +75,6 @@ const addEntry = (fileName) => {
         } else {
             console.log('生成' + jspFile + '完成');
         }
-        done();
     });
 };
 
@@ -98,14 +84,16 @@ const addEntry = (fileName) => {
 const command = process.argv[2];
 if (command === 'addentry') {
     console.log('输入文件名 (不要输入扩展名)：');
-    process.stdin.on('readable', () => {
+    const onInput = () => {
         let chunk = process.stdin.read().trim();
         if (chunk) {
             addEntry(chunk);
         } else {
             console.log('必须输入文件名！');
         }
-    });
+        process.stdin.destroy();
+    };
+    process.stdin.on('readable', onInput);
 
 } else {
     /////////////////
