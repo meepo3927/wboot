@@ -55,7 +55,7 @@ module.exports = {
 </script>
 
 <style scoped lang="less">
-@label-height:  34px;
+
 .v-input-file {
     display: inline-block;
 }
@@ -64,7 +64,6 @@ label {
     border: 1px solid #ccc;
     padding: 6px 12px;
     font-size: 14px;
-    height: @label-height;
     border-radius: 4px;
     width: 100%;
     cursor: pointer;
