@@ -126,6 +126,9 @@ computed.myPlaceholder = function () {
     return this.placeholder || '请选择';
 };
 computed.v = function () {
+    if ((typeof this.value) === 'string') {
+        return this.value.split(',');
+    }
     return this.value || [];
 };
 computed.l = function () {
@@ -190,7 +193,7 @@ module.exports = {
 </script>
 
 <style scoped lang="less">
-@my-height:  30px;
+@my-height:  34px;
 @v0-margin:  4px;
 @v0-height:  @my-height - (@v0-margin * 2);
 @list-max-height: 482px;
