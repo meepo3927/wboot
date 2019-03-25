@@ -126,9 +126,6 @@ computed.myPlaceholder = function () {
     return this.placeholder || '请选择';
 };
 computed.v = function () {
-    if ((typeof this.value) === 'string') {
-        return this.value.split(',');
-    }
     return this.value || [];
 };
 computed.l = function () {
